@@ -15,6 +15,7 @@ protected:
 	std::set<Layer*> mLayers;
 	Layer *mParent;
 	float mOpacity;
+	bool mVisible;
 
 	void SetTarget(ID2D1RenderTarget *target);
 public:
@@ -35,8 +36,11 @@ public:
 	D2D1_RECT_F GetBounds();
 	Layer* GetParent();
 	void SetParent(Layer* layer);
+	void InvalidateParent();
 	float GetOpacity();
 	void SetOpacity(float opacity);
+	void SetVisible(bool value);
+	bool IsVisible();
 
 	bool Intersects(int x, int y);
 

@@ -12,13 +12,13 @@ void Layer::SetTarget(ID2D1RenderTarget *target)
 }
 
 Layer::Layer(int width, int height)
-	: Drawable(D2Pool::CreateRenderTarget(width, height)), mWidth(width), mHeight(height), mOpacity(1.0f)
+	: Drawable(D2Pool::CreateRenderTarget(width, height)), mWidth(width), mHeight(height), mOpacity(1.0f), mVisible(true)
 {
 
 }
 
 Layer::Layer(ID2D1RenderTarget* target)
-	: Drawable(target)
+	: Drawable(target), mOpacity(1.0f), mVisible(true)
 {
 	this->SetTarget(target);
 }
@@ -83,6 +83,12 @@ void Layer::SetParent(Layer* layer)
 	mParent = layer;
 }
 
+void Layer::InvalidateParent()
+{
+	if (this->GetParent())
+		this->GetParent()->Invalidate(INVALIDATION_MODE::INVALIDATION_ALL);
+}
+
 float Layer::GetOpacity()
 {
 	return mOpacity;
@@ -91,8 +97,18 @@ float Layer::GetOpacity()
 void Layer::SetOpacity(float opacity)
 {
 	mOpacity = opacity;
-	if (this->GetParent())
-		this->GetParent()->Invalidate(INVALIDATION_MODE::INVALIDATION_ALL);
+	this->InvalidateParent();
+}
+
+void Layer::SetVisible(bool value)
+{
+	mVisible = value;
+	this->InvalidateParent();
+}
+
+bool Layer::IsVisible()
+{
+	return mVisible;
 }
 
 bool Layer::Intersects(int x, int y)
@@ -119,6 +135,8 @@ void Layer::Draw(ID2D1RenderTarget* target)
 	if (mLayers.size() != 0)
 	{
 		for each(Layer *layer in mLayers) {
+			if (!layer->IsVisible())
+				continue;
 			layer->Draw(layer->GetTarget());
 			ID2D1Bitmap *bmp = layer->GetBitmap();
 			if (bmp)
