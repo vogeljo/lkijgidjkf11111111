@@ -24,7 +24,11 @@ public:
 	static IDWriteFactory* GetWriteFactory();
 	static IDWriteTextFormat* GetFormat(D2PoolFont font);
 
-	static void PrintText(ID2D1RenderTarget* target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, std::wstring str, ...);
+	static void PrintText__OLD(ID2D1RenderTarget* target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, std::wstring str, ...);
+	static void PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush);
+	static void PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, DWRITE_TEXT_ALIGNMENT halign = DWRITE_TEXT_ALIGNMENT_LEADING, DWRITE_PARAGRAPH_ALIGNMENT valign = DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+
+	static std::wstring FormatString(std::wstring str, ...);
 
 	static int RunPipeline(Drawable *drawable);
 };

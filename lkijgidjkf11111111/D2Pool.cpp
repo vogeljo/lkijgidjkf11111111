@@ -92,7 +92,34 @@ IDWriteTextFormat* D2Pool::GetFormat(D2PoolFont font)
 	}
 }
 
-void D2Pool::PrintText(ID2D1RenderTarget* target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, std::wstring str, ...)
+void D2Pool::PrintText__OLD(ID2D1RenderTarget* target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, std::wstring str, ...)
+{
+	va_list argp;
+	va_start(argp, str);
+
+	std::wstring rstr = FormatString(str, argp);
+
+	target->DrawTextA(rstr.c_str(), rstr.length(), format, rect, brush);
+
+	va_end(argp);
+}
+
+void D2Pool::PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush)
+{
+	target->DrawText(str.c_str(), str.length(), format, rect, brush);
+}
+
+void D2Pool::PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, DWRITE_TEXT_ALIGNMENT halign, DWRITE_PARAGRAPH_ALIGNMENT valign)
+{
+	IDWriteTextLayout *layout;
+	GetWriteFactory()->CreateTextLayout(str.c_str(), str.length(), format, rect.right - rect.left, rect.bottom - rect.top, &layout);
+	layout->SetTextAlignment(halign);
+	layout->SetParagraphAlignment(valign);
+	target->DrawTextLayout(D2D1::Point2F(rect.left, rect.top), layout, brush);
+	SafeRelease(&layout);
+}
+
+std::wstring D2Pool::FormatString(std::wstring str, ...)
 {
 	va_list argp;
 	va_start(argp, str);
@@ -123,9 +150,8 @@ void D2Pool::PrintText(ID2D1RenderTarget* target, IDWriteTextFormat *format, D2D
 			}
 		}
 	}
-	target->DrawTextA(rstr.c_str(), rstr.length(), format, rect, brush);
-
 	va_end(argp);
+	return rstr;
 }
 
 int D2Pool::RunPipeline(Drawable *drawable)
