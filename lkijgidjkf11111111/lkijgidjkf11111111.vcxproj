@@ -110,6 +110,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CashDisplayLayer.h" />
     <ClInclude Include="ProgressBarLayer.h" />
     <ClInclude Include="D2Pool.h" />
     <ClInclude Include="Drawable.h" />
@@ -118,6 +119,7 @@
     <ClInclude Include="MyGame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CashDisplayLayer.cpp" />
     <ClCompile Include="ProgressBarLayer.cpp" />
     <ClCompile Include="D2Pool.cpp" />
     <ClCompile Include="Drawable.cpp" />
