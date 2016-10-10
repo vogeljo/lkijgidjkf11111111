@@ -2,6 +2,7 @@
 #include "Game.h"
 
 #include "ProgressBarLayer.h"
+#include "CashDisplayLayer.h"
 
 class MyGame :
 	public CGame
@@ -9,6 +10,7 @@ class MyGame :
 private:
 	int nUpdate;
 	ProgressBarLayer *cl;
+	CashDisplayLayer *l_cash;
 public:
 	MyGame(int width, int height);
 	virtual ~MyGame();
@@ -19,5 +21,8 @@ public:
 
 	virtual void Initialize() override;
 	virtual bool MUST_CALL OnMouseMove(int x, int y) override;
+
+	virtual bool MUST_CALL OnLMouseDown(int x, int y) override;
+
 };
 
