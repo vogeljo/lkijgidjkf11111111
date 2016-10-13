@@ -25,14 +25,17 @@ ID2D1HwndRenderTarget* D2Pool::CreateWindowRenderTarget(HWND hWnd)
 	//AdjustWindowRect(&r, GetWindowLongPtr(hWnd, GWL_STYLE), FALSE);
 	D2D1_SIZE_U size = D2D1::SizeU(r.right - r.left, r.bottom - r.top);
 
-	GetFactory()->CreateHwndRenderTarget(D2D1::RenderTargetProperties(), D2D1::HwndRenderTargetProperties(hWnd, size), &target);
+	GetFactory()->CreateHwndRenderTarget(D2D1::RenderTargetProperties(D2D1_RENDER_TARGET_TYPE_DEFAULT, D2D1::PixelFormat(DXGI_FORMAT_UNKNOWN, D2D1_ALPHA_MODE_PREMULTIPLIED)), D2D1::HwndRenderTargetProperties(hWnd, size), &target);
+	D2Pool::SetSourceRenderTarget(target);
 	return target;
 }
 
 ID2D1BitmapRenderTarget* D2Pool::CreateRenderTarget(int width, int height)
 {
 	ID2D1BitmapRenderTarget* target = nullptr;
-	GetSourceRenderTarget()->CreateCompatibleRenderTarget(D2D1::SizeF(width, height), &target);
+	D2D1_SIZE_F size = D2D1::SizeF(width, height);
+	D2D1_PIXEL_FORMAT pformat = D2D1::PixelFormat(DXGI_FORMAT_UNKNOWN, D2D1_ALPHA_MODE_PREMULTIPLIED);
+	GetSourceRenderTarget()->CreateCompatibleRenderTarget(&size, nullptr, &pformat, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, &target);
 	return target;
 }
 
@@ -119,6 +122,20 @@ void D2Pool::PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextF
 	SafeRelease(&layout);
 }
 
+void D2Pool::PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, float fontSize, DWRITE_TEXT_ALIGNMENT halign = DWRITE_TEXT_ALIGNMENT_LEADING, DWRITE_PARAGRAPH_ALIGNMENT valign /*= DWRITE_PARAGRAPH_ALIGNMENT_NEAR*/)
+{
+	IDWriteTextLayout *layout;
+	GetWriteFactory()->CreateTextLayout(str.c_str(), str.length(), format, rect.right - rect.left, rect.bottom - rect.top, &layout);
+	layout->SetTextAlignment(halign);
+	layout->SetParagraphAlignment(valign);
+	DWRITE_TEXT_RANGE range;
+	range.startPosition = 0;
+	range.length = str.length();
+	layout->SetFontSize(fontSize, range);
+	target->DrawTextLayout(D2D1::Point2F(rect.left, rect.top), layout, brush);
+	SafeRelease(&layout);
+}
+
 std::wstring D2Pool::FormatString(std::wstring str, ...)
 {
 	va_list argp;
@@ -131,6 +148,9 @@ std::wstring D2Pool::FormatString(std::wstring str, ...)
 			switch (c) {
 			case L'n':
 				rstr += std::to_wstring(va_arg(argp, int));
+				break;
+			case L's':
+				rstr += std::wstring(va_arg(argp, wchar_t*));
 				break;
 			case L'%':
 			default:
@@ -152,6 +172,31 @@ std::wstring D2Pool::FormatString(std::wstring str, ...)
 	}
 	va_end(argp);
 	return rstr;
+}
+
+std::wstring D2Pool::IntToMoney(int money, bool currency /*= true*/)
+{
+	int cent = abs(money % 100);
+
+	std::wstring ws;
+	ws += std::to_wstring(money / 100);
+	ws += L',';
+	if (cent < 10)
+		ws += L'0';
+	ws += std::to_wstring(cent);
+	if (currency)
+		ws += L" €";
+	return ws;
+}
+
+std::wstring D2Pool::IntToMoneyChange(int money, bool currency /* = true*/)
+{
+	std::wstring ws;
+	wchar_t c = money >= 0 ? L'+' : L'-';
+
+	ws += c;
+	ws += IntToMoney(abs(money), currency);
+	return ws;
 }
 
 int D2Pool::RunPipeline(Drawable *drawable)

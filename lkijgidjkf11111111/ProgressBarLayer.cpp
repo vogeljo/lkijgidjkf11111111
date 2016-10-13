@@ -3,7 +3,7 @@
 ProgressBarLayer::ProgressBarLayer(int width, int height)
 	: Layer(width, height), nRedraw(1), mBackground(D2D1::ColorF(D2D1::ColorF::CornflowerBlue))
 {
-
+	//mAlphaBackground = true;
 }
 
 ProgressBarLayer::~ProgressBarLayer()

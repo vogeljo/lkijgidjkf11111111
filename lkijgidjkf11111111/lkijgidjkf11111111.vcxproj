@@ -111,15 +111,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CashDisplayLayer.h" />
+    <ClInclude Include="DragController.h" />
+    <ClInclude Include="MapData.h" />
+    <ClInclude Include="MapLayer.h" />
+    <ClInclude Include="MapTile.h" />
     <ClInclude Include="ProgressBarLayer.h" />
     <ClInclude Include="D2Pool.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MyGame.h" />
+    <ClInclude Include="Unit.h" />
+    <ClInclude Include="UnitStats.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CashDisplayLayer.cpp" />
+    <ClCompile Include="DragController.cpp" />
+    <ClCompile Include="MapData.cpp" />
+    <ClCompile Include="MapLayer.cpp" />
+    <ClCompile Include="MapTile.cpp" />
     <ClCompile Include="ProgressBarLayer.cpp" />
     <ClCompile Include="D2Pool.cpp" />
     <ClCompile Include="Drawable.cpp" />
@@ -127,6 +137,8 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGame.cpp" />
+    <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="UnitStats.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

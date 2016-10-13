@@ -12,7 +12,7 @@ enum INVALIDATION_MODE : int {
 class Drawable abstract
 {
 protected:
-	ID2D1RenderTarget* mTarget;
+	ID2D1BitmapRenderTarget* mTarget;
 	INVALIDATION_MODE mInvalidationMode;
 	bool mInitalized;
 	int mIsDrawing;
@@ -21,7 +21,7 @@ protected:
 	void StartDrawing(ID2D1RenderTarget *target);
 	void EndDrawing(ID2D1RenderTarget *target);
 public:
-	Drawable(ID2D1RenderTarget* target);
+	Drawable(ID2D1BitmapRenderTarget* target);
 	virtual ~Drawable();
 
 	virtual bool IsBitmap();
@@ -29,13 +29,14 @@ public:
 
 	virtual ID2D1Bitmap* GetBitmap();
 
-	virtual ID2D1RenderTarget* GetTarget();
+	virtual ID2D1BitmapRenderTarget* GetTarget();
 
 	virtual void OnUpdate() = 0;
 	virtual bool OnDraw(ID2D1RenderTarget* target) = 0;
 
 	virtual void Update();
 	virtual void Draw(ID2D1RenderTarget* target);
+	virtual void Draw(ID2D1RenderTarget* target, bool force);
 
 	void Invalidate(INVALIDATION_MODE mode = INVALIDATION_DEFAULT);
 	INVALIDATION_MODE GetInvalidationMode();

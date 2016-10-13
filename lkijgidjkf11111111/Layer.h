@@ -2,7 +2,7 @@
 #include "D2Pool.h"
 #include "Drawable.h"
 
-#include <set>
+#include <vector>
 
 #define MUST_CALL
 
@@ -12,17 +12,19 @@ class Layer abstract
 protected:
 	int mWidth, mHeight;
 	int mPosX, mPosY;
-	std::set<Layer*> mLayers;
+	std::vector<Layer*> mLayers;
 	Layer *mParent;
 	float mOpacity;
 	bool mVisible;
+	bool mAlphaBackground;
 
-	void SetTarget(ID2D1RenderTarget *target);
+	void SetTarget(ID2D1BitmapRenderTarget *target);
+	void DrawFromBackBuffer(ID2D1RenderTarget *target, D2D1_RECT_F& rect);
 public:
 	Layer(int width, int height);
 
 	// takes target, creates none.
-	Layer(ID2D1RenderTarget* target);
+	//Layer(ID2D1RenderTarget* target);
 
 	virtual ~Layer();
 
@@ -43,6 +45,7 @@ public:
 	bool IsVisible();
 
 	bool Intersects(int x, int y);
+	bool IsTransparent();
 
 	virtual void Update() override;
 	virtual void Draw(ID2D1RenderTarget* target) override;
@@ -55,5 +58,14 @@ public:
 
 	// returns false when the mouse is over a sublayer.
 	virtual bool MUST_CALL OnLMouseDown(int x, int y);
+
+	// returns false when the mouse is over a sublayer.
+	virtual bool MUST_CALL OnRMouseDown(int x, int y);
+
+	// returns false when the mouse is over a sublayer.
+	virtual bool MUST_CALL OnLMouseUp(int x, int y);
+
+	// returns false when the mouse is over a sublayer.
+	virtual bool MUST_CALL OnRMouseUp(int x, int y);
 };
 
