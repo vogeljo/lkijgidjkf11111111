@@ -110,11 +110,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ButtonLayer.h" />
     <ClInclude Include="CashDisplayLayer.h" />
+    <ClInclude Include="crc32.h" />
     <ClInclude Include="DragController.h" />
+    <ClInclude Include="InfoLayer.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="InventoryLayer.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="InventoryItemLayer.h" />
+    <ClInclude Include="ITimedAnimation.h" />
+    <ClInclude Include="LinearTimedAnimation.h" />
     <ClInclude Include="MapData.h" />
     <ClInclude Include="MapLayer.h" />
     <ClInclude Include="MapTile.h" />
+    <ClInclude Include="MyGameItems.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="ProgressBarLayer.h" />
     <ClInclude Include="D2Pool.h" />
     <ClInclude Include="Drawable.h" />
@@ -123,13 +134,25 @@
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitStats.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ButtonLayer.cpp" />
     <ClCompile Include="CashDisplayLayer.cpp" />
+    <ClCompile Include="crc32.cpp" />
     <ClCompile Include="DragController.cpp" />
+    <ClCompile Include="InfoLayer.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="InventoryLayer.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="InventoryItemLayer.cpp" />
+    <ClCompile Include="ITimedAnimation.cpp" />
+    <ClCompile Include="LinearTimedAnimation.cpp" />
     <ClCompile Include="MapData.cpp" />
     <ClCompile Include="MapLayer.cpp" />
     <ClCompile Include="MapTile.cpp" />
+    <ClCompile Include="MyGameItems.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="ProgressBarLayer.cpp" />
     <ClCompile Include="D2Pool.cpp" />
     <ClCompile Include="Drawable.cpp" />
@@ -139,6 +162,7 @@
     <ClCompile Include="MyGame.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitStats.cpp" />
+    <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

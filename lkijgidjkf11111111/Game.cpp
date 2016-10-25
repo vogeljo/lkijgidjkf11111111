@@ -2,7 +2,7 @@
 #include <windowsx.h>
 
 LRESULT WINAPI GameWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	CGame *game = (CGame*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+	Game *game = (Game*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 
 	int mouse_x, mouse_y;
 
@@ -42,11 +42,16 @@ LRESULT WINAPI GameWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	case WM_RBUTTONUP:
 		game->OnRMouseUp(mouse_xs, mouse_ys);
 		break;
+	case WM_KEYDOWN:
+		game->OnKeyDown(wParam);
+		if (wParam == VK_ESCAPE)
+			game->Exit();
+		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
-HWND CreateGameWindow(CGame *game, int width, int height) {
+HWND CreateGameWindow(Game *game, int width, int height) {
 #define MY_INSTANCE GetModuleHandle(0)
 #define MY_WINDOW_CLASS TEXT("lkijgidjkfWindow")
 #define MY_WINDOW_STYLE (WS_OVERLAPPEDWINDOW & ~(WS_THICKFRAME) | WS_VISIBLE)
@@ -66,28 +71,28 @@ HWND CreateGameWindow(CGame *game, int width, int height) {
 	return CreateWindow(MY_WINDOW_CLASS, TEXT("My Window!"), MY_WINDOW_STYLE, CW_USEDEFAULT, CW_USEDEFAULT, r.right - r.left, r.bottom - r.top, NULL, NULL, MY_INSTANCE, game);
 }
 
-CGame::CGame(int width, int height)
-	: Layer((mWindowTarget = D2Pool::CreateWindowRenderTarget(mWindow = CreateGameWindow(this, width, height)), width), height)
+Game::Game(int width, int height)
+	: Layer((mWindowTarget = D2Pool::CreateWindowRenderTarget(mWindow = CreateGameWindow(this, width, height), width, height), width), height)
 {
-	//D2Pool::SetSourceRenderTarget(rt);
+
 }
 
-CGame::~CGame()
+Game::~Game()
 {
 }
 
-HWND CGame::GetWindowHandle()
+HWND Game::GetWindowHandle()
 {
 	return mWindow;
 }
 
-void CGame::BindWindow(HWND handle)
+void Game::BindWindow(HWND handle)
 {
 	//SetWindowLongPtr(handle, GWLP_USERDATA, (LONG_PTR)this);
 	//SetWindowLongPtr(handle, GWLP_WNDPROC, (LONG_PTR)GameWndProc);
 }
 
-int CGame::GetDisplayWidth()
+int Game::GetDisplayWidth()
 {
 	RECT r;
 	GetClientRect(mWindow, &r);
@@ -95,14 +100,14 @@ int CGame::GetDisplayWidth()
 }
 
 
-int CGame::GetDisplayHeight()
+int Game::GetDisplayHeight()
 {
 	RECT r;
 	GetClientRect(mWindow, &r);
 	return r.bottom - r.top;
 }
 
-int CGame::GetMousePosX()
+int Game::GetMousePosX()
 {
 	POINT p;
 	GetCursorPos(&p);
@@ -110,7 +115,7 @@ int CGame::GetMousePosX()
 	return p.x;
 }
 
-int CGame::GetMousePosY()
+int Game::GetMousePosY()
 {
 	POINT p;
 	GetCursorPos(&p);
@@ -118,31 +123,81 @@ int CGame::GetMousePosY()
 	return p.y;
 }
 
-void CGame::Show()
+void Game::SetFocus(Layer *layer)
+{
+	mFocused = layer;
+}
+
+void Game::Show()
 {
 	ShowWindow(mWindow, SW_SHOW);
 }
 
-void CGame::Draw(ID2D1RenderTarget* target)
+void Game::SetFullscreen()
 {
-	Layer::Draw(target);
+	auto val = GetWindowLongPtr(mWindow, GWL_STYLE);
+	val &= ~(WS_OVERLAPPEDWINDOW);
+	SetWindowLongPtr(mWindow, GWL_STYLE, val);
+	SetWindowPos(mWindow, NULL, 0, 0, Util::GetScreenWidth(), Util::GetScreenHeight(), SWP_NOMOVE | SWP_NOZORDER);
+
+	/*WINDOWPLACEMENT wp;
+	wp.flags = WPF_RESTORETOMAXIMIZED;
+	SetWindowPlacement(mWindow, &wp);*/
+}
+
+void Game::Exit()
+{
+	DestroyWindow(mWindow);
+}
+
+void Game::Draw(ID2D1RenderTarget* target)
+{
+	int tw = target->GetSize().width;
+	int th = target->GetSize().height;
 
 	mWindowTarget->BeginDraw();
-
+	
+	Layer::Draw(target);
+	
 	ID2D1Bitmap *bmp = nullptr;
 	this->GetTarget()->GetBitmap(&bmp);
-	mWindowTarget->DrawBitmap(bmp, this->GetRectangle());
+	int w = bmp->GetSize().width;
+	int h = bmp->GetSize().height;
+	mWindowTarget->DrawBitmap(bmp, this->GetBoundingRectangle());
 
 	mWindowTarget->EndDraw();
 }
 
-void CGame::OnUpdate()
+void Game::OnUpdate()
 {
 	//throw std::logic_error("The method or operation is not implemented.");
 }
 
-bool CGame::OnDraw(ID2D1RenderTarget* target)
+bool Game::OnDraw(ID2D1RenderTarget* target)
 {
 	//throw std::logic_error("The method or operation is not implemented.");
 	return true;
+}
+
+void Game::OnKeyDown(int key)
+{
+	if (mFocused) {
+		mFocused->OnKeyDown(key);
+	}
+}
+
+bool MUST_CALL Game::OnMouseMove(int x, int y)
+{
+	auto l = this->FindLayerAt(x, y);
+
+	if (l != mMouseHover) {
+		if (mMouseHover)
+			mMouseHover->OnMouseLeave();
+		if (l != this)
+			l->OnMouseEnter();
+	}
+
+	mMouseHover = (l == this) ? nullptr : l;
+
+	return Layer::OnMouseMove(x, y);
 }

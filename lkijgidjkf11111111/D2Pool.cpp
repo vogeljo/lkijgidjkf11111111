@@ -6,6 +6,61 @@
 #include <map>
 #include <cstdarg>
 
+
+//
+HRESULT RealLoadBitmapFromFile(ID2D1RenderTarget *pRenderTarget, IWICImagingFactory *pIWICFactory, PCWSTR uri,
+	UINT destinationWidth, UINT destinationHeight, ID2D1Bitmap **ppBitmap)
+{
+	IWICBitmapDecoder *pDecoder = NULL;
+	IWICBitmapFrameDecode *pSource = NULL;
+	IWICStream*pStream = NULL;
+	IWICFormatConverter *pConverter = NULL;
+	IWICBitmapScaler *pScaler = NULL;
+
+	HRESULT hr = pIWICFactory->CreateDecoderFromFilename(uri, NULL, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &pDecoder);
+
+	if (SUCCEEDED(hr)) {
+		hr = pDecoder->GetFrame(0, &pSource);
+	}
+
+	if (SUCCEEDED(hr)) {
+		// Convert Image format to 32bppPBGRA
+		// (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
+		hr = pIWICFactory->CreateFormatConverter(&pConverter);
+	}
+
+	if (SUCCEEDED(hr)) {
+		hr = pConverter->Initialize(
+			pSource,
+			GUID_WICPixelFormat32bppPBGRA,
+			WICBitmapDitherTypeNone,
+			NULL,
+			0.f,
+			WICBitmapPaletteTypeMedianCut
+		);
+	}
+
+	if (SUCCEEDED(hr)) {
+
+		// Create a Direct2D bitmap from the WIC bitmap
+		hr = pRenderTarget->CreateBitmapFromWicBitmap(
+			pConverter,
+			NULL,
+			ppBitmap
+		);
+	}
+
+	SafeRelease(&pDecoder);
+	SafeRelease(&pSource);
+	SafeRelease(&pStream);
+	SafeRelease(&pConverter);
+	SafeRelease(&pScaler);
+
+	return hr;
+}
+
+//
+
 static ID2D1RenderTarget* source_rt = nullptr;
 
 ID2D1Factory* D2Pool::GetFactory()
@@ -18,12 +73,17 @@ ID2D1Factory* D2Pool::GetFactory()
 
 ID2D1HwndRenderTarget* D2Pool::CreateWindowRenderTarget(HWND hWnd)
 {
-	ID2D1HwndRenderTarget* target = nullptr;
-
 	RECT r;
 	GetClientRect(hWnd, &r);
-	//AdjustWindowRect(&r, GetWindowLongPtr(hWnd, GWL_STYLE), FALSE);
-	D2D1_SIZE_U size = D2D1::SizeU(r.right - r.left, r.bottom - r.top);
+
+	return CreateWindowRenderTarget(hWnd, r.right - r.left, r.bottom - r.top);
+}
+
+ID2D1HwndRenderTarget* D2Pool::CreateWindowRenderTarget(HWND hWnd, int width, int height)
+{
+	ID2D1HwndRenderTarget* target = nullptr;
+
+	D2D1_SIZE_U size = D2D1::SizeU(width, height);
 
 	GetFactory()->CreateHwndRenderTarget(D2D1::RenderTargetProperties(D2D1_RENDER_TARGET_TYPE_DEFAULT, D2D1::PixelFormat(DXGI_FORMAT_UNKNOWN, D2D1_ALPHA_MODE_PREMULTIPLIED)), D2D1::HwndRenderTargetProperties(hWnd, size), &target);
 	D2Pool::SetSourceRenderTarget(target);
@@ -88,7 +148,10 @@ IDWriteTextFormat* D2Pool::GetFormat(D2PoolFont font)
 		IDWriteFactory *factory = GetWriteFactory();
 		switch (font) {
 		case D2PoolFont::NORMAL:
-			factory->CreateTextFormat(L"Arial", NULL, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 12.0f, L"de-de", &format);
+			factory->CreateTextFormat(L"Corbel", NULL, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 14.0f, L"de-de", &format);
+			break;
+		case D2PoolFont::MONOSPACE:
+			factory->CreateTextFormat(L"Consolas", NULL, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 13.0f, L"de-de", &format);
 			break;
 		}
 		return formats[font] = format;
@@ -132,6 +195,35 @@ void D2Pool::PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextF
 	range.startPosition = 0;
 	range.length = str.length();
 	layout->SetFontSize(fontSize, range);
+	target->DrawTextLayout(D2D1::Point2F(rect.left, rect.top), layout, brush);
+	SafeRelease(&layout);
+}
+
+void D2Pool::PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, DWRITE_FONT_WEIGHT weight, DWRITE_TEXT_ALIGNMENT halign, DWRITE_PARAGRAPH_ALIGNMENT valign /*= DWRITE_PARAGRAPH_ALIGNMENT_NEAR*/)
+{
+	IDWriteTextLayout *layout;
+	GetWriteFactory()->CreateTextLayout(str.c_str(), str.length(), format, rect.right - rect.left, rect.bottom - rect.top, &layout);
+	layout->SetTextAlignment(halign);
+	layout->SetParagraphAlignment(valign);
+	DWRITE_TEXT_RANGE range;
+	range.startPosition = 0;
+	range.length = str.length();
+	layout->SetFontWeight(weight, range);
+	target->DrawTextLayout(D2D1::Point2F(rect.left, rect.top), layout, brush);
+	SafeRelease(&layout);
+}
+
+void D2Pool::PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, float fontSize, DWRITE_FONT_WEIGHT weight, DWRITE_TEXT_ALIGNMENT halign, DWRITE_PARAGRAPH_ALIGNMENT valign /*= DWRITE_PARAGRAPH_ALIGNMENT_NEAR*/)
+{
+	IDWriteTextLayout *layout;
+	GetWriteFactory()->CreateTextLayout(str.c_str(), str.length(), format, rect.right - rect.left, rect.bottom - rect.top, &layout);
+	layout->SetTextAlignment(halign);
+	layout->SetParagraphAlignment(valign);
+	DWRITE_TEXT_RANGE range;
+	range.startPosition = 0;
+	range.length = str.length();
+	layout->SetFontSize(fontSize, range);
+	layout->SetFontWeight(weight, range);
 	target->DrawTextLayout(D2D1::Point2F(rect.left, rect.top), layout, brush);
 	SafeRelease(&layout);
 }
@@ -197,6 +289,54 @@ std::wstring D2Pool::IntToMoneyChange(int money, bool currency /* = true*/)
 	ws += c;
 	ws += IntToMoney(abs(money), currency);
 	return ws;
+}
+
+D2D1_COLOR_F D2Pool::GetReadableColor(D2D1_COLOR_F& backgroundColor)
+{
+	// .2126 R, .7152 G, .0722 B
+	return D2D1::ColorF(backgroundColor.r * 0.2126 + backgroundColor.g * 0.7152 + backgroundColor.b * 0.0722 > 0.5f ? D2D1::ColorF::Black : D2D1::ColorF::White);
+}
+
+IWICImagingFactory* D2Pool::GetWICFactory()
+{
+	static IWICImagingFactory *factory = nullptr;
+	if (!factory) {
+		CoInitialize(NULL);
+		CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, IID_IWICImagingFactory, (LPVOID*)&factory);
+	}
+	return factory;
+}
+
+ID2D1Bitmap* D2Pool::LoadBitmapFromFile(std::wstring file)
+{
+	return LoadBitmapFromFile(file, 0, 0);
+}
+
+ID2D1Bitmap* D2Pool::LoadBitmapFromFile(std::wstring file, int width, int height)
+{
+	ID2D1Bitmap *bmp = nullptr;
+	RealLoadBitmapFromFile(D2Pool::GetSourceRenderTarget(), D2Pool::GetWICFactory(), file.c_str(), width, height, &bmp);
+	return bmp;
+}
+
+ID2D1Bitmap* D2Pool::GetGraphic(D2Graphic graphic)
+{
+	static std::map<D2Graphic, ID2D1Bitmap*> values;
+	auto it = values.find(graphic);
+	if (it != values.end())
+		return it->second;
+	else {
+		std::wstring filename = L"";
+		switch (graphic) {
+		case D2Graphic::APPLE:
+			filename = L"apple.png";
+			break;
+		}
+		if (filename.empty())
+			return nullptr;
+
+		return values[graphic] = D2Pool::LoadBitmapFromFile(filename);
+	}
 }
 
 int D2Pool::RunPipeline(Drawable *drawable)

@@ -2,12 +2,19 @@
 #include <d2d1.h>
 #include <dwrite.h>
 #include <string>
+#include <wincodec.h>
+
+#pragma comment(lib, "windowscodecs.lib")
 
 class Drawable;
 class Layer;
 
 enum class D2PoolFont {
-	NORMAL
+	NORMAL, MONOSPACE
+};
+
+enum class D2Graphic {
+	APPLE
 };
 
 class D2Pool abstract
@@ -15,6 +22,7 @@ class D2Pool abstract
 public:
 	static ID2D1Factory* GetFactory();
 	static ID2D1HwndRenderTarget* CreateWindowRenderTarget(HWND hWnd);
+	static ID2D1HwndRenderTarget* CreateWindowRenderTarget(HWND hWnd, int width, int height);
 	static ID2D1BitmapRenderTarget* CreateRenderTarget(int width, int height);
 	static void SetSourceRenderTarget(ID2D1RenderTarget* target);
 	static ID2D1RenderTarget* GetSourceRenderTarget();
@@ -28,11 +36,22 @@ public:
 	static void PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush);
 	static void PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, DWRITE_TEXT_ALIGNMENT halign, DWRITE_PARAGRAPH_ALIGNMENT valign = DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 	static void PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, float fontSize, DWRITE_TEXT_ALIGNMENT halign, DWRITE_PARAGRAPH_ALIGNMENT valign = DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+	static void PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, DWRITE_FONT_WEIGHT weight, DWRITE_TEXT_ALIGNMENT halign, DWRITE_PARAGRAPH_ALIGNMENT valign = DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+	static void PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextFormat *format, D2D1_RECT_F& rect, ID2D1Brush *brush, float fontSize, DWRITE_FONT_WEIGHT weight, DWRITE_TEXT_ALIGNMENT halign, DWRITE_PARAGRAPH_ALIGNMENT valign = DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
 	static std::wstring FormatString(std::wstring str, ...);
 
 	static std::wstring IntToMoney(int money, bool currency = true);
 	static std::wstring IntToMoneyChange(int money, bool currency = true);
+
+	static D2D1_COLOR_F GetReadableColor(D2D1_COLOR_F& backgroundColor);
+
+	static IWICImagingFactory* GetWICFactory();
+
+	static ID2D1Bitmap* LoadBitmapFromFile(std::wstring file);
+	static ID2D1Bitmap* LoadBitmapFromFile(std::wstring file, int width, int height);
+
+	static ID2D1Bitmap* GetGraphic(D2Graphic graphic);
 
 	static int RunPipeline(Drawable *drawable);
 };

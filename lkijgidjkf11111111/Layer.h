@@ -6,6 +6,8 @@
 
 #define MUST_CALL
 
+class Game;
+
 class Layer abstract
 	: public Drawable
 {
@@ -17,6 +19,7 @@ protected:
 	float mOpacity;
 	bool mVisible;
 	bool mAlphaBackground;
+	D2D1_RECT_F mPadding;
 
 	void SetTarget(ID2D1BitmapRenderTarget *target);
 	void DrawFromBackBuffer(ID2D1RenderTarget *target, D2D1_RECT_F& rect);
@@ -29,12 +32,14 @@ public:
 	virtual ~Layer();
 
 	void AddLayer(Layer *layer);
+	void AddLayer(Layer *layer, Layer *lower);
 	void SetPosition(int x, int y);
 	int GetPositionX();
 	int GetPositionY();
 	int GetWidth();
 	int GetHeight();
-	D2D1_RECT_F GetRectangle();
+	D2D1_RECT_F GetContentRectangle();
+	D2D1_RECT_F GetBoundingRectangle();
 	D2D1_RECT_F GetBounds();
 	Layer* GetParent();
 	void SetParent(Layer* layer);
@@ -42,9 +47,14 @@ public:
 	float GetOpacity();
 	void SetOpacity(float opacity);
 	void SetVisible(bool value);
+	void SetPadding(float padding);
+	void SetPadding(float left, float top, float right, float bottom);
 	bool IsVisible();
 
 	bool Intersects(int x, int y);
+	Layer* GetLayerAt(int x, int y);
+	Layer* FindLayerAt(int x, int y);
+	virtual bool TestMouseHit(int x, int y);
 	bool IsTransparent();
 
 	virtual void Update() override;
@@ -67,5 +77,10 @@ public:
 
 	// returns false when the mouse is over a sublayer.
 	virtual bool MUST_CALL OnRMouseUp(int x, int y);
+
+	virtual void MUST_CALL OnKeyDown(int key);
+
+	virtual void MUST_CALL OnMouseEnter();
+	virtual void MUST_CALL OnMouseLeave();
 };
 

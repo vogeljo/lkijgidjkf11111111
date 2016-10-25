@@ -1,5 +1,7 @@
 #include "Layer.h"
 
+#include "Game.h"
+
 #include <queue>
 
 void Layer::SetTarget(ID2D1BitmapRenderTarget *target)
@@ -35,8 +37,29 @@ Layer::~Layer()
 
 void Layer::AddLayer(Layer *layer)
 {
+	Layer *lower = nullptr;
+	if (mLayers.size())
+		lower = mLayers[mLayers.size() - 1];
+
+	this->AddLayer(layer, lower);
+}
+
+void Layer::AddLayer(Layer *layer, Layer *lower)
+{
 	layer->SetParent(this);
-	mLayers.push_back(layer);
+
+	auto it = mLayers.begin() + mLayers.size();
+
+	if (lower) {
+		for (auto i = mLayers.begin(); i != mLayers.end(); ++i) {
+			if (*i == lower) {
+				it = i + 1;
+				continue;
+			}
+		}
+	}
+
+	mLayers.insert(it, layer);
 }
 
 void Layer::SetPosition(int x, int y)
@@ -67,7 +90,12 @@ int Layer::GetHeight()
 	return mHeight;
 }
 
-D2D1_RECT_F Layer::GetRectangle()
+D2D1_RECT_F Layer::GetContentRectangle()
+{
+	return D2D1::RectF(mPadding.left, mPadding.top, mWidth - mPadding.right, mHeight - mPadding.bottom);
+}
+
+D2D1_RECT_F Layer::GetBoundingRectangle()
 {
 	return D2D1::RectF(0, 0, mWidth, mHeight);
 }
@@ -111,6 +139,21 @@ void Layer::SetVisible(bool value)
 	this->InvalidateParent();
 }
 
+void Layer::SetPadding(float left, float top, float right, float bottom)
+{
+	mPadding.left = left;
+	mPadding.top = top;
+	mPadding.right = right;
+	mPadding.bottom = bottom;
+
+	this->Invalidate(INVALIDATION_NOCHILDREN);
+}
+
+void Layer::SetPadding(float padding)
+{
+	this->SetPadding(padding, padding, padding, padding);
+}
+
 bool Layer::IsVisible()
 {
 	return mVisible;
@@ -120,6 +163,30 @@ bool Layer::Intersects(int x, int y)
 {
 	return (mPosX <= x && (mPosX + mWidth) >= x)
 		&& (mPosY <= y && (mPosY + mHeight) >= y);
+}
+
+Layer* Layer::GetLayerAt(int x, int y)
+{
+	for (auto it = mLayers.rbegin(); it != mLayers.rend(); ++it) {
+		Layer *l = *it;
+		if (l->IsVisible() && l->TestMouseHit(x, y))
+			return l;
+	}
+	return this;
+}
+
+Layer* Layer::FindLayerAt(int x, int y)
+{
+	auto child = this->GetLayerAt(x, y);
+	if (child == this)
+		return child;
+	else
+		return child->FindLayerAt(x - child->GetPositionX(), y - child->GetPositionY());
+}
+
+bool Layer::TestMouseHit(int x, int y)
+{
+	return this->Intersects(x, y);
 }
 
 bool Layer::IsTransparent()
@@ -156,7 +223,7 @@ void Layer::Draw(ID2D1RenderTarget* target)
 	while (!batch.empty()) {
 		Layer *l = batch.front();
 		//target->FillRectangle(l->GetBounds(), D2Pool::GetSolidColorBrush(D2D1::ColorF::Maroon));
-		target->DrawBitmap(l->GetBitmap(), l->GetBounds(), l->GetOpacity(), D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, l->GetRectangle());
+		target->DrawBitmap(l->GetBitmap(), l->GetBounds(), l->GetOpacity(), D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, l->GetBoundingRectangle());
 		batch.pop();
 	}
 
@@ -169,68 +236,66 @@ bool Layer::IsBitmap()
 }
 
 bool MUST_CALL Layer::OnMouseMove(int x, int y)
-{
-	//for each (auto l in mLayers) {
-	
-	for (auto it = mLayers.rbegin(); it != mLayers.rend(); ++it) {
-		Layer *l = *it;
-		
-		if (l->Intersects(x, y)) {
-			l->OnMouseMove(x - l->GetPositionX(), y - l->GetPositionY());
-			return false;
-		}
+{	
+	Layer *l = this->GetLayerAt(x, y);
+	if (l != this) {
+		l->OnMouseMove(x - l->GetPositionX(), y - l->GetPositionY());
+		return false;
 	}
 	return true;
 }
 
 bool MUST_CALL Layer::OnLMouseDown(int x, int y)
 {
-	for (auto it = mLayers.rbegin(); it != mLayers.rend(); ++it) {
-		Layer *l = *it;
-		
-		if (l->Intersects(x, y)) {
-			l->OnLMouseDown(x - l->GetPositionX(), y - l->GetPositionY());
-			return false;
-		}
+	Layer *l = this->GetLayerAt(x, y);
+	if (l != this) {
+		l->OnLMouseDown(x - l->GetPositionX(), y - l->GetPositionY());
+		return false;
 	}
 	return true;
 }
 
 bool MUST_CALL Layer::OnRMouseDown(int x, int y)
 {
-	for (auto it = mLayers.rbegin(); it != mLayers.rend(); ++it) {
-		Layer *l = *it;
-
-		if (l->Intersects(x, y)) {
-			l->OnRMouseDown(x - l->GetPositionX(), y - l->GetPositionY());
-			return false;
-		}
+	Layer *l = this->GetLayerAt(x, y);
+	if (l != this) {
+		l->OnRMouseDown(x - l->GetPositionX(), y - l->GetPositionY());
+		return false;
 	}
 	return true;
 }
 
 bool MUST_CALL Layer::OnLMouseUp(int x, int y)
 {
-	for (auto it = mLayers.rbegin(); it != mLayers.rend(); ++it) {
-		Layer *l = *it;
-
-		if (l->Intersects(x, y)) {
-			l->OnLMouseUp(x - l->GetPositionX(), y - l->GetPositionY());
-			return false;
-		}
+	Layer *l = this->GetLayerAt(x, y);
+	if (l != this) {
+		l->OnLMouseUp(x - l->GetPositionX(), y - l->GetPositionY());
+		return false;
 	}
 	return true;
 }
 
 bool MUST_CALL Layer::OnRMouseUp(int x, int y)
 {
-	for (auto it = mLayers.rbegin(); it != mLayers.rend(); ++it) {
-		Layer *l = *it;
-
-		if (l->Intersects(x, y)) {
-			l->OnRMouseUp(x - l->GetPositionX(), y - l->GetPositionY());
-			return false;
-		}
+	Layer *l = this->GetLayerAt(x, y);
+	if (l != this) {
+		l->OnRMouseUp(x - l->GetPositionX(), y - l->GetPositionY());
+		return false;
 	}
 	return true;
+}
+
+void Layer::OnKeyDown(int key)
+{
+
+}
+
+void MUST_CALL Layer::OnMouseEnter()
+{
+
+}
+
+void MUST_CALL Layer::OnMouseLeave()
+{
+
 }
