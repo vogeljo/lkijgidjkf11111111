@@ -2,7 +2,7 @@
 
 bool Util::IsKeyDown(int key)
 {
-	return GetKeyState(key) & 0x8000;
+	return !!(GetKeyState(key) & 0x8000);
 }
 
 int Util::GetScreenWidth()
