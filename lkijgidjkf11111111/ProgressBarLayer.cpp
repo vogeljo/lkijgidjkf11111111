@@ -1,7 +1,7 @@
 #include "ProgressBarLayer.h"
 
-ProgressBarLayer::ProgressBarLayer(int width, int height)
-	: Layer(width, height), nRedraw(1), mBackground(D2D1::ColorF(D2D1::ColorF::CornflowerBlue))
+ProgressBarLayer::ProgressBarLayer(Game& game, int width, int height)
+	: Layer(game, width, height), nRedraw(1), mBackground(D2D1::ColorF(D2D1::ColorF::CornflowerBlue))
 {
 	//mAlphaBackground = true;
 }

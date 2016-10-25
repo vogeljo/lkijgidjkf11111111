@@ -26,14 +26,14 @@ void MyGame::Initialize()
 	uPlayer.GetStats().Set(Stat::Money, 12000);
 	uPlayer.SetLocation(5.0f, 5.0f);
 
-	l_map = new MapLayer(mWidth, mHeight, *this, *map_ptr);
+	l_map = new MapLayer(*this, mWidth, mHeight, *map_ptr);
 	l_map->SetPosition(0, 0);
 	l_map->SetPlayer(&uPlayer);
 
-	l_cash = new CashDisplayLayer(uPlayer, 250, 40);
+	l_cash = new CashDisplayLayer(*this, uPlayer, 250, 40);
 	l_cash->SetPosition(this->GetWidth() - l_cash->GetWidth(), this->GetHeight() - l_cash->GetHeight());
 
-	l_inventory = new InventoryLayer(mWidth, mHeight, uPlayer.GetInventory());
+	l_inventory = new InventoryLayer(*this, mWidth, mHeight, uPlayer.GetInventory());
 	l_inventory->SetPosition(mWidth / 2 - l_inventory->GetWidth() / 2, mHeight / 2 - l_inventory->GetHeight() / 2);
 	l_inventory->SetVisible(false);
 

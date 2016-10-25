@@ -12,6 +12,7 @@ class Layer abstract
 	: public Drawable
 {
 protected:
+	Game& mGame;
 	int mWidth, mHeight;
 	int mPosX, mPosY;
 	std::vector<Layer*> mLayers;
@@ -24,13 +25,14 @@ protected:
 	void SetTarget(ID2D1BitmapRenderTarget *target);
 	void DrawFromBackBuffer(ID2D1RenderTarget *target, D2D1_RECT_F& rect);
 public:
-	Layer(int width, int height);
+	Layer(Game& game, int width, int height);
 
 	// takes target, creates none.
 	//Layer(ID2D1RenderTarget* target);
 
 	virtual ~Layer();
 
+	Game& GetGame();
 	void AddLayer(Layer *layer);
 	void AddLayer(Layer *layer, Layer *lower);
 	void SetPosition(int x, int y);

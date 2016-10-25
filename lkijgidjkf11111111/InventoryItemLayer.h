@@ -14,7 +14,7 @@ private:
 
 	Inventory& mInventory;
 public:
-	InventoryItemLayer(Inventory& inventory, ItemToken token);
+	InventoryItemLayer(Game& game, Inventory& inventory, ItemToken token);
 	virtual ~InventoryItemLayer();
 
 	void SetToken(ItemToken token);

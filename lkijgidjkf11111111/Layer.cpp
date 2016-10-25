@@ -19,8 +19,8 @@ void Layer::DrawFromBackBuffer(ID2D1RenderTarget *target, D2D1_RECT_F& rect)
 	target->DrawBitmap(this->GetBitmap(), rect, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, rect);
 }
 
-Layer::Layer(int width, int height)
-	: Drawable(D2Pool::CreateRenderTarget(width, height)), mWidth(width), mHeight(height), mOpacity(1.0f), mVisible(true), mAlphaBackground(false)
+Layer::Layer(Game& game, int width, int height)
+	: Drawable(D2Pool::CreateRenderTarget(width, height)), mGame(game), mWidth(width), mHeight(height), mOpacity(1.0f), mVisible(true), mAlphaBackground(false)
 {
 
 }
@@ -33,6 +33,11 @@ Layer::Layer(int width, int height)
 
 Layer::~Layer()
 {
+}
+
+Game& Layer::GetGame()
+{
+	return mGame;
 }
 
 void Layer::AddLayer(Layer *layer)

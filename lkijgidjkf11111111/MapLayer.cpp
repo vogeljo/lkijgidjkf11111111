@@ -14,8 +14,8 @@ int MapLayer::GetTileForXY(int x_y)
 	return floor((float)(x_y) / (float)mTileSize);
 }
 
-MapLayer::MapLayer(int width, int height, MyGame& game, MapData& mapData)
-	: Layer(width, height), mMouseTileX(0), mMouseTileY(0), mDragScroll(width, height), mMapData(mapData), mPlayer(nullptr), mGame(game)
+MapLayer::MapLayer(Game& game, int width, int height, MapData& mapData)
+	: Layer(game, width, height), mMouseTileX(0), mMouseTileY(0), mDragScroll(width, height), mMapData(mapData), mPlayer(nullptr)
 {
 	this->SetTileSize(32);
 	this->SetPadding(5.0f);
@@ -29,7 +29,7 @@ MapLayer::~MapLayer()
 
 void MapLayer::Initialize()
 {
-	l_info = new InfoLayer(300, 100);
+	l_info = new InfoLayer(this->GetGame(), 300, 100);
 	this->AddLayer(l_info);
 	srand(GetTickCount());
 }

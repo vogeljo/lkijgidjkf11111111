@@ -16,7 +16,7 @@ protected:
 
 	LinearTimedAnimation anim_showhide;
 public:
-	InventoryLayer(int width, int height, Inventory& inv);
+	InventoryLayer(Game& game, int width, int height, Inventory& inv);
 	virtual ~InventoryLayer();
 
 	virtual void OnUpdate() override;

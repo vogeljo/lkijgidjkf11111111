@@ -1,7 +1,7 @@
 #include "ButtonLayer.h"
 
-ButtonLayer::ButtonLayer(int width, int height)
-	: Layer(width, height), mHover(false), mClickHandler(nullptr)
+ButtonLayer::ButtonLayer(Game& game, int width, int height)
+	: Layer(game, width, height), mHover(false), mClickHandler(nullptr)
 {
 	this->SetText(L"Button");
 }

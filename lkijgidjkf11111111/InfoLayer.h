@@ -12,7 +12,7 @@ protected:
 
 	LinearTimedAnimation mAnimation;
 public:
-	InfoLayer(int width, int height);
+	InfoLayer(Game& game, int width, int height);
 	virtual ~InfoLayer();
 
 	virtual void OnUpdate() override;

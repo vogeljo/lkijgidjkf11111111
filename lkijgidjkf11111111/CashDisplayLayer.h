@@ -14,7 +14,7 @@ private:
 	bool mDrawUnitName;
 	CashDisplayLayerMode mMode;
 public:
-	CashDisplayLayer(Unit& unit, int width, int height);
+	CashDisplayLayer(Game& game, Unit& unit, int width, int height);
 	virtual ~CashDisplayLayer();
 
 	void SetUnit(Unit unit);

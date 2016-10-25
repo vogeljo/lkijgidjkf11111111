@@ -72,7 +72,7 @@ HWND CreateGameWindow(Game *game, int width, int height) {
 }
 
 Game::Game(int width, int height)
-	: Layer((mWindowTarget = D2Pool::CreateWindowRenderTarget(mWindow = CreateGameWindow(this, width, height), width, height), width), height)
+	: Layer(*this, (mWindowTarget = D2Pool::CreateWindowRenderTarget(mWindow = CreateGameWindow(this, width, height), width, height), width), height)
 {
 
 }

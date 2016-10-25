@@ -3,8 +3,8 @@
 #include "Inventory.h"
 
 
-InventoryItemLayer::InventoryItemLayer(Inventory& inventory, ItemToken token)
-	: Layer(80, 80), mBackground(D2D1::ColorF::Black), mInventory(inventory)
+InventoryItemLayer::InventoryItemLayer(Game& game, Inventory& inventory, ItemToken token)
+	: Layer(game, 80, 80), mBackground(D2D1::ColorF::Black), mInventory(inventory)
 {
 	this->SetInventory(inventory);
 	this->SetToken(token);

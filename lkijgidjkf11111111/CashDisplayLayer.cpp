@@ -2,8 +2,8 @@
 
 #include "D2Pool.h"
 
-CashDisplayLayer::CashDisplayLayer(Unit& unit, int width, int height)
-	: Layer(width, height), mUnit(unit), mDrawUnitName(true), mMode(CashDisplayLayerMode::Total)
+CashDisplayLayer::CashDisplayLayer(Game& game, Unit& unit, int width, int height)
+	: Layer(game, width, height), mUnit(unit), mDrawUnitName(true), mMode(CashDisplayLayerMode::Total)
 {
 	this->SetPadding(3.0f);
 }

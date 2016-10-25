@@ -22,7 +22,6 @@ protected:
 	DragController mDragScroll;
 	InfoLayer *l_info;
 	MapData& mMapData;
-	MyGame& mGame;
 
 	Player *mPlayer;
 
@@ -31,7 +30,7 @@ protected:
 	D2D1_RECT_F GetRectForCell(int cellX, int cellY);
 	int GetTileForXY(int x);
 public:
-	MapLayer(int width, int height, MyGame& game, MapData& mapData);
+	MapLayer(Game& game, int width, int height, MapData& mapData);
 	virtual ~MapLayer();
 
 	virtual void Initialize() override;

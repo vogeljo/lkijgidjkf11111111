@@ -1,5 +1,6 @@
 #pragma once
 #include "Layer.h"
+
 class ProgressBarLayer :
 	public Layer
 {
@@ -7,7 +8,7 @@ protected:
 	int nRedraw;
 	D2D1_COLOR_F mBackground;
 public:
-	ProgressBarLayer(int width, int height);
+	ProgressBarLayer(Game& game, int width, int height);
 	virtual ~ProgressBarLayer();
 
 	virtual void OnUpdate() override;

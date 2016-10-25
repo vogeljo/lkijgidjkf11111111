@@ -13,7 +13,7 @@ private:
 
 	ClickHandler mClickHandler;
 public:
-	ButtonLayer(int width, int height);
+	ButtonLayer(Game& game, int width, int height);
 	virtual ~ButtonLayer();
 
 	virtual void OnUpdate() override;

@@ -1,7 +1,7 @@
 #include "InfoLayer.h"
 
-InfoLayer::InfoLayer(int width, int height)
-	: Layer(width, height)
+InfoLayer::InfoLayer(Game& game, int width, int height)
+	: Layer(game, width, height)
 {
 	this->SetVisible(false);
 	this->SetBackground(D2D1::ColorF(D2D1::ColorF::Gray));
