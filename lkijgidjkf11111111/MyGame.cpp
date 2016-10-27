@@ -1,11 +1,13 @@
 #include "MyGame.h"
 #include "D2Pool.h"
 
+#include <iostream>
+
 MyGame::MyGame(int width, int height)
 	: Game(width, height), nUpdate(1), map_ptr(nullptr)
 {
 	//map_data.SetType(MapCoordPair(10, 10), MapTileType::Water);
-	bool success = MapData::FromFile("default.lkmap", &map_ptr);
+	bool success = MapData::FromFile("resources\\default.lkmap", &map_ptr);
 	if (!success) {
 		map_ptr = new MapData();
 		map_ptr->SetType(MapCoordPair(0, 0), MapTileType::Water);
@@ -37,9 +39,13 @@ void MyGame::Initialize()
 	l_inventory->SetPosition(mWidth / 2 - l_inventory->GetWidth() / 2, mHeight / 2 - l_inventory->GetHeight() / 2);
 	l_inventory->SetVisible(false);
 
+	l_time = new MyGameTimeLayer(*this, 250, 40, mTime);
+	l_time->SetPosition(0, this->GetHeight() - l_time->GetHeight());
+
 	this->AddLayer(l_map);
 	this->AddLayer(l_inventory);
 	this->AddLayer(l_cash);
+	this->AddLayer(l_time);
 
 	this->SetFocus(l_map);
 }
@@ -85,7 +91,7 @@ void MyGame::OpenInventory()
 
 void MyGame::OnUpdate()
 {
-
+	mTime.Update();
 }
 
 bool MyGame::OnDraw(ID2D1RenderTarget* target)

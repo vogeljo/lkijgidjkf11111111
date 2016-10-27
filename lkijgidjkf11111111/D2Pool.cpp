@@ -335,7 +335,9 @@ ID2D1Bitmap* D2Pool::GetGraphic(D2Graphic graphic)
 		if (filename.empty())
 			return nullptr;
 
-		return values[graphic] = D2Pool::LoadBitmapFromFile(filename);
+		std::wstring foldername = L"resources\\";
+
+		return values[graphic] = D2Pool::LoadBitmapFromFile(foldername + filename);
 	}
 }
 

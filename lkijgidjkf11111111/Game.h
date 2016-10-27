@@ -3,6 +3,9 @@
 #include "Layer.h"
 #include "Util.h"
 
+#include <windows.h>
+#include <windowsx.h>
+
 enum class CGameSpecialDimensions {
 	FULLSCREEN
 };

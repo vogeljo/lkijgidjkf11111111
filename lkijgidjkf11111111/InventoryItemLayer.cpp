@@ -40,9 +40,10 @@ bool InventoryItemLayer::OnDraw(ID2D1RenderTarget* target)
 	D2D1_COLOR_F clearColor = D2D1::ColorF(D2D1::ColorF::Black);
 	target->Clear(clearColor);
 
-	auto item = ItemPool::Get(mToken);
+	Item* it = ItemPool::Get(mToken);
+	auto g = D2Pool::GetGraphic(it->GetGraphic());
 
-	target->DrawBitmap(D2Pool::GetGraphic(item->GetGraphic()), this->GetContentRectangle());
+	target->DrawBitmap(g, this->GetContentRectangle());
 	D2Pool::PrintText(std::to_wstring(mInventory.Get(mToken)), target, D2Pool::GetFormat(D2PoolFont::NORMAL), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2Pool::GetReadableColor(clearColor)), 18.0f, DWRITE_TEXT_ALIGNMENT_TRAILING, DWRITE_PARAGRAPH_ALIGNMENT_FAR);
 
 	target->DrawRectangle(this->GetBoundingRectangle(), D2Pool::GetSolidColorBrush(mBackground), 2.0f);

@@ -117,7 +117,7 @@ bool MapLayer::OnDraw(ID2D1RenderTarget* target)
 	if (mPlayer) {
 		DrawUnit(target, mPlayer);
 	}
-
+	
 	// debug
 	auto text_aa_old = target->GetTextAntialiasMode();
 	target->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_ALIASED);

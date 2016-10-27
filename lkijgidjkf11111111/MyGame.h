@@ -5,6 +5,8 @@
 #include "CashDisplayLayer.h"
 #include "MapLayer.h"
 
+#include "MyGameTime.h"
+#include "MyGameTimeLayer.h"
 #include "MapData.h"
 #include "MyGameItems.h"
 #include "InventoryLayer.h"
@@ -20,6 +22,9 @@ private:
 	CashDisplayLayer *l_cash;
 	MapLayer *l_map;
 	InventoryLayer *l_inventory;
+
+	MyGameTime mTime;
+	MyGameTimeLayer *l_time;
 
 	MapData *map_ptr;
 public:

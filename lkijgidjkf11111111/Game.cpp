@@ -1,5 +1,4 @@
 #include "Game.h"
-#include <windowsx.h>
 
 LRESULT WINAPI GameWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	Game *game = (Game*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
@@ -61,9 +60,13 @@ HWND CreateGameWindow(Game *game, int width, int height) {
 	cls.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	cls.hCursor = LoadCursor(NULL, IDC_ARROW);
 	cls.hInstance = MY_INSTANCE;
+	// experimental:
+	cls.hIcon = (HICON)GetClassLongPtr(GetConsoleWindow(), GCLP_HICON);
 	cls.lpfnWndProc = GameWndProc;
 	cls.lpszClassName = MY_WINDOW_CLASS;
 	RegisterClass(&cls);
+
+	SetClassLongPtr(GetConsoleWindow(), GCLP_HICON, (LONG_PTR)LoadIcon(NULL, IDI_ERROR));
 
 	RECT r = { 0, 0, width, height };
 	AdjustWindowRect(&r, MY_WINDOW_STYLE, FALSE);

@@ -1,6 +1,7 @@
 #pragma once
 #include <windows.h>
 #include <functional>
+#include "Util.h"
 
 class ITimedAnimation abstract
 {
@@ -25,7 +26,5 @@ public:
 	virtual float CalculateValue(float progress) = 0;
 
 	bool IsRunning();
-
-	static DWORD GetTime();
 };
 

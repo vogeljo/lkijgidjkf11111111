@@ -11,7 +11,7 @@ ITimedAnimation::~ITimedAnimation()
 
 void ITimedAnimation::Start()
 {
-	mStartTime = ITimedAnimation::GetTime();
+	mStartTime = Util::GetTime();
 	mCallbackFired = false;
 }
 
@@ -37,7 +37,7 @@ void ITimedAnimation::Abort()
 float ITimedAnimation::GetProgress()
 {
 	if (IsRunning())
-		return (float)(ITimedAnimation::GetTime() - mStartTime) / (float)mDuration;
+		return (float)(Util::GetTime() - mStartTime) / (float)mDuration;
 	else
 		return 0.0f;
 }
@@ -53,7 +53,7 @@ float ITimedAnimation::GetValue()
 
 bool ITimedAnimation::IsRunning()
 {
-	bool running = mDuration != 0 && (ITimedAnimation::GetTime() - mStartTime) < mDuration;
+	bool running = mDuration != 0 && (Util::GetTime() - mStartTime) < mDuration;
 
 	if (!running && !mCallbackFired) {
 		if (mCallback)
@@ -62,9 +62,4 @@ bool ITimedAnimation::IsRunning()
 	}
 
 	return running;
-}
-
-DWORD ITimedAnimation::GetTime()
-{
-	return GetTickCount();
 }
