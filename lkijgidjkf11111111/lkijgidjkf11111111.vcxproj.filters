@@ -99,6 +99,9 @@
     <ClInclude Include="MyGameTimeLayer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="native.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D2Pool.cpp">

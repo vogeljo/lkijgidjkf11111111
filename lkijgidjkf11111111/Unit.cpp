@@ -42,8 +42,8 @@ void Unit::SetColor(D2D1_COLOR_F& color)
 
 void Unit::SetLocation(float x, float y)
 {
-	mLocation.x = max(0.0f, x);
-	mLocation.y = max(0.0f, y);
+	mLocation.x = std::max(0.0f, x);
+	mLocation.y = std::max(0.0f, y);
 }
 
 Inventory& Unit::GetInventory()

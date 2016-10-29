@@ -1,5 +1,5 @@
 #pragma once
-#include <d2d1.h>
+#include "native.h"
 #include <string>
 
 enum class MapTileType : uint8_t {

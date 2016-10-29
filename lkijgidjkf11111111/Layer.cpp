@@ -2,8 +2,6 @@
 
 #include "Game.h"
 
-#include <queue>
-
 void Layer::SetTarget(ID2D1BitmapRenderTarget *target)
 {
 	mTarget = target;

@@ -1,6 +1,4 @@
 #include "InventoryLayer.h"
-#include "D2Pool.h"
-#include "MyGameItems.h"
 
 InventoryLayer::InventoryLayer(Game& game, int width, int height, Inventory& inv)
 	: Layer(game, width, height), mInventory(inv)

@@ -1,10 +1,8 @@
 #pragma once
-#include <d2d1.h>
 #include "Layer.h"
 #include "Util.h"
 
-#include <windows.h>
-#include <windowsx.h>
+#include "native.h"
 
 enum class CGameSpecialDimensions {
 	FULLSCREEN

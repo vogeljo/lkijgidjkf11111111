@@ -4,6 +4,7 @@
 #include "LinearTimedAnimation.h"
 #include "ButtonLayer.h"
 #include "InventoryItemLayer.h"
+#include "MyGameItems.h"
 
 class InventoryLayer :
 	public Layer

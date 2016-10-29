@@ -1,9 +1,5 @@
 #include "MapData.h"
 
-#include <fstream>
-#include <iostream>
-#include <cstdint>
-
 MapData::MapData()
 	: MapData(MAP_DEFAULT_WIDTH, MAP_DEFAULT_HEIGHT)
 {

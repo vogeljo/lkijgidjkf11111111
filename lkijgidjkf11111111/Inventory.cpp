@@ -1,5 +1,4 @@
 #include "Inventory.h"
-#include <algorithm>
 
 
 Inventory::Inventory()
@@ -23,7 +22,7 @@ void Inventory::Remove(ItemToken item)
 
 void Inventory::Remove(ItemToken item, int amount)
 {
-	mItems[item] = max(0, mItems[item] - amount);
+	mItems[item] = std::max(0, mItems[item] - amount);
 }
 
 int Inventory::Get(ItemToken item)

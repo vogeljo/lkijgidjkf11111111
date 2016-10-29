@@ -3,6 +3,7 @@
 #include "Drawable.h"
 
 #include <vector>
+#include <queue>
 
 #define MUST_CALL
 

@@ -1,7 +1,4 @@
 #include "MyGame.h"
-#include "D2Pool.h"
-
-#include <iostream>
 
 MyGame::MyGame(int width, int height)
 	: Game(width, height), nUpdate(1), map_ptr(nullptr)

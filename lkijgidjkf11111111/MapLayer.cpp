@@ -1,6 +1,5 @@
 #include "MapLayer.h"
 #include "MyGame.h"
-#include <cmath>
 
 D2D1_RECT_F MapLayer::GetRectForCell(int cellX, int cellY)
 {
@@ -178,7 +177,7 @@ void MapLayer::DrawUnit(ID2D1RenderTarget *target, Unit *unit)
 
 void MapLayer::SetTileSize(int value)
 {
-	mTileSize = max(5, value);
+	mTileSize = std::max(5, value);
 	this->Invalidate(INVALIDATION_ALL);
 }
 
@@ -227,7 +226,7 @@ bool MUST_CALL MapLayer::OnMouseMove(int x, int y)
 			l_info->SetText(text);
 			l_info->SetTitle(title);
 			l_info->SetBackground(background);
-			l_info->SetPosition(max(0, min(x + 15, this->GetWidth() - l_info->GetWidth())), max(0, min(y + 15, this->GetHeight() - l_info->GetHeight())));
+			l_info->SetPosition(std::max(0, std::min(x + 15, this->GetWidth() - l_info->GetWidth())), std::max(0, std::min(y + 15, this->GetHeight() - l_info->GetHeight())));
 			l_info->Show();
 		}
 		else {

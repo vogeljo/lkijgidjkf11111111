@@ -1,7 +1,4 @@
 #include "DragController.h"
-#include <algorithm>
-
-#include <windows.h>
 
 DragController::DragController(int viewWidth, int viewHeight)
 	: mAcceleration(1.0f)
@@ -141,16 +138,16 @@ DragController::Coords DragController::Coords::Limited(int min_x, int min_y, int
 DragController::Coords DragController::Coords::LimitedDown(int min_x, int min_y)
 {
 	return Coords(
-		max(min_x, x),
-		max(min_y, y)
+		std::max(min_x, x),
+		std::max(min_y, y)
 	);
 }
 
 DragController::Coords DragController::Coords::LimitedUp(int max_x, int max_y)
 {
 	return Coords(
-		min(max_x, x),
-		min(max_y, y)
+		std::min(max_x, x),
+		std::min(max_y, y)
 	);
 }
 

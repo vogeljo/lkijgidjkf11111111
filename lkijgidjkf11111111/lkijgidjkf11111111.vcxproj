@@ -139,6 +139,7 @@
     <ClInclude Include="MyGameItems.h" />
     <ClInclude Include="MyGameTime.h" />
     <ClInclude Include="MyGameTimeLayer.h" />
+    <ClInclude Include="native.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ProgressBarLayer.h" />
     <ClInclude Include="D2Pool.h" />

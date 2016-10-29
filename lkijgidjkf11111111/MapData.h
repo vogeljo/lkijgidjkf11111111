@@ -1,9 +1,11 @@
 #pragma once
 #include "MapTile.h"
-#include <cstdint>
 #include <map>
 #include <vector>
 #include <functional>
+#include <fstream>
+#include <iostream>
+#include <cstdint>
 
 #define MAP_DEFAULT_WIDTH 500
 #define MAP_DEFAULT_HEIGHT 500

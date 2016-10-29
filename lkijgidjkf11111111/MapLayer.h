@@ -1,4 +1,6 @@
 #pragma once
+#include <cmath>
+
 #include "Layer.h"
 
 #include "InfoLayer.h"

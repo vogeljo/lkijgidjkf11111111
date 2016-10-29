@@ -11,6 +11,8 @@
 #include "MyGameItems.h"
 #include "InventoryLayer.h"
 
+#include <iostream>
+
 class MyGame :
 	public Game
 {
