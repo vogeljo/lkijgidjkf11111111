@@ -2,7 +2,6 @@
 #include <string>
 #include <map>
 #include "crc32.h"
-#include <d2d1.h>
 #include "D2Pool.h"
 
 typedef uint32_t ItemToken;

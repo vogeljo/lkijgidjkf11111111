@@ -1,7 +1,5 @@
 #include "CashDisplayLayer.h"
 
-#include "D2Pool.h"
-
 CashDisplayLayer::CashDisplayLayer(Game& game, Unit& unit, int width, int height)
 	: Layer(game, width, height), mUnit(unit), mDrawUnitName(true), mMode(CashDisplayLayerMode::Total)
 {

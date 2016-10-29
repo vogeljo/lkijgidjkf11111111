@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include <functional>
+#include <algorithm>
 #include "Item.h"
 
 class Inventory

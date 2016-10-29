@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <d2d1.h>
+#include <algorithm>
 #include "UnitStats.h"
 #include "Inventory.h"
 
