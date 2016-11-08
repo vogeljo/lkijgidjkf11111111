@@ -15,7 +15,7 @@ int Util::GetScreenHeight()
 	return GetSystemMetrics(SM_CYSCREEN);
 }
 
-DWORD Util::GetTime()
+uint64_t Util::GetTime()
 {
-	return GetTickCount();
+	return GetTickCount64();
 }

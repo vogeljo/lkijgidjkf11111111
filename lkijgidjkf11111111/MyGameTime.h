@@ -3,12 +3,12 @@
 #include "Util.h"
 #include "D2Pool.h"
 
-typedef DWORD MyGameTimeStamp;
+typedef uint64_t MyGameTimeStamp;
 
 class MyGameTime
 {
 private:
-	DWORD mLastUpdate;
+	uint64_t mLastUpdate;
 	MyGameTimeStamp mValue;
 	int mDayDuration;
 	int mHourDuration;
@@ -27,13 +27,13 @@ public:
 	void Update(DWORD real_time);
 
 	int GetDay();
-	int GetTotalDays();
+	uint64_t GetTotalDays();
 	int GetHour();
-	int GetTotalHours();
+	uint64_t GetTotalHours();
 	int GetMinute();
-	int GetTotalMinutes();
+	uint64_t GetTotalMinutes();
 	int GetSecond();
-	int GetTotalSeconds();
+	uint64_t GetTotalSeconds();
 
 	std::wstring ToString();
 };

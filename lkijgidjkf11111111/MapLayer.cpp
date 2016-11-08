@@ -101,7 +101,8 @@ bool MapLayer::OnDraw(ID2D1RenderTarget* target)
 	}
 
 	// draw hover
-	target->FillRectangle(this->GetRectForCell(mMouseTileX, mMouseTileY), D2Pool::GetSolidColorBrush(D2D1::ColorF::Black, 0.2f));
+	if (mMouseTileX >= 0 && mMouseTileY >= 0)
+		target->FillRectangle(this->GetRectForCell(mMouseTileX, mMouseTileY), D2Pool::GetSolidColorBrush(D2D1::ColorF::Black, 0.2f));
 
 	for (int x = -gridOffsetX; x <= mWidth; x += mTileSize) {
 		target->DrawLine(D2D1::Point2F(x, 0), D2D1::Point2F(x, mHeight), D2Pool::GetSolidColorBrush(D2D1::ColorF(0x005000)));
@@ -278,6 +279,8 @@ void MapLayer::OnKeyDown(int key)
 
 void MUST_CALL MapLayer::OnMouseLeave()
 {
+	l_info->FadeOut(50);
+	mMouseTileX = mMouseTileY = -1;
 	mDragScroll.EndDrag();
 	this->Invalidate(INVALIDATION_NOCHILDREN);
 }

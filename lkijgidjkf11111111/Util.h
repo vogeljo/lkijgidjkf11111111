@@ -1,5 +1,6 @@
 #pragma once
 #include "native.h"
+#include <chrono>
 
 class Util abstract
 {
@@ -8,6 +9,7 @@ public:
 	static int GetScreenWidth();
 	static int GetScreenHeight();
 
-	static DWORD GetTime();
+	// Gets steady, monotonic time in milliseconds.
+	static uint64_t GetTime();
 };
 

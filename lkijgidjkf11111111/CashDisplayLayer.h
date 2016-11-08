@@ -13,6 +13,8 @@ private:
 	Unit& mUnit;
 	bool mDrawUnitName;
 	CashDisplayLayerMode mMode;
+
+	ID2D1LinearGradientBrush *mBackground;
 public:
 	CashDisplayLayer(Game& game, Unit& unit, int width, int height);
 	virtual ~CashDisplayLayer();
@@ -26,6 +28,8 @@ public:
 
 
 	virtual bool MUST_CALL OnLMouseDown(int x, int y) override;
+
+	virtual void Initialize() override;
 
 };
 

@@ -3,6 +3,9 @@
 #include "MyGameTime.h"
 #include "D2Pool.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 class MyGameTimeLayer :
 	public Layer
 {
@@ -16,6 +19,8 @@ public:
 	virtual bool OnDraw(ID2D1RenderTarget* target) override;
 
 	virtual bool TestMouseHit(int x, int y) override;
+	
+	virtual void Initialize() override;
 
 };
 

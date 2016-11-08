@@ -1,6 +1,9 @@
 #include "MyGameTime.h"
 
-int MyGameTime::TICKS_PER_SECOND = 5;
+#include <cstdio>
+
+// TICKS_PER_SECOND * sec(reality) = sec(game)
+int MyGameTime::TICKS_PER_SECOND = 360;
 
 std::wstring ZeroLeft(std::wstring& src, int digits) {
 	std::wstring res = src;
@@ -54,7 +57,7 @@ int MyGameTime::GetDay()
 	return this->GetTotalDays() + 1;
 }
 
-int MyGameTime::GetTotalDays()
+uint64_t MyGameTime::GetTotalDays()
 {
 	return this->GetTotalHours() / mDayDuration;
 }
@@ -64,7 +67,7 @@ int MyGameTime::GetHour()
 	return this->GetTotalHours() % mDayDuration;
 }
 
-int MyGameTime::GetTotalHours()
+uint64_t MyGameTime::GetTotalHours()
 {
 	return this->GetTotalMinutes() / mHourDuration;
 }
@@ -74,7 +77,7 @@ int MyGameTime::GetMinute()
 	return this->GetTotalMinutes() % mHourDuration;
 }
 
-int MyGameTime::GetTotalMinutes()
+uint64_t MyGameTime::GetTotalMinutes()
 {
 	return this->GetTotalSeconds() / mMinuteDuration;
 }
@@ -84,16 +87,17 @@ int MyGameTime::GetSecond()
 	return this->GetTotalSeconds() % mMinuteDuration;
 }
 
-int MyGameTime::GetTotalSeconds()
+uint64_t MyGameTime::GetTotalSeconds()
 {
-	return mValue / MyGameTime::TICKS_PER_SECOND;
+	return mValue * TICKS_PER_SECOND / 1000;
 }
 
 std::wstring MyGameTime::ToString()
 {
-	std::wstring str = L"Day ";
-	str += std::to_wstring(this->GetDay());
-	str += L" - ";
+	std::wstring str = L"";
+	//str += L"Tag ";
+	//str += std::to_wstring(this->GetDay());
+	//str += L" - ";
 	str += ZeroLeft(std::to_wstring(this->GetHour()), 2);
 	str += L":";
 	str += ZeroLeft(std::to_wstring(this->GetMinute()), 2);

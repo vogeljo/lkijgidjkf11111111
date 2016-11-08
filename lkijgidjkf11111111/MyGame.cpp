@@ -30,25 +30,27 @@ void MyGame::Initialize()
 	l_map->SetPosition(0, 0);
 	l_map->SetPlayer(&uPlayer);
 
-	l_cash = new CashDisplayLayer(*this, uPlayer, 250, 40);
+	l_cash = new CashDisplayLayer(*this, uPlayer, 300, 40);
 	l_cash->SetPosition(this->GetWidth() - l_cash->GetWidth(), this->GetHeight() - l_cash->GetHeight());
+	l_cash->SetVisible(false);
 
 	l_inventory = new InventoryLayer(*this, mWidth, mHeight, uPlayer.GetInventory());
 	l_inventory->SetPosition(mWidth / 2 - l_inventory->GetWidth() / 2, mHeight / 2 - l_inventory->GetHeight() / 2);
 	l_inventory->SetVisible(false);
 
-	l_time = new MyGameTimeLayer(*this, 250, 40, mTime);
+	l_time = new MyGameTimeLayer(*this, 200, 200, mTime);
 	l_time->SetPosition(0, this->GetHeight() - l_time->GetHeight());
+	l_time->SetVisible(false);
 
-	l_player_attr = new PlayerAttributesLayer(*this, uPlayer, 300, this->GetHeight());
+	l_player_attr = new PlayerAttributesLayer(*this, uPlayer, 300, this->GetHeight() - l_cash->GetHeight());
 	l_player_attr->SetPosition(this->GetWidth() - 300, 0);
 	l_player_attr->SetVisible(false);
 
 	this->AddLayer(l_map);
-	this->AddLayer(l_cash);
 	this->AddLayer(l_player_attr);
-	this->AddLayer(l_inventory);
+	this->AddLayer(l_cash);
 	this->AddLayer(l_time);
+	this->AddLayer(l_inventory);
 
 	this->SetFocus(l_map);
 }
@@ -74,10 +76,16 @@ void MyGame::OnKeyDown(int key)
 			l_inventory->FadeIn(100);
 		break;
 	case 'C':
-		if (l_player_attr->IsVisible())
-			l_player_attr->FadeOut(50);
-		else
-			l_player_attr->FadeIn(50);
+		if (l_player_attr->IsVisible()) {
+			l_player_attr->FadeOut(100);
+			l_cash->FadeOut(100);
+			l_time->FadeOut(100);
+		}
+		else {
+			l_player_attr->FadeIn(100);
+			l_cash->FadeIn(100);
+			l_time->FadeIn(100);
+		}
 		break;
 	case VK_OEM_COMMA:
 		uPlayer.GetStats().Substract(Stat::Health, 1);

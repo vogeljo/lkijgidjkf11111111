@@ -309,17 +309,17 @@ void MUST_CALL Layer::OnMouseLeave()
 
 void Layer::FadeIn(DWORD duration_ms)
 {
-	if (anim_fadeinout.IsRelaxing()) {
+	if (!this->IsVisible() && anim_fadeinout.IsRelaxing()) {
 		this->SetVisible(true);
-		anim_fadeinout.Start(this->GetOpacity(), 1.0f, duration_ms);
+		anim_fadeinout.Start(0.0f, 1.0f, duration_ms);
 		this->Invalidate(INVALIDATION_NOCHILDREN);
 	}
 }
 
 void Layer::FadeOut(DWORD duration_ms /*= 100*/)
 {
-	if (anim_fadeinout.IsRelaxing()) {
-		anim_fadeinout.Start(this->GetOpacity(), 0.0f, duration_ms, [&]() {
+	if (this->IsVisible() && anim_fadeinout.IsRelaxing()) {
+		anim_fadeinout.Start(1.0f, 0.0f, duration_ms, [&]() {
 			this->SetVisible(false);
 		});
 	}

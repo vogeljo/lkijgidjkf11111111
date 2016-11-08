@@ -29,7 +29,9 @@ void PlayerAttributesLayer::OnUpdate()
 bool PlayerAttributesLayer::OnDraw(ID2D1RenderTarget* target)
 {
 	target->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
-	target->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.7f));
+	target->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+
+	target->FillRectangle(this->GetBoundingRectangle(), mBackground);
 
 	D2Pool::PrintText(D2Pool::FormatString(L"Attribute von %s", mPlayer.GetName().c_str()), target, D2Pool::GetFormat(D2PoolFont::NORMAL), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2D1::ColorF::White), 24.0f, DWRITE_TEXT_ALIGNMENT_CENTER);
 
@@ -68,7 +70,19 @@ bool PlayerAttributesLayer::OnDraw(ID2D1RenderTarget* target)
 	return false;
 }
 
-bool PlayerAttributesLayer::TestMouseHit(int x, int y)
+void PlayerAttributesLayer::Initialize()
 {
-	return false;
+	Layer::Initialize();
+	
+	D2D1_GRADIENT_STOP g_stops[] = {
+		D2D1::GradientStop(0.0f, D2D1::ColorF(D2D1::ColorF::Black, 0.3f)),
+		D2D1::GradientStop(0.9f, D2D1::ColorF(D2D1::ColorF::Black, 0.2f)),
+		D2D1::GradientStop(1.0f, D2D1::ColorF(D2D1::ColorF::Black, 0.5f))
+	};
+	ID2D1GradientStopCollection *stops = nullptr;
+	D2Pool::GetSourceRenderTarget()->CreateGradientStopCollection(g_stops, 3, D2D1_GAMMA_1_0, D2D1_EXTEND_MODE::D2D1_EXTEND_MODE_CLAMP, &stops);
+
+	D2Pool::GetSourceRenderTarget()->CreateLinearGradientBrush(D2D1::LinearGradientBrushProperties(D2D1::Point2F(0, 0), D2D1::Point2F(this->GetWidth(), 0)), stops, &mBackground);
+
+	stops->Release();
 }

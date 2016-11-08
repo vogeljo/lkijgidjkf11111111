@@ -28,24 +28,6 @@ void InventoryLayer::Initialize()
 	this->AddLayer(l_item1);
 }
 
-//void InventoryLayer::Show()
-//{
-//	this->SetVisible(true);
-//	anim_showhide.Start(0.0f, 1.0f, 60);
-//	this->Invalidate(INVALIDATION_NOCHILDREN);
-//}
-//
-//void InventoryLayer::Hide()
-//{
-//	if (!anim_showhide.IsRunning()) {
-//		anim_showhide.Start(1.0f, 0.0f, 200, [&]() {
-//			this->SetVisible(false);
-//		});
-//	}
-//}
-
-#include <iostream>
-
 void InventoryLayer::OnUpdate()
 {
 	this->SetOpacity(anim_showhide.GetValue());

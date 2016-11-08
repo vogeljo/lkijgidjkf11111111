@@ -33,7 +33,9 @@ void CashDisplayLayer::OnUpdate()
 
 bool CashDisplayLayer::OnDraw(ID2D1RenderTarget* target)
 {
-	target->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.5f));
+	target->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+
+	target->FillRectangle(this->GetBoundingRectangle(), mBackground);
 
 	std::wstring modeStr = L"";
 	const float fontSize = 22.0f;
@@ -76,4 +78,21 @@ bool MUST_CALL CashDisplayLayer::OnLMouseDown(int x, int y)
 	this->Invalidate(INVALIDATION_ALL);
 	//this->ToggleDrawUnitName();
 	return Layer::OnLMouseDown(x, y);
+}
+
+void CashDisplayLayer::Initialize()
+{
+	Layer::Initialize();
+
+	D2D1_GRADIENT_STOP g_stops[] = {
+		D2D1::GradientStop(0.0f, D2D1::ColorF(D2D1::ColorF::Black, 0.3f)),
+		D2D1::GradientStop(0.9f, D2D1::ColorF(D2D1::ColorF::Black, 0.2f)),
+		D2D1::GradientStop(1.0f, D2D1::ColorF(D2D1::ColorF::Black, 0.5f))
+	};
+	ID2D1GradientStopCollection *stops = nullptr;
+	D2Pool::GetSourceRenderTarget()->CreateGradientStopCollection(g_stops, 3, D2D1_GAMMA_1_0, D2D1_EXTEND_MODE_CLAMP, &stops);
+
+	D2Pool::GetSourceRenderTarget()->CreateLinearGradientBrush(D2D1::LinearGradientBrushProperties(D2D1::Point2F(0, 0), D2D1::Point2F(this->GetWidth(), 0)), stops, &mBackground);
+
+	stops->Release();
 }

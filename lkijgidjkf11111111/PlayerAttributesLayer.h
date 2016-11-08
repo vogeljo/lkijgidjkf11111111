@@ -9,6 +9,7 @@ class PlayerAttributesLayer :
 {
 private:
 	Player& mPlayer;
+	ID2D1LinearGradientBrush *mBackground;
 public:
 	PlayerAttributesLayer(Game& game, Player& player, int width, int height);
 	virtual ~PlayerAttributesLayer();
@@ -17,8 +18,8 @@ public:
 
 	virtual void OnUpdate() override;
 	virtual bool OnDraw(ID2D1RenderTarget* target) override;
-
-	virtual bool TestMouseHit(int x, int y) override;
+	
+	virtual void Initialize() override;
 
 };
 
