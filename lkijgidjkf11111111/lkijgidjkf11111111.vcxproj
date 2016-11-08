@@ -141,6 +141,7 @@
     <ClInclude Include="MyGameTimeLayer.h" />
     <ClInclude Include="native.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerAttributesLayer.h" />
     <ClInclude Include="ProgressBarLayer.h" />
     <ClInclude Include="D2Pool.h" />
     <ClInclude Include="Drawable.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="MyGameTime.cpp" />
     <ClCompile Include="MyGameTimeLayer.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerAttributesLayer.cpp" />
     <ClCompile Include="ProgressBarLayer.cpp" />
     <ClCompile Include="D2Pool.cpp" />
     <ClCompile Include="Drawable.cpp" />

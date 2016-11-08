@@ -39,7 +39,12 @@ void MyGame::Initialize()
 	l_time = new MyGameTimeLayer(*this, 250, 40, mTime);
 	l_time->SetPosition(0, this->GetHeight() - l_time->GetHeight());
 
+	l_player_attr = new PlayerAttributesLayer(*this, uPlayer, 300, this->GetHeight());
+	l_player_attr->SetPosition(this->GetWidth() - 300, 0);
+	l_player_attr->SetVisible(false);
+
 	this->AddLayer(l_map);
+	this->AddLayer(l_player_attr);
 	this->AddLayer(l_inventory);
 	this->AddLayer(l_cash);
 	this->AddLayer(l_time);
@@ -66,6 +71,9 @@ void MyGame::OnKeyDown(int key)
 			l_inventory->Hide();
 		else
 			this->OpenInventory();
+		break;
+	case 'C':
+		l_player_attr->SetVisible(!l_player_attr->IsVisible());
 		break;
 	default:
 		break;

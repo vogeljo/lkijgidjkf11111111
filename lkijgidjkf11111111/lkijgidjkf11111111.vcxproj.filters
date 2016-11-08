@@ -102,6 +102,9 @@
     <ClInclude Include="native.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerAttributesLayer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D2Pool.cpp">
@@ -186,6 +189,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="MyGameTimeLayer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttributesLayer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

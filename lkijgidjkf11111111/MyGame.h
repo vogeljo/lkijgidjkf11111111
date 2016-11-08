@@ -10,6 +10,7 @@
 #include "MapData.h"
 #include "MyGameItems.h"
 #include "InventoryLayer.h"
+#include "PlayerAttributesLayer.h"
 
 #include <iostream>
 
@@ -24,6 +25,7 @@ private:
 	CashDisplayLayer *l_cash;
 	MapLayer *l_map;
 	InventoryLayer *l_inventory;
+	PlayerAttributesLayer *l_player_attr;
 
 	MyGameTime mTime;
 	MyGameTimeLayer *l_time;
