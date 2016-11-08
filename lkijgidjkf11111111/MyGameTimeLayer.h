@@ -15,5 +15,7 @@ public:
 	virtual void OnUpdate() override;
 	virtual bool OnDraw(ID2D1RenderTarget* target) override;
 
+	virtual bool TestMouseHit(int x, int y) override;
+
 };
 

@@ -10,7 +10,7 @@ protected:
 	std::wstring mText, mTitle;
 	D2D1_COLOR_F mBackground;
 
-	LinearTimedAnimation mAnimation;
+	//LinearTimedAnimation mAnimation;
 public:
 	InfoLayer(Game& game, int width, int height);
 	virtual ~InfoLayer();
@@ -26,9 +26,5 @@ public:
 	void SetBackground(D2D1_COLOR_F color);
 
 	virtual bool TestMouseHit(int x, int y) override;
-
-	void Show();
-	void Hide();
-
 };
 

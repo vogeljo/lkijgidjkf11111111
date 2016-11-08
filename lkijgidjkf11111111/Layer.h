@@ -2,6 +2,8 @@
 #include "D2Pool.h"
 #include "Drawable.h"
 
+#include "LinearTimedAnimation.h"
+
 #include <vector>
 #include <queue>
 
@@ -25,6 +27,9 @@ protected:
 
 	void SetTarget(ID2D1BitmapRenderTarget *target);
 	void DrawFromBackBuffer(ID2D1RenderTarget *target, D2D1_RECT_F& rect);
+
+	// animations
+	LinearTimedAnimation anim_fadeinout;
 public:
 	Layer(Game& game, int width, int height);
 
@@ -63,6 +68,8 @@ public:
 	virtual void Update() override;
 	virtual void Draw(ID2D1RenderTarget* target) override;
 
+	void FadeIn(DWORD duration_ms = 100);
+	void FadeOut(DWORD duration_ms = 100);
 
 	virtual bool IsBitmap() override;
 

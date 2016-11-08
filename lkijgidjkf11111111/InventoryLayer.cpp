@@ -18,7 +18,7 @@ void InventoryLayer::Initialize()
 	l_btnClose->SetText(L"\x2716");
 	l_btnClose->SetPosition(this->GetWidth() - l_btnClose->GetWidth() - 10, 10);
 	l_btnClose->SetClickHandler([&]() {
-		this->Hide();
+		this->FadeOut();
 	});
 
 	l_item1 = new InventoryItemLayer(this->GetGame(), mInventory, MyGameItems::APPLE);
@@ -28,21 +28,21 @@ void InventoryLayer::Initialize()
 	this->AddLayer(l_item1);
 }
 
-void InventoryLayer::Show()
-{
-	this->SetVisible(true);
-	anim_showhide.Start(0.0f, 1.0f, 60);
-	this->Invalidate(INVALIDATION_NOCHILDREN);
-}
-
-void InventoryLayer::Hide()
-{
-	if (!anim_showhide.IsRunning()) {
-		anim_showhide.Start(1.0f, 0.0f, 200, [&]() {
-			this->SetVisible(false);
-		});
-	}
-}
+//void InventoryLayer::Show()
+//{
+//	this->SetVisible(true);
+//	anim_showhide.Start(0.0f, 1.0f, 60);
+//	this->Invalidate(INVALIDATION_NOCHILDREN);
+//}
+//
+//void InventoryLayer::Hide()
+//{
+//	if (!anim_showhide.IsRunning()) {
+//		anim_showhide.Start(1.0f, 0.0f, 200, [&]() {
+//			this->SetVisible(false);
+//		});
+//	}
+//}
 
 #include <iostream>
 

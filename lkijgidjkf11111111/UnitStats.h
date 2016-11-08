@@ -6,6 +6,8 @@ enum class Stat {
 	Health, Money
 };
 
+std::wstring GetStatText(Stat s);
+
 class UnitStats
 {
 private:

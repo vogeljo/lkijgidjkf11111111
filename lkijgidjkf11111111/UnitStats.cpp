@@ -42,3 +42,17 @@ void UnitStats::ForEach(std::function<void(Stat, int)> callback)
 		callback(pair.first, pair.second);
 	}
 }
+
+std::wstring GetStatText(Stat s)
+{
+	std::wstring str = L"<unknown>";
+	switch (s) {
+	case Stat::Health:
+		str = L"Gesundheit";
+		break;
+	case Stat::Money:
+		str = L"Geld";
+		break;
+	}
+	return str;
+}

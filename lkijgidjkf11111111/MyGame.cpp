@@ -23,6 +23,7 @@ void MyGame::Initialize()
 
 	//uPlayer.SetName(L"Spieler");
 	uPlayer.GetStats().Set(Stat::Money, 12000);
+	uPlayer.GetStats().Set(Stat::Health, 100);
 	uPlayer.SetLocation(5.0f, 5.0f);
 
 	l_map = new MapLayer(*this, mWidth, mHeight, *map_ptr);
@@ -44,9 +45,9 @@ void MyGame::Initialize()
 	l_player_attr->SetVisible(false);
 
 	this->AddLayer(l_map);
+	this->AddLayer(l_cash);
 	this->AddLayer(l_player_attr);
 	this->AddLayer(l_inventory);
-	this->AddLayer(l_cash);
 	this->AddLayer(l_time);
 
 	this->SetFocus(l_map);
@@ -68,12 +69,21 @@ void MyGame::OnKeyDown(int key)
 	{
 	case VK_TAB:
 		if (l_inventory->IsVisible())
-			l_inventory->Hide();
+			l_inventory->FadeOut(100);
 		else
-			this->OpenInventory();
+			l_inventory->FadeIn(100);
 		break;
 	case 'C':
-		l_player_attr->SetVisible(!l_player_attr->IsVisible());
+		if (l_player_attr->IsVisible())
+			l_player_attr->FadeOut(50);
+		else
+			l_player_attr->FadeIn(50);
+		break;
+	case VK_OEM_COMMA:
+		uPlayer.GetStats().Substract(Stat::Health, 1);
+		break;
+	case VK_OEM_PERIOD:
+		uPlayer.GetStats().Add(Stat::Health, 1);
 		break;
 	default:
 		break;
@@ -91,7 +101,7 @@ MyGame::~MyGame()
 
 void MyGame::OpenInventory()
 {
-	l_inventory->Show();
+	l_inventory->FadeIn();
 }
 
 void MyGame::OnUpdate()

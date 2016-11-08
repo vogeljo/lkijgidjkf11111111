@@ -22,3 +22,8 @@ bool MyGameTimeLayer::OnDraw(ID2D1RenderTarget* target)
 
 	return false;
 }
+
+bool MyGameTimeLayer::TestMouseHit(int x, int y)
+{
+	return false;
+}

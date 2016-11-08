@@ -24,8 +24,8 @@ public:
 	virtual bool OnDraw(ID2D1RenderTarget* target) override;
 
 	virtual void Initialize() override;
-
+/*
 	void Show();
-	void Hide();
+	void Hide();*/
 };
 

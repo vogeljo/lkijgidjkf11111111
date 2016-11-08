@@ -1,6 +1,7 @@
 #include "ITimedAnimation.h"
 
 ITimedAnimation::ITimedAnimation()
+	: mCallbackFired(true)
 {
 
 }
@@ -51,6 +52,11 @@ float ITimedAnimation::GetValue()
 	}
 }
 
+void ITimedAnimation::Set(float value)
+{
+	this->Start(value, value, 0);
+}
+
 bool ITimedAnimation::IsRunning()
 {
 	bool running = mDuration != 0 && (Util::GetTime() - mStartTime) < mDuration;
@@ -62,4 +68,9 @@ bool ITimedAnimation::IsRunning()
 	}
 
 	return running;
+}
+
+bool ITimedAnimation::IsRelaxing()
+{
+	return mCallbackFired;
 }

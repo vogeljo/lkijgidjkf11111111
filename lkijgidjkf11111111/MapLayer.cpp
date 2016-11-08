@@ -227,10 +227,11 @@ bool MUST_CALL MapLayer::OnMouseMove(int x, int y)
 			l_info->SetTitle(title);
 			l_info->SetBackground(background);
 			l_info->SetPosition(std::max(0, std::min(x + 15, this->GetWidth() - l_info->GetWidth())), std::max(0, std::min(y + 15, this->GetHeight() - l_info->GetHeight())));
-			l_info->Show();
+			l_info->FadeIn(50);
 		}
 		else {
-			l_info->Hide();
+			//if (l_info->IsVisible())
+				l_info->FadeOut(50);
 		}
 
 		if (oldX != mMouseTileX || oldY != mMouseTileY)

@@ -6,8 +6,6 @@ InfoLayer::InfoLayer(Game& game, int width, int height)
 	this->SetVisible(false);
 	this->SetBackground(D2D1::ColorF(D2D1::ColorF::Gray));
 
-	mAnimation.Start(1.0f, 1.0f, 0);
-
 #define PADDING 8.0f
 	this->SetPadding(PADDING);
 }
@@ -36,26 +34,9 @@ bool InfoLayer::TestMouseHit(int x, int y)
 	return false;
 }
 
-void InfoLayer::Show()
-{
-	if (!this->IsVisible()) {
-		this->SetVisible(true);
-		mAnimation.Start(0.0f, 1.0f, 100);
-	}
-}
-
-void InfoLayer::Hide()
-{
-	if (this->IsVisible() && !mAnimation.IsRunning()) {
-		mAnimation.Start(1.0f, 0.0f, 200, [&]() {
-			this->SetVisible(false);
-		});
-	}
-}
-
 void InfoLayer::OnUpdate()
 {
-	this->SetOpacity(mAnimation.GetValue());
+
 }
 
 bool InfoLayer::OnDraw(ID2D1RenderTarget* target)

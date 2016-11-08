@@ -20,7 +20,7 @@ void Layer::DrawFromBackBuffer(ID2D1RenderTarget *target, D2D1_RECT_F& rect)
 Layer::Layer(Game& game, int width, int height)
 	: Drawable(D2Pool::CreateRenderTarget(width, height)), mGame(game), mWidth(width), mHeight(height), mOpacity(1.0f), mVisible(true), mAlphaBackground(false)
 {
-
+	anim_fadeinout.Set(1.0f);
 }
 
 //Layer::Layer(ID2D1RenderTarget* target)
@@ -201,6 +201,10 @@ void Layer::Update()
 {
 	Drawable::Update();
 
+	// TODO: make this universal, let every layer update specific objects.
+	//if (!anim_showhide.IsRelaxing())
+		this->SetOpacity(anim_fadeinout.GetValue());
+
 	for each(Layer *layer in mLayers) {
 		layer->Update();
 	}
@@ -301,4 +305,22 @@ void MUST_CALL Layer::OnMouseEnter()
 void MUST_CALL Layer::OnMouseLeave()
 {
 
+}
+
+void Layer::FadeIn(DWORD duration_ms)
+{
+	if (anim_fadeinout.IsRelaxing()) {
+		this->SetVisible(true);
+		anim_fadeinout.Start(this->GetOpacity(), 1.0f, duration_ms);
+		this->Invalidate(INVALIDATION_NOCHILDREN);
+	}
+}
+
+void Layer::FadeOut(DWORD duration_ms /*= 100*/)
+{
+	if (anim_fadeinout.IsRelaxing()) {
+		anim_fadeinout.Start(this->GetOpacity(), 0.0f, duration_ms, [&]() {
+			this->SetVisible(false);
+		});
+	}
 }

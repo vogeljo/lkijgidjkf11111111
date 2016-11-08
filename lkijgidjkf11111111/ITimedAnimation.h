@@ -23,8 +23,10 @@ public:
 
 	float GetProgress();
 	float GetValue();
+	void Set(float value);
 	virtual float CalculateValue(float progress) = 0;
 
 	bool IsRunning();
+	bool IsRelaxing();
 };
 
