@@ -105,6 +105,18 @@
     <ClInclude Include="PlayerAttributesLayer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="INPCUnit.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="INPCMovement.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="ThiefNPCUnit.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCMovementPatrol.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D2Pool.cpp">
@@ -192,6 +204,18 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="PlayerAttributesLayer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="INPCUnit.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="INPCMovement.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="ThiefNPCUnit.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCMovementPatrol.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

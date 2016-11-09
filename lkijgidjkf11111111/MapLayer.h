@@ -10,6 +10,8 @@
 #include "Util.h"
 #include "MyGameItems.h"
 
+#include "ThiefNPCUnit.h"
+
 class MyGame;
 
 class MapLayer :
@@ -26,6 +28,7 @@ protected:
 	MapData& mMapData;
 
 	Player *mPlayer;
+	ThiefNPCUnit *npcThief;
 
 	int nUpdate;
 

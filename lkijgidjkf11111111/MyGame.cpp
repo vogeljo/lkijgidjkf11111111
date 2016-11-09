@@ -87,12 +87,6 @@ void MyGame::OnKeyDown(int key)
 			l_time->FadeIn(100);
 		}
 		break;
-	case VK_OEM_COMMA:
-		uPlayer.GetStats().Substract(Stat::Health, 1);
-		break;
-	case VK_OEM_PERIOD:
-		uPlayer.GetStats().Add(Stat::Health, 1);
-		break;
 	default:
 		break;
 	}
@@ -114,6 +108,11 @@ void MyGame::OpenInventory()
 
 void MyGame::OnUpdate()
 {
+	if (Util::IsKeyDown(VK_OEM_COMMA))
+		uPlayer.GetStats().Substract(Stat::Health, 1);
+	if (Util::IsKeyDown(VK_OEM_PERIOD))
+		uPlayer.GetStats().Add(Stat::Health, 1);
+
 	mTime.Update();
 }
 

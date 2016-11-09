@@ -11,5 +11,7 @@ public:
 
 	// Gets steady, monotonic time in milliseconds.
 	static uint64_t GetTime();
+
+	static D2D1_COLOR_F TweenHealth(float progress);
 };
 

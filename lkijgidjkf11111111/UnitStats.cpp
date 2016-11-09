@@ -51,7 +51,7 @@ std::wstring GetStatText(Stat s)
 		str = L"Gesundheit";
 		break;
 	case Stat::Money:
-		str = L"Geld";
+		str = L"Geld in \x00A2";
 		break;
 	}
 	return str;

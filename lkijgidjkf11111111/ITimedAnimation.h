@@ -6,12 +6,12 @@
 class ITimedAnimation abstract
 {
 protected:
-	DWORD mDuration;
+	uint64_t mDuration;
 	float mStartValue, mEndValue;
 	bool mCallbackFired;
 	std::function<void()> mCallback;
 
-	DWORD mStartTime;
+	uint64_t mStartTime;
 public:
 	ITimedAnimation();
 	virtual ~ITimedAnimation();

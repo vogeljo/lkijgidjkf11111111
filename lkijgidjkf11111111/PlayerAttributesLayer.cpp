@@ -46,7 +46,7 @@ bool PlayerAttributesLayer::OnDraw(ID2D1RenderTarget* target)
 
 	rect.top += 20.0f;
 	float ratio = ((float)health / 100.0f);
-	auto color = D2D1::ColorF(1.0f - ratio, ratio, 0.0f);
+	auto color = Util::TweenHealth(ratio);
 	auto health_bar_rect = D2D1::RectF(rect.left, rect.top, rect.right, rect.top + 5.0f);
 	health_bar_rect.right = health_bar_rect.left + (health_bar_rect.right - health_bar_rect.left) * ratio;
 	target->FillRectangle(health_bar_rect, D2Pool::GetSolidColorBrush(color));

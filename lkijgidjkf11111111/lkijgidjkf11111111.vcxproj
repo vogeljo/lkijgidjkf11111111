@@ -127,6 +127,8 @@
     <ClInclude Include="crc32.h" />
     <ClInclude Include="DragController.h" />
     <ClInclude Include="InfoLayer.h" />
+    <ClInclude Include="INPCMovement.h" />
+    <ClInclude Include="INPCUnit.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventoryLayer.h" />
     <ClInclude Include="Item.h" />
@@ -140,6 +142,7 @@
     <ClInclude Include="MyGameTime.h" />
     <ClInclude Include="MyGameTimeLayer.h" />
     <ClInclude Include="native.h" />
+    <ClInclude Include="NPCMovementPatrol.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerAttributesLayer.h" />
     <ClInclude Include="ProgressBarLayer.h" />
@@ -149,6 +152,7 @@
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="ThiefNPCUnit.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitStats.h" />
     <ClInclude Include="Util.h" />
@@ -159,6 +163,8 @@
     <ClCompile Include="crc32.cpp" />
     <ClCompile Include="DragController.cpp" />
     <ClCompile Include="InfoLayer.cpp" />
+    <ClCompile Include="INPCMovement.cpp" />
+    <ClCompile Include="INPCUnit.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventoryLayer.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -171,6 +177,7 @@
     <ClCompile Include="MyGameItems.cpp" />
     <ClCompile Include="MyGameTime.cpp" />
     <ClCompile Include="MyGameTimeLayer.cpp" />
+    <ClCompile Include="NPCMovementPatrol.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAttributesLayer.cpp" />
     <ClCompile Include="ProgressBarLayer.cpp" />
@@ -180,6 +187,7 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGame.cpp" />
+    <ClCompile Include="ThiefNPCUnit.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitStats.cpp" />
     <ClCompile Include="Util.cpp" />

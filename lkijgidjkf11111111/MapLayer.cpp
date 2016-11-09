@@ -31,6 +31,10 @@ void MapLayer::Initialize()
 	l_info = new InfoLayer(this->GetGame(), 300, 100);
 	this->AddLayer(l_info);
 	srand(GetTickCount());
+
+	npcThief = new ThiefNPCUnit();
+	npcThief->SetName(L"Thief 1");
+	npcThief->SetLocation(15.0f, 7.0f);
 }
 
 void MapLayer::OnUpdate()
@@ -64,6 +68,9 @@ void MapLayer::OnUpdate()
 	//loc.x += (float)(rand() % 400 - 200) / 1000.0f;
 	//loc.y += (float)(rand() % 400 - 200) / 1000.0f;
 	//changed = true;
+
+	mPlayer->Update();
+	npcThief->Update();
 
 	if (changed) {
 		mPlayer->SetLocation(loc.x, loc.y);
@@ -117,13 +124,18 @@ bool MapLayer::OnDraw(ID2D1RenderTarget* target)
 	if (mPlayer) {
 		DrawUnit(target, mPlayer);
 	}
+
+	if (npcThief) {
+		printf("%f ; %f\n", npcThief->GetLocation().x, npcThief->GetLocation().y);
+		DrawUnit(target, npcThief);
+	}
 	
 	// debug
 	auto text_aa_old = target->GetTextAntialiasMode();
 	target->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_ALIASED);
 
 	D2Pool::PrintText(D2Pool::FormatString(L"Mouse @(%n | %n)", mMouseTileX, mMouseTileY), target, D2Pool::GetFormat(D2PoolFont::MONOSPACE), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2D1::ColorF::White), 16.0f, DWRITE_TEXT_ALIGNMENT_CENTER);
-	D2Pool::PrintText(D2Pool::FormatString(L"First: (%n | %n)\nLast: (%n | %n)\n\nPlayer (%n | %n)", first_x, first_y, last_x, last_y, (int)std::floor(mPlayer->GetLocation().x), (int)std::floor(mPlayer->GetLocation().y)), target, D2Pool::GetFormat(D2PoolFont::MONOSPACE), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2D1::ColorF::White));
+	D2Pool::PrintText(D2Pool::FormatString(L"First: (%n | %n)\nLast: (%n | %n)\n\nThief (%n | %n)", first_x, first_y, last_x, last_y, (int)std::floor(npcThief->GetLocation().x), (int)std::floor(npcThief->GetLocation().y)), target, D2Pool::GetFormat(D2PoolFont::MONOSPACE), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2D1::ColorF::White));
 
 	target->SetTextAntialiasMode(text_aa_old);
 
@@ -149,7 +161,9 @@ void MapLayer::DrawUnit(ID2D1RenderTarget *target, Unit *unit)
 		return;
 
 	std::wstring name = unit->GetName();
+	float phealth = (float)unit->GetStats().Get(Stat::Health) / 100.0f;
 	auto color = unit->GetColor();
+	auto health_color = Util::TweenHealth(phealth);
 
 #define UNIT_OVERSIZE 3
 	UnitLocation loc = unit->GetLocation();
@@ -161,19 +175,23 @@ void MapLayer::DrawUnit(ID2D1RenderTarget *target, Unit *unit)
 	target->FillRoundedRectangle(rrect_face, D2Pool::GetSolidColorBrush(color));
 	target->DrawRoundedRectangle(rrect_face, D2Pool::GetSolidColorBrush(D2D1::ColorF(0x333333)), 1.0f);
 
+	auto rect_health = D2D1::RectF(rect.left, rect.top - 10.0f, rect.right, rect.top - 10.0f + 4.0f);
+	rect_health.right = rect_health.left + phealth * (rect_health.right - rect_health.left);
+	target->FillRectangle(rect_health, D2Pool::GetSolidColorBrush(health_color));
+
 	if (!name.empty()) {
 		std::wstring str;
 		str += name[0];
 		D2D1_COLOR_F textColor = D2Pool::GetReadableColor(color);
 		D2Pool::PrintText(str, target, D2Pool::GetFormat(D2PoolFont::NORMAL), rect, D2Pool::GetSolidColorBrush(textColor), 24.0f, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-	}
 
 #define LABEL_WIDTH 60
-	// draw label
-	auto rect_label = D2D1::RectF(rect.left - (LABEL_WIDTH / 2 - (rect.right - rect.left) / 2), rect.bottom + 3, rect.right + (LABEL_WIDTH / 2 - (rect.right - rect.left) / 2), rect.bottom + 20 + 3);
-	auto rrect_label = D2D1::RoundedRect(rect_label, 2.0f, 2.0f);
-	target->FillRoundedRectangle(rrect_label, D2Pool::GetSolidColorBrush(D2D1::ColorF::Black, 0.8f));
-	D2Pool::PrintText(unit->GetName(), target, D2Pool::GetFormat(D2PoolFont::NORMAL), rect_label, D2Pool::GetSolidColorBrush(D2D1::ColorF::White), DWRITE_TEXT_ALIGNMENT_CENTER);
+		// draw label
+		auto rect_label = D2D1::RectF(rect.left - (LABEL_WIDTH / 2 - (rect.right - rect.left) / 2), rect.bottom + 3, rect.right + (LABEL_WIDTH / 2 - (rect.right - rect.left) / 2), rect.bottom + 20 + 3);
+		auto rrect_label = D2D1::RoundedRect(rect_label, 2.0f, 2.0f);
+		target->FillRoundedRectangle(rrect_label, D2Pool::GetSolidColorBrush(D2D1::ColorF::Black, 0.8f));
+		D2Pool::PrintText(unit->GetName(), target, D2Pool::GetFormat(D2PoolFont::NORMAL), rect_label, D2Pool::GetSolidColorBrush(D2D1::ColorF::White), DWRITE_TEXT_ALIGNMENT_CENTER);
+	}
 }
 
 void MapLayer::SetTileSize(int value)
@@ -231,8 +249,7 @@ bool MUST_CALL MapLayer::OnMouseMove(int x, int y)
 			l_info->FadeIn(50);
 		}
 		else {
-			//if (l_info->IsVisible())
-				l_info->FadeOut(50);
+			l_info->FadeOut(50);
 		}
 
 		if (oldX != mMouseTileX || oldY != mMouseTileY)
@@ -273,6 +290,9 @@ void MapLayer::OnKeyDown(int key)
 	switch (key) {
 	case VK_SPACE:
 		//this->CenterUnit(mPlayer);
+		break;
+	case 'P':
+		static_cast<NPCMovementPatrol*>(npcThief->GetMovement())->AddWaypoint(10.0f, 30.0f);
 		break;
 	}
 }

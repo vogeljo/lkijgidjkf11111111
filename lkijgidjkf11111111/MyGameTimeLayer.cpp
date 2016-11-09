@@ -52,11 +52,10 @@ bool MyGameTimeLayer::OnDraw(ID2D1RenderTarget* target)
 		target->DrawLine(p1, p2, D2Pool::GetSolidColorBrush(D2D1::ColorF::White), n % 3 == 0 ? 2.5f : 1.0f);
 	}
 
-	target->FillEllipse(D2D1::Ellipse(center, 5.0f, 5.0f), D2Pool::GetSolidColorBrush(D2D1::ColorF::White));
-
 	target->DrawLine(center, D2D1::Point2F(center.x + sinf(hour) * radius * 3 / 5, center.y - cosf(hour) * radius * 3 / 5), D2Pool::GetSolidColorBrush(D2D1::ColorF::White), 4.0f);
 	target->DrawLine(D2D1::Point2F(center.x - sinf(minute) * radius * 2 / 10, center.y + cosf(minute) * radius * 2 / 10), D2D1::Point2F(center.x + sinf(minute) * radius * 9 / 10, center.y - cosf(minute) * radius * 9 / 10), D2Pool::GetSolidColorBrush(D2D1::ColorF::White), 2.0f);
 
+	target->FillEllipse(D2D1::Ellipse(center, 5.0f, 5.0f), D2Pool::GetSolidColorBrush(D2D1::ColorF::LightGray));
 
 	return false;
 }
