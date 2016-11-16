@@ -18,8 +18,8 @@ void MyGameTimeLayer::OnUpdate()
 bool MyGameTimeLayer::OnDraw(ID2D1RenderTarget* target)
 {
 	target->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-	D2Pool::PrintText(D2Pool::FormatString(L"Tag %n", mTime.GetDay()), target, D2Pool::GetFormat(D2PoolFont::NORMAL), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2D1::ColorF::White), 24.0f, DWRITE_TEXT_ALIGNMENT_LEADING, DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
-	D2Pool::PrintText(mTime.ToString(), target, D2Pool::GetFormat(D2PoolFont::NORMAL), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2D1::ColorF::White), 24.0f, DWRITE_TEXT_ALIGNMENT_TRAILING, DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+	D2Pool::PrintText(D2Pool::FormatString(L"Tag %n", mTime.GetDay()), target, D2Pool::GetFormat(D2PoolFont::NORMAL), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2D1::ColorF::White), 24.0f, DWRITE_TEXT_ALIGNMENT_TRAILING, DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+	D2Pool::PrintText(mTime.ToString(), target, D2Pool::GetFormat(D2PoolFont::NORMAL), this->GetContentRectangle() + D2D1::Point2F(0.0f, 20.0f), D2Pool::GetSolidColorBrush(D2D1::ColorF::White), 24.0f, DWRITE_TEXT_ALIGNMENT_TRAILING, DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
 	auto clock_rect = this->GetContentRectangle();
 	clock_rect.top += 30;

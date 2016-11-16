@@ -12,11 +12,15 @@
 
 #include "ThiefNPCUnit.h"
 
+#include "LinearDynamic.h"
+
 class MyGame;
 
 class MapLayer :
 	public Layer
 {
+	LinearDynamicF testDynamic;
+
 protected:
 	int mTileSize;
 	int mMouseTileX;

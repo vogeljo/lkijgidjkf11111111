@@ -59,4 +59,3 @@ public:
 
 	void Update();
 };
-

@@ -15,7 +15,7 @@ int Util::GetScreenHeight()
 	return GetSystemMetrics(SM_CYSCREEN);
 }
 
-uint64_t Util::GetTime()
+TimeStamp Util::GetTime()
 {
 	return std::chrono::steady_clock::now().time_since_epoch().count() / 1000000;
 	//return GetTickCount64();

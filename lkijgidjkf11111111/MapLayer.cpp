@@ -14,7 +14,7 @@ int MapLayer::GetTileForXY(int x_y)
 }
 
 MapLayer::MapLayer(Game& game, int width, int height, MapData& mapData)
-	: Layer(game, width, height), mMouseTileX(0), mMouseTileY(0), mDragScroll(width, height), mMapData(mapData), mPlayer(nullptr)
+	: Layer(game, width, height), mMouseTileX(0), mMouseTileY(0), mDragScroll(width, height), mMapData(mapData), mPlayer(nullptr), testDynamic(0.0f, 1.0f)
 {
 	this->SetTileSize(32);
 	this->SetPadding(5.0f);
@@ -41,41 +41,27 @@ void MapLayer::OnUpdate()
 {
 	++nUpdate;
 
-	auto loc = mPlayer->GetLocation();
-	bool changed = false;
-	float speed = 0.1f;
-
-	if (Util::IsKeyDown('W')) {
-		loc.y -= speed;
-		changed = true;
-	}
-	if (Util::IsKeyDown('A')) {
-		loc.x -= speed;
-		changed = true;
-	}
-	if (Util::IsKeyDown('S')) {
-		loc.y += speed;
-		changed = true;
-	}
-	if (Util::IsKeyDown('D')) {
-		loc.x += speed;
-		changed = true;
-	}
 	if (Util::IsKeyDown(VK_SPACE)) {
 		this->CenterUnit(mPlayer);
 	}
 
-	//loc.x += (float)(rand() % 400 - 200) / 1000.0f;
-	//loc.y += (float)(rand() % 400 - 200) / 1000.0f;
-	//changed = true;
+	float speed = 0.5f;
+
+	if (Util::IsKeyDown('W')) {
+		mPlayer->SetLocation(mPlayer->GetLocation().x, mPlayer->GetLocation().y - speed);
+	}
+	if (Util::IsKeyDown('A')) {
+		mPlayer->SetLocation(mPlayer->GetLocation().x - speed, mPlayer->GetLocation().y);
+	}
+	if (Util::IsKeyDown('S')) {
+		mPlayer->SetLocation(mPlayer->GetLocation().x, mPlayer->GetLocation().y + speed);
+	}
+	if (Util::IsKeyDown('D')) {
+		mPlayer->SetLocation(mPlayer->GetLocation().x + speed, mPlayer->GetLocation().y);
+	}
 
 	mPlayer->Update();
 	npcThief->Update();
-
-	if (changed) {
-		mPlayer->SetLocation(loc.x, loc.y);
-		this->Invalidate(INVALIDATION_NOCHILDREN);
-	}
 }
 
 bool MapLayer::OnDraw(ID2D1RenderTarget* target)
@@ -126,7 +112,7 @@ bool MapLayer::OnDraw(ID2D1RenderTarget* target)
 	}
 
 	if (npcThief) {
-		printf("%f ; %f\n", npcThief->GetLocation().x, npcThief->GetLocation().y);
+		//printf("%f ; %f\n", npcThief->GetLocation().x, npcThief->GetLocation().y);
 		DrawUnit(target, npcThief);
 	}
 	
@@ -135,7 +121,13 @@ bool MapLayer::OnDraw(ID2D1RenderTarget* target)
 	target->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_ALIASED);
 
 	D2Pool::PrintText(D2Pool::FormatString(L"Mouse @(%n | %n)", mMouseTileX, mMouseTileY), target, D2Pool::GetFormat(D2PoolFont::MONOSPACE), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2D1::ColorF::White), 16.0f, DWRITE_TEXT_ALIGNMENT_CENTER);
-	D2Pool::PrintText(D2Pool::FormatString(L"First: (%n | %n)\nLast: (%n | %n)\n\nThief (%n | %n)", first_x, first_y, last_x, last_y, (int)std::floor(npcThief->GetLocation().x), (int)std::floor(npcThief->GetLocation().y)), target, D2Pool::GetFormat(D2PoolFont::MONOSPACE), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2D1::ColorF::White));
+	D2Pool::PrintText(
+		D2Pool::FormatString(
+			L"First: (%n | %n)\nLast: (%n | %n)\n\nThief (%n | %n)\n[TEST] Dynamic: %f",
+			first_x, first_y, last_x, last_y, (int)std::floor(npcThief->GetLocation().x),	(int)std::floor(npcThief->GetLocation().y), testDynamic.Get()
+		),
+		target, D2Pool::GetFormat(D2PoolFont::MONOSPACE), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2D1::ColorF::White)
+	);
 
 	target->SetTextAntialiasMode(text_aa_old);
 
@@ -292,7 +284,7 @@ void MapLayer::OnKeyDown(int key)
 		//this->CenterUnit(mPlayer);
 		break;
 	case 'P':
-		static_cast<NPCMovementPatrol*>(npcThief->GetMovement())->AddWaypoint(10.0f, 30.0f);
+		//static_cast<NPCMovementPatrol*>(npcThief->GetMovement())->AddWaypoint(10.0f, 30.0f);
 		break;
 	}
 }
