@@ -241,12 +241,7 @@ std::wstring D2Pool::FormatString(std::wstring str, ...)
 				rstr += std::wstring(va_arg(argp, wchar_t*));
 				break;
 			case L'f': {
-#if _WIN64
-				typedef double ValType;
-#else
-				typedef float ValType;
-#endif
-				rstr += std::to_wstring(va_arg(argp, ValType));
+				rstr += std::to_wstring(va_arg(argp, double));
 				break;
 			}
 			case L'%':
