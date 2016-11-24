@@ -8,5 +8,7 @@ class ThiefNPCUnit :
 public:
 	ThiefNPCUnit();
 	virtual ~ThiefNPCUnit();
+
+	NPCMovementPatrol* GetPatrol();
 };
 

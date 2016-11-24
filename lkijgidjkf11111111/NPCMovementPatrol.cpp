@@ -42,3 +42,13 @@ UnitLocation NPCMovementPatrol::GetNextWaypoint()
 	else
 		return UnitLocation::NONE;
 }
+
+bool NPCMovementPatrol::IsEmpty()
+{
+	return mWaypoints.empty();
+}
+
+void NPCMovementPatrol::Clear()
+{
+	mWaypoints.clear();
+}

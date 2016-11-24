@@ -20,7 +20,17 @@ public:
 		return mValue;
 	}
 
+	virtual void Set(T value) {
+		mValue = value;
+	}
+
+	ConstantDynamic<T>& operator=(T value);
 };
 
+template<typename T>
+ConstantDynamic<T>& ConstantDynamic<T>::operator=(T value) {
+	this->Set(value);
+	return *this;
+}
 
 typedef ConstantDynamic<float> ConstantDynamicF;

@@ -12,6 +12,8 @@
 #include "InventoryLayer.h"
 #include "PlayerAttributesLayer.h"
 
+#include "HouseInfo.h"
+
 #include <iostream>
 
 class MyGame :

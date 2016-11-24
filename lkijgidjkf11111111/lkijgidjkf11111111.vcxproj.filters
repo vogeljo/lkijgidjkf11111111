@@ -126,6 +126,24 @@
     <ClInclude Include="LinearDynamic.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="ITimedDynamic.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="TimedSineDynamic.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="MapToolboxLayer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="HouseInfo.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundedConstantDynamic.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="TweenDynamic.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D2Pool.cpp">
@@ -225,6 +243,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="NPCMovementPatrol.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="MapToolboxLayer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="HouseInfo.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

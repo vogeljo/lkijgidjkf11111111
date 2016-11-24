@@ -1,7 +1,8 @@
 #pragma once
 #include "Unit.h"
 #include "INPCMovement.h"
-#include "LinearTimedAnimation.h"
+
+#include "TweenDynamic.h"
 
 class INPCUnit abstract :
 	public Unit
@@ -14,14 +15,15 @@ public:
 	virtual UnitLocation GetLocation() override;
 	INPCMovement* GetMovement();
 
+	// Stops the npc unit's movement
+	void Halt();
 protected:
 	virtual void OnUpdate(uint64_t diff_ms) override;
 
-	LinearTimedAnimation anim_positionX;
-	LinearTimedAnimation anim_positionY;
+	LinearTweenDynamic<float> anim_positionX;
+	LinearTweenDynamic<float> anim_positionY;
 
 	INPCMovement *mMovement;
-	bool mAnimationsEnded;
 
 	void SetMovement(INPCMovement *mvmt);
 };

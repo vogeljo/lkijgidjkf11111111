@@ -1,8 +1,10 @@
 #pragma once
 #include "native.h"
 #include <chrono>
+#include <stack>
 
 typedef uint64_t TimeStamp;
+typedef TimeStamp TimeDiff;
 
 class Util abstract
 {
@@ -13,6 +15,9 @@ public:
 
 	// Gets steady, monotonic time in milliseconds.
 	static TimeStamp GetTime();
+	static TimeStamp GetRealTime();
+	static TimeStamp PushTime();
+	static TimeStamp PopTime();
 
 	static D2D1_COLOR_F TweenHealth(float progress);
 };

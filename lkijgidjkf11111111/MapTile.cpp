@@ -22,6 +22,11 @@ D2D1_COLOR_F GetMapTileColor(MapTileType type)
 		return D2D1::ColorF(0xA9A9A9);
 	case MapTileType::Sand:
 		return D2D1::ColorF(0xF0E68C);
+	case MapTileType::House:
+		return D2D1::ColorF(0xA7A7A7);
+		break;
+	case MapTileType::Unknown:
+		return D2D1::ColorF(D2D1::ColorF::Black, 0.2f);
 	case MapTileType::None:
 	default:
 		return D2D1::ColorF(D2D1::ColorF::Gray);
@@ -47,6 +52,10 @@ void GetMapTileInfo(MapTileType type, std::wstring& dTitle, std::wstring& dText)
 	case MapTileType::Sand:
 		rtext = L"Sand ist ein natürlich vorkommendes, unverfestigtes Sediment, das sich überwiegend aus Mineralkörnern mit einer Korngröße von 0,063 bis 2 Millimeter zusammensetzt.";
 		rtitle = L"Sand";
+		break;
+	case MapTileType::House:
+		rtext = L"Häuser bieten verschiedene Aktionen an.";
+		rtitle = L"Haus";
 		break;
 	}
 

@@ -14,6 +14,10 @@ public:
 	}
 
 	virtual T Get() = 0;
+
+	operator T() {
+		return this->Get();
+	}
 };
 
 typedef IDynamic<float> IDynamicF;

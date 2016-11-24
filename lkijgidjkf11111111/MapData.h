@@ -13,6 +13,8 @@
 typedef uint32_t MapCoord;
 typedef uint64_t MapCoordIndex;
 
+typedef void *MapTileDataType;
+
 struct MapCoordPair {
 	MapCoord x, y;
 
@@ -25,6 +27,22 @@ struct MapCoordPair {
 };
 //typedef uint64_t MapCoordPair;
 
+struct MapTileData {
+public:
+	MapTileType type;
+	MapTileDataType data;
+
+	MapTileData() : MapTileData(MapTileType::None, (MapTileDataType)nullptr) {
+
+	}
+
+	MapTileData(MapTileType type, MapTileDataType data)
+		: type(type), data(data)
+	{
+
+	}
+};
+
 bool operator<(const MapCoordPair& mcp1, const MapCoordPair& mcp2);
 
 typedef std::function<void(MapCoordPair)> MapDataChangeCallback;
@@ -36,7 +54,7 @@ private:
 	//std::map<MapCoordPair, MapTile> mValues;
 	std::vector<MapDataChangeCallback> mChangeCallbacks;
 
-	MapTileType *data;
+	MapTileData *data;
 
 	void InvokeChange(MapCoordPair cp);
 protected:
@@ -58,6 +76,9 @@ public:
 
 	void SetType(MapCoordPair cp, MapTileType type);
 	MapTileType GetType(MapCoordPair cp);
+
+	void SetData(MapCoordPair cp, MapTileDataType type);
+	MapTileDataType GetData(MapCoordPair cp);
 
 	void AddChangeCallback(MapDataChangeCallback cb);
 	void RemoveChangeCallback(MapDataChangeCallback cb);

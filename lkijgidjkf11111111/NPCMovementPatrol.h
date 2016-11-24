@@ -16,6 +16,7 @@ public:
 	void RemoveWaypoint(int index);
 
 	virtual UnitLocation GetNextWaypoint() override;
-
+	virtual bool IsEmpty() override;
+	virtual void Clear() override;
 };
 

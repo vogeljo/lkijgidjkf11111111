@@ -13,8 +13,27 @@ MyGame::MyGame(int width, int height)
 	wchar_t buffer[100] = { 0 };
 
 	GetEnvironmentVariableW(L"USERNAME", buffer, 100);
-	uPlayer.SetName(buffer);
+	uPlayer.SetName(buffer); 
 	uPlayer.SetColor(D2D1::ColorF(D2D1::ColorF::Orange));
+	
+	HouseInfo *house1 = new HouseInfo(*map_ptr, L"House 1");
+	house1->AddField(MapCoordPair(20, 20));
+	house1->AddField(MapCoordPair(22, 20));
+	house1->AddField(MapCoordPair(21, 21));
+	house1->AddField(MapCoordPair(22, 21));
+	house1->AddField(MapCoordPair(23, 21));
+	house1->AddField(MapCoordPair(20, 22));
+	house1->AddField(MapCoordPair(21, 22));
+	house1->AddField(MapCoordPair(24, 21));
+	house1->AddField(MapCoordPair(25, 21));
+	house1->AddField(MapCoordPair(26, 21));
+	house1->AddField(MapCoordPair(27, 21));
+	house1->AddField(MapCoordPair(28, 21));
+	house1->AddField(MapCoordPair(28, 22));
+	house1->AddField(MapCoordPair(28, 23));
+	house1->AddField(MapCoordPair(28, 22));
+	house1->AddField(MapCoordPair(27, 23));
+	house1->AddField(MapCoordPair(24, 23));
 }
 
 void MyGame::Initialize()

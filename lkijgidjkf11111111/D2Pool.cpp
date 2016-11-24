@@ -352,8 +352,12 @@ int D2Pool::RunPipeline(Drawable *drawable)
 			DispatchMessage(&msg);
 		}
 		else {
+			Util::PushTime();
+
 			drawable->Update();
 			drawable->Draw(drawable->GetTarget());
+
+			Util::PopTime();
 		}
 	}
 	return msg.wParam;

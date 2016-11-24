@@ -3,7 +3,7 @@
 UnitLocation UnitLocation::NONE = UnitLocation::UnitLocation(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
 
 Unit::Unit()
-	: mSpeed(10.0f)
+	: mSpeed(5.0f), mVisionRange(25.0f)
 {
 	mColor = D2D1::ColorF(rand());
 }
@@ -52,6 +52,43 @@ void Unit::SetLocation(float x, float y)
 Inventory& Unit::GetInventory()
 {
 	return mInventory;
+}
+
+float Unit::GetVisionRange()
+{
+	return mVisionRange;
+}
+
+void Unit::SetVisionRange(float value)
+{
+	mVisionRange = value;
+}
+
+bool Unit::HasVisionAt(UnitLocation & loc)
+{
+	auto diff = loc.DistanceTo(this->GetLocation());
+	return diff <= this->GetVisionRange();
+}
+
+bool Unit::HasVisionAt(Unit & unit)
+{
+	return this->HasVisionAt(unit.GetLocation());
+}
+
+bool Unit::HasVisionAt(MapCoordPair & pair)
+{
+	return this->HasVisionAt(UnitLocation(pair.x + 0.5f, pair.y + 0.5f));
+}
+
+float Unit::GetVisionIntensityAt(UnitLocation & loc)
+{
+	float diff = this->GetLocation().DistanceTo(loc);
+	float rel = diff / mVisionRange;
+
+	if (this->HasVisionAt(loc))
+		return std::sqrtf(mVisionRange - diff) / std::sqrtf(mVisionRange - 0);
+	else
+		return 0.0f;
 }
 
 void Unit::SetSpeed(float value)

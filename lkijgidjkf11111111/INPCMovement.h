@@ -8,5 +8,7 @@ public:
 	virtual ~INPCMovement();
 
 	virtual UnitLocation GetNextWaypoint() = 0;
+	virtual bool IsEmpty() = 0;
+	virtual void Clear() = 0;
 };
 

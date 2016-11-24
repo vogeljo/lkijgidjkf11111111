@@ -1,5 +1,7 @@
 #pragma once
 #include "native.h"
+#include "Util.h"
+
 #include <string>
 #include <map>
 #include <cstdarg>

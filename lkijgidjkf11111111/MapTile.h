@@ -3,7 +3,7 @@
 #include <string>
 
 enum class MapTileType : uint8_t {
-	None, Water, Dirt, Stone, Sand
+	None, Unknown, Water, Dirt, Stone, Sand, House
 };
 
 struct MapTile
@@ -19,3 +19,4 @@ public:
 D2D1_COLOR_F GetMapTileColor(MapTileType type);
 void GetMapTileInfo(MapTileType type, std::wstring& dTitle, std::wstring& dText);
 
+ 

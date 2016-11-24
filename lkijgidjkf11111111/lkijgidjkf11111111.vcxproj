@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -27,26 +27,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -122,11 +122,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BoundedConstantDynamic.h" />
     <ClInclude Include="ButtonLayer.h" />
     <ClInclude Include="CashDisplayLayer.h" />
     <ClInclude Include="ConstantDynamic.h" />
     <ClInclude Include="crc32.h" />
     <ClInclude Include="DragController.h" />
+    <ClInclude Include="HouseInfo.h" />
     <ClInclude Include="IDynamic.h" />
     <ClInclude Include="InfoLayer.h" />
     <ClInclude Include="INPCMovement.h" />
@@ -136,11 +138,13 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="InventoryItemLayer.h" />
     <ClInclude Include="ITimedAnimation.h" />
+    <ClInclude Include="ITimedDynamic.h" />
     <ClInclude Include="LinearDynamic.h" />
     <ClInclude Include="LinearTimedAnimation.h" />
     <ClInclude Include="MapData.h" />
     <ClInclude Include="MapLayer.h" />
     <ClInclude Include="MapTile.h" />
+    <ClInclude Include="MapToolboxLayer.h" />
     <ClInclude Include="MyGameItems.h" />
     <ClInclude Include="MyGameTime.h" />
     <ClInclude Include="MyGameTimeLayer.h" />
@@ -155,7 +159,9 @@
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="TimedSineDynamic.h" />
     <ClInclude Include="ThiefNPCUnit.h" />
+    <ClInclude Include="TweenDynamic.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitStats.h" />
     <ClInclude Include="Util.h" />
@@ -165,6 +171,7 @@
     <ClCompile Include="CashDisplayLayer.cpp" />
     <ClCompile Include="crc32.cpp" />
     <ClCompile Include="DragController.cpp" />
+    <ClCompile Include="HouseInfo.cpp" />
     <ClCompile Include="InfoLayer.cpp" />
     <ClCompile Include="INPCMovement.cpp" />
     <ClCompile Include="INPCUnit.cpp" />
@@ -177,6 +184,7 @@
     <ClCompile Include="MapData.cpp" />
     <ClCompile Include="MapLayer.cpp" />
     <ClCompile Include="MapTile.cpp" />
+    <ClCompile Include="MapToolboxLayer.cpp" />
     <ClCompile Include="MyGameItems.cpp" />
     <ClCompile Include="MyGameTime.cpp" />
     <ClCompile Include="MyGameTimeLayer.cpp" />

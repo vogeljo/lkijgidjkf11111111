@@ -13,6 +13,10 @@
 #include "ThiefNPCUnit.h"
 
 #include "LinearDynamic.h"
+#include "TimedSineDynamic.h"
+#include "BoundedConstantDynamic.h"
+
+#include "HouseInfo.h"
 
 class MyGame;
 
@@ -22,10 +26,15 @@ class MapLayer :
 	LinearDynamicF testDynamic;
 
 protected:
-	int mTileSize;
+	BoundedConstantDynamic<int> mTileSize;
+	//int mTileSize;
 	int mMouseTileX;
 	int mMouseTileY;
 	bool mMouseHover;
+
+	TimedSineDynamic<float> mVisionRingAlpha;
+
+	ID2D1RadialGradientBrush *mBrushVision;
 
 	DragController mDragScroll;
 	InfoLayer *l_info;
@@ -48,7 +57,9 @@ public:
 	virtual bool OnDraw(ID2D1RenderTarget* target) override;
 
 	//void DrawLabelForUnit(ID2D1RenderTarget *target, Unit *unit, std::wstring label);
-	void DrawUnit(ID2D1RenderTarget *target, Unit *unit);
+	void DrawUnit(ID2D1RenderTarget *target, Unit *unit, bool drawVision);
+
+	void DrawHouse(ID2D1RenderTarget *target, HouseInfo *house);
 
 	void SetTileSize(int value);
 	void SetPlayer(Player *player);

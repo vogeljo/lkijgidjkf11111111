@@ -8,7 +8,7 @@ MapData::MapData()
 MapData::MapData(int width, int height)
 	: mWidth(width), mHeight(height)
 {
-	data = new MapTileType[width * height]{ MapTileType::None };
+	data = new MapTileData[width * height];
 }
 
 MapData::~MapData()
@@ -59,7 +59,7 @@ void MapData::SetType(MapCoordPair cp, MapTileType type)
 void MapData::SetType(MapCoordIndex index, MapTileType type)
 {
 	if (index >= 0 && index < this->GetDataLength()) {
-		data[index] = type;
+		data[index].type = type;
 		this->InvokeChange(this->CoordIndexToPair(index));
 	}
 }
@@ -69,10 +69,27 @@ MapTileType MapData::GetType(MapCoordPair cp)
 	return this->GetType(this->CoordPairToIndex(cp));
 }
 
+void MapData::SetData(MapCoordPair cp, MapTileDataType type)
+{
+	auto index = this->CoordPairToIndex(cp);
+	if (index >= 0 && index < this->GetDataLength()) {
+		data[index].data = type;
+		this->InvokeChange(cp);
+	}	
+}
+
+MapTileDataType MapData::GetData(MapCoordPair cp)
+{
+	auto index = this->CoordPairToIndex(cp);
+	if (index >= 0 && index < GetDataLength())
+		return data[index].data;
+	return NULL;
+}
+
 MapTileType MapData::GetType(MapCoordIndex index)
 {
 	if (index >= 0 && index < this->GetDataLength())
-		return data[index];
+		return data[index].type;
 	else
 		return MapTileType::None;
 }
@@ -105,8 +122,8 @@ bool MapData::FromFile(std::string filename, MapData **dPtr)
 
 		for (uint64_t i = 0; i < len; ++i) {
 			MapTileType type;
-			ifs.read((char*)&type, sizeof(type));
-			if (ifs.bad())
+			auto n = ifs.readsome((char*)&type, sizeof(type));
+			if (n == 0)
 				break;
 			MapCoordPair pair = MapCoordPair(i % width, i / width);
 			ptr->SetType(pair,  type);

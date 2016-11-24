@@ -1,9 +1,13 @@
 #pragma once
+#define _USE_MATH_DEFINES
+
 #include <string>
 #include <algorithm>
+#include <cmath>
 #include "UnitStats.h"
 #include "Inventory.h"
 #include "Util.h"
+#include "MapData.h"
 
 typedef int Money;
 
@@ -31,6 +35,7 @@ protected:
 	std::wstring mName;
 	UnitLocation mLocation;
 	float mSpeed;
+	float mVisionRange;
 
 	D2D1_COLOR_F mColor;
 	Inventory mInventory;
@@ -51,6 +56,13 @@ public:
 	void SetColor(D2D1_COLOR_F& color);
 	void SetLocation(float x, float y);
 	Inventory& GetInventory();
+
+	float GetVisionRange();
+	void SetVisionRange(float value);
+	bool HasVisionAt(UnitLocation& loc);
+	bool HasVisionAt(Unit& unit);
+	bool HasVisionAt(MapCoordPair& pair);
+	float GetVisionIntensityAt(UnitLocation& loc);
 
 	void SetSpeed(float value);
 	float GetSpeed();
