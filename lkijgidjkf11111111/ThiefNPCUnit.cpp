@@ -8,14 +8,10 @@ ThiefNPCUnit::ThiefNPCUnit()
 	this->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
 	this->GetStats().Set(Stat::Health, 100);
 
-	auto mvmt = new NPCMovementPatrol();
-	/*mvmt->AddWaypoint(10.0f, 10.0f);
-	mvmt->AddWaypoint(30.0f, 10.0f);
-	mvmt->AddWaypoint(50.0f, 30.0f);
-	mvmt->AddWaypoint(05.0f, 30.0f);*/
+	auto mvmt = new NPCMovementPatrol(this);
 
 	this->SetMovement(mvmt);
-	this->SetSpeed(20.0f);
+	this->SetSpeed(10.0f);
 }
 
 

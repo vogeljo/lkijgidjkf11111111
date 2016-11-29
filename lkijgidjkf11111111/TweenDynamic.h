@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include "Util.h"
 #include "ITimedDynamic.h"
 
@@ -9,8 +10,10 @@ class TweenDynamic abstract
 protected:
 	T mStartValue, mEndValue;
 	TimeDiff mDuration;
+	std::function<void()> mCallback;
 public:
 	TweenDynamic(T start, T end, TimeDiff duration)
+		: mCallback(nullptr)
 	{
 		this->Reset(start, end, duration);
 	}
@@ -29,22 +32,36 @@ public:
 
 	virtual T Get() override
 	{
-//		printf("%d\n", this->GetTimeDiff());
-		if (this->HasEnded())
+		if (this->HasEnded()) {
+			if (mCallback) {
+				mCallback();
+				mCallback = nullptr;
+			}
 			return mEndValue;
+		}
 		else
 			return this->GetTweenValue(std::max(0.0f, std::min(1.0f, (float)this->GetTimeDiff() / (float)mDuration)));
 	}
 
 	bool HasEnded() {
-		return mDuration == T(0) || this->GetTimeDiff() >= mDuration;
+		auto val = mDuration == T(0) || this->GetTimeDiff() >= mDuration;
+		if (val && mCallback) {
+			mCallback();
+			mCallback = nullptr;
+		}
+		return val;
 	}
 
 	using ITimedDynamic::Reset;
 	void Reset(T start, T end, TimeDiff duration) {
+		this->Reset(start, end, duration, nullptr);
+	}
+
+	void Reset(T start, T end, TimeDiff duration, std::function<void()> callback) {
 		mStartValue = start;
 		mEndValue = end;
 		mDuration = duration;
+		mCallback = callback;
 		this->Reset();
 	}
 };

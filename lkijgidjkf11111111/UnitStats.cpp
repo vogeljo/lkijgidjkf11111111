@@ -23,17 +23,17 @@ int& UnitStats::GetRef(Stat stat)
 
 void UnitStats::Set(Stat stat, int value)
 {
-	mValues[stat] = value;
+	mValues[stat] = std::max(UNIT_STAT_MIN, std::min(UNIT_STAT_MAX, value));
 }
 
 void UnitStats::Add(Stat stat, int value)
 {
-	mValues[stat] += value;
+	this->Set(stat, this->Get(stat) + value);
 }
 
 void UnitStats::Substract(Stat stat, int value)
 {
-	mValues[stat] -= value;
+	this->Set(stat, this->Get(stat) - value);
 }
 
 void UnitStats::ForEach(std::function<void(Stat, int)> callback)

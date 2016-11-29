@@ -42,7 +42,7 @@ void MyGame::Initialize()
 
 	//uPlayer.SetName(L"Spieler");
 	uPlayer.GetStats().Set(Stat::Money, 12000);
-	uPlayer.GetStats().Set(Stat::Health, 100);
+	uPlayer.GetStats().Set(Stat::Health, 1000);
 	uPlayer.SetLocation(5.0f, 5.0f);
 
 	l_map = new MapLayer(*this, mWidth, mHeight, *map_ptr);

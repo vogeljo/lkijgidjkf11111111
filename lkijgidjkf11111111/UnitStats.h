@@ -1,12 +1,17 @@
 #pragma once
 #include <map>
 #include <functional>
+#include <algorithm>
+#include <limits>
 
 enum class Stat {
 	Health, Money
 };
 
 std::wstring GetStatText(Stat s);
+
+#define UNIT_STAT_MAX 1000
+#define UNIT_STAT_MIN 0
 
 class UnitStats
 {

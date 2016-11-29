@@ -14,8 +14,6 @@ protected:
 	ButtonLayer *l_btnClose;
 
 	InventoryItemLayer *l_item1;
-
-	LinearTimedAnimation anim_showhide;
 public:
 	InventoryLayer(Game& game, int width, int height, Inventory& inv);
 	virtual ~InventoryLayer();

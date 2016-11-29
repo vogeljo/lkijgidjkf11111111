@@ -2,7 +2,7 @@
 #include "D2Pool.h"
 #include "Drawable.h"
 
-#include "LinearTimedAnimation.h"
+#include "TweenDynamic.h"
 
 #include <vector>
 #include <queue>
@@ -20,7 +20,6 @@ protected:
 	int mPosX, mPosY;
 	std::vector<Layer*> mLayers;
 	Layer *mParent;
-	float mOpacity;
 	bool mVisible;
 	bool mAlphaBackground;
 	D2D1_RECT_F mPadding;
@@ -29,7 +28,7 @@ protected:
 	void DrawFromBackBuffer(ID2D1RenderTarget *target, D2D1_RECT_F& rect);
 
 	// animations
-	LinearTimedAnimation anim_fadeinout;
+	LinearTweenDynamic<float> dynOpacity;
 public:
 	Layer(Game& game, int width, int height);
 
@@ -46,6 +45,7 @@ public:
 	int GetPositionY();
 	int GetWidth();
 	int GetHeight();
+	D2D1_POINT_2F GetCenter();
 	D2D1_RECT_F GetContentRectangle();
 	D2D1_RECT_F GetBoundingRectangle();
 	D2D1_RECT_F GetBounds();

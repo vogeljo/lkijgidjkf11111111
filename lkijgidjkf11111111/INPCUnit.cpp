@@ -14,17 +14,18 @@ INPCUnit::~INPCUnit()
 
 UnitLocation INPCUnit::GetLocation()
 {
-	if (mMovement && !mMovement->IsEmpty()) {
-		return UnitLocation(anim_positionX.Get(), anim_positionY.Get());
+	if (mMovement) {
+		auto loc = mMovement->GetLocation();
+		if (!loc.IsNone())
+			return loc;
 	}
-	else {
-		return Unit::GetLocation();
-	}
+
+	return Unit::GetLocation();
 }
 
 void INPCUnit::OnUpdate(uint64_t diff_ms)
 {
-	if (anim_positionX.HasEnded() && mMovement) {
+	/*if (anim_positionX.HasEnded() && mMovement) {
 		auto wp = mMovement->GetNextWaypoint();
 		if (!wp.IsNone()) {
 			auto loc = this->GetLocation();
@@ -34,7 +35,7 @@ void INPCUnit::OnUpdate(uint64_t diff_ms)
 			anim_positionX.Reset(loc.x, wp.x, duration);
 			anim_positionY.Reset(loc.y, wp.y, duration);
 		}
-	}
+	}*/
 }
 
 void INPCUnit::SetMovement(INPCMovement *mvmt)

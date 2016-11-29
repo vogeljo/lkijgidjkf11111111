@@ -45,7 +45,7 @@ bool PlayerAttributesLayer::OnDraw(ID2D1RenderTarget* target)
 	D2Pool::PrintText(D2Pool::FormatString(L"%n", health), target, D2Pool::GetFormat(D2PoolFont::NORMAL), rect, D2Pool::GetSolidColorBrush(D2D1::ColorF::White), DWRITE_TEXT_ALIGNMENT_TRAILING);
 
 	rect.top += 20.0f;
-	float ratio = ((float)health / 100.0f);
+	float ratio = ((float)health / UNIT_STAT_MAX);
 	auto color = Util::TweenHealth(ratio);
 	auto health_bar_rect = D2D1::RectF(rect.left, rect.top, rect.right, rect.top + 5.0f);
 	health_bar_rect.right = health_bar_rect.left + (health_bar_rect.right - health_bar_rect.left) * ratio;

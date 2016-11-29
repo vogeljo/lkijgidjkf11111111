@@ -152,6 +152,11 @@ bool UnitLocation::operator==(UnitLocation& l2)
 	return this->x == l2.x && this->y == l2.y;
 }
 
+bool UnitLocation::operator!=(UnitLocation & l2)
+{
+	return !(this->operator==(l2));
+}
+
 bool UnitLocation::IsNone()
 {
 	return *this == UnitLocation::NONE;

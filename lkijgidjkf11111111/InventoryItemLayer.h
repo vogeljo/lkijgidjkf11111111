@@ -2,6 +2,8 @@
 #include "Layer.h"
 #include "Item.h"
 
+#include <cmath>
+
 class Inventory;
 
 class InventoryItemLayer :
@@ -13,6 +15,8 @@ private:
 	int mLastValue;
 
 	Inventory& mInventory;
+
+	//ID2D1RadialGradientBrush *mBackBrush;
 public:
 	InventoryItemLayer(Game& game, Inventory& inventory, ItemToken token);
 	virtual ~InventoryItemLayer();
@@ -23,11 +27,11 @@ public:
 	virtual void OnUpdate() override;
 	virtual bool OnDraw(ID2D1RenderTarget* target) override;
 
+	virtual bool TestMouseHit(int x, int y) override;
 
 	virtual void MUST_CALL OnMouseEnter() override;
-
-
 	virtual void MUST_CALL OnMouseLeave() override;
+	virtual bool MUST_CALL OnMouseMove(int x, int y) override;
 
 };
 

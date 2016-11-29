@@ -30,7 +30,7 @@ void InventoryLayer::Initialize()
 
 void InventoryLayer::OnUpdate()
 {
-	this->SetOpacity(anim_showhide.GetValue());
+
 }
 
 bool InventoryLayer::OnDraw(ID2D1RenderTarget* target)

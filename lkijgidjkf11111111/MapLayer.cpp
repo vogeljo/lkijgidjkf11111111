@@ -49,6 +49,7 @@ void MapLayer::Initialize()
 	npcThief = new ThiefNPCUnit();
 	npcThief->SetName(L"Thief 1");
 	npcThief->SetLocation(15.0f, 7.0f);
+	npcThief->GetPatrol()->AddWaypoint(10.0f, 10.0f);
 }
 
 void MapLayer::OnUpdate()
@@ -177,7 +178,7 @@ void MapLayer::DrawUnit(ID2D1RenderTarget *target, Unit *unit, bool drawVision)
 		return;
 
 	std::wstring name = unit->GetName();
-	float phealth = (float)unit->GetStats().Get(Stat::Health) / 100.0f;
+	float phealth = (float)unit->GetStats().Get(Stat::Health) / UNIT_STAT_MAX;
 	auto color = unit->GetColor();
 	auto health_color = Util::TweenHealth(phealth);
 
@@ -322,6 +323,9 @@ void MapLayer::DrawHouse(ID2D1RenderTarget *target, HouseInfo *house)
 	}
 
 	std::vector<std::tuple<D2D1_POINT_2F, D2D1_POINT_2F>> lines;
+	float line_width = house->Intersects(*mPlayer) ? 1.0f : 0.5f;
+	float outline_size = line_width * (mTileSize / 32.0f);
+	float outline_size2 = outline_size / 2.0f;
 
 	for (auto x = tl.x; x <= br.x; ++x) {
 		for (auto y = tl.y; y <= br.y; ++y) {
@@ -368,10 +372,9 @@ void MapLayer::DrawHouse(ID2D1RenderTarget *target, HouseInfo *house)
 	}
 
 	D2D1::ColorF line_color = D2D1::ColorF::Black;
-	float line_width = house->Intersects(*mPlayer) ? 1.0f : 0.5f;
 
 	for each (auto t in lines) {
-		target->DrawLine(std::get<0>(t), std::get<1>(t), D2Pool::GetSolidColorBrush(line_color), line_width * (mTileSize / 32.0f));
+		target->DrawLine(std::get<0>(t), std::get<1>(t), D2Pool::GetSolidColorBrush(line_color), outline_size);
 	}
 
 	D2Pool::PrintText(house->GetName(), target, D2Pool::GetFormat(D2PoolFont::NORMAL), house_rect, D2Pool::GetSolidColorBrush(D2D1::ColorF::White, 1.0f), 24.0f, DWRITE_FONT_WEIGHT_BOLD, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
@@ -431,7 +434,7 @@ bool MUST_CALL MapLayer::OnMouseMove(int x, int y)
 			l_info->SetPosition(std::max(0, std::min(x + 15, this->GetWidth() - l_info->GetWidth())), std::max(0, std::min(y + 15, this->GetHeight() - l_info->GetHeight())));
 			l_info->FadeIn(50);
 		}
-		else {
+		else if (l_info->IsVisible()) {
 			l_info->FadeOut(50);
 		}
 

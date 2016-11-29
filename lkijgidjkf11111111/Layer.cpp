@@ -18,9 +18,9 @@ void Layer::DrawFromBackBuffer(ID2D1RenderTarget *target, D2D1_RECT_F& rect)
 }
 
 Layer::Layer(Game& game, int width, int height)
-	: Drawable(D2Pool::CreateRenderTarget(width, height)), mGame(game), mWidth(width), mHeight(height), mOpacity(1.0f), mVisible(true), mAlphaBackground(false)
+	: Drawable(D2Pool::CreateRenderTarget(width, height)), mGame(game), mWidth(width), mHeight(height), mVisible(true), mAlphaBackground(false)
 {
-	anim_fadeinout.Set(1.0f);
+	dynOpacity.Reset(1.0f, 1.0f, 0);
 }
 
 //Layer::Layer(ID2D1RenderTarget* target)
@@ -127,12 +127,13 @@ void Layer::InvalidateParent()
 
 float Layer::GetOpacity()
 {
-	return mOpacity;
+	auto val = dynOpacity.Get();
+	return val;
 }
 
 void Layer::SetOpacity(float opacity)
 {
-	mOpacity = opacity;
+	dynOpacity.Reset(opacity, opacity, 0);
 	this->InvalidateParent();
 }
 
@@ -194,17 +195,13 @@ bool Layer::TestMouseHit(int x, int y)
 
 bool Layer::IsTransparent()
 {
-	return mAlphaBackground || mOpacity < 1.0f;
+	return mAlphaBackground || dynOpacity.Get() < 1.0f;
 }
 
 void Layer::Update()
 {
 	Drawable::Update();
-
-	// TODO: make this universal, let every layer update specific objects.
-	//if (!anim_showhide.IsRelaxing())
-		this->SetOpacity(anim_fadeinout.GetValue());
-
+	
 	for each(Layer *layer in mLayers) {
 		layer->Update();
 	}
@@ -307,19 +304,19 @@ void MUST_CALL Layer::OnMouseLeave()
 
 }
 
-void Layer::FadeIn(DWORD duration_ms)
+void Layer::FadeIn(DWORD duration_ms /*= 100*/)
 {
-	if (!this->IsVisible() && anim_fadeinout.IsRelaxing()) {
+	if (!this->IsVisible() && dynOpacity.HasEnded()) {
 		this->SetVisible(true);
-		anim_fadeinout.Start(0.0f, 1.0f, duration_ms);
+		dynOpacity.Reset(0.0f, 1.0f, duration_ms);
 		this->Invalidate(INVALIDATION_NOCHILDREN);
 	}
 }
 
 void Layer::FadeOut(DWORD duration_ms /*= 100*/)
 {
-	if (this->IsVisible() && anim_fadeinout.IsRelaxing()) {
-		anim_fadeinout.Start(1.0f, 0.0f, duration_ms, [&]() {
+	if (this->IsVisible() && dynOpacity.HasEnded()) {
+		dynOpacity.Reset(1.0f, 0.0f, duration_ms, [&]() {
 			this->SetVisible(false);
 		});
 	}

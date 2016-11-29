@@ -22,6 +22,7 @@ public:
 	UnitLocation operator-(UnitLocation& l2);
 	UnitLocation operator*(UnitLocation& l2);
 	bool operator==(UnitLocation& l2);
+	bool operator!=(UnitLocation& l2);
 	bool IsNone();
 	float DistanceTo(UnitLocation& loc);
 

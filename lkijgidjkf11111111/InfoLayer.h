@@ -9,8 +9,6 @@ class InfoLayer :
 protected:
 	std::wstring mText, mTitle;
 	D2D1_COLOR_F mBackground;
-
-	//LinearTimedAnimation mAnimation;
 public:
 	InfoLayer(Game& game, int width, int height);
 	virtual ~InfoLayer();
