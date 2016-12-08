@@ -214,7 +214,8 @@ void Layer::Draw(ID2D1RenderTarget* target)
 	Drawable::Draw(target);
 
 	for each(Layer *layer in mLayers) {
-		layer->Print(target);
+		if (layer->IsVisible())
+			layer->Print(target);
 	}
 
 	this->EndDrawing(target);
@@ -222,7 +223,13 @@ void Layer::Draw(ID2D1RenderTarget* target)
 
 void Layer::Print(ID2D1RenderTarget *target)
 {
-	target->DrawBitmap(this->GetBitmap(), this->GetBounds(), this->GetOpacity());
+	auto p = this->GetParent();
+
+	float opacity = this->GetOpacity();
+	if (p)
+		opacity *= p->GetOpacity();
+
+	target->DrawBitmap(this->GetBitmap(), this->GetBounds(), opacity);
 
 	for each(auto l in mLayers)
 		l->Print(target);
