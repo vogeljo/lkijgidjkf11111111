@@ -30,13 +30,13 @@ InventoryItemLayer::~InventoryItemLayer()
 void InventoryItemLayer::SetToken(ItemToken token)
 {
 	mToken = token;
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }
 
 void InventoryItemLayer::SetInventory(Inventory& inventory)
 {
 	mInventory = inventory;
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }
 
 void InventoryItemLayer::OnUpdate()
@@ -45,7 +45,7 @@ void InventoryItemLayer::OnUpdate()
 
 	int v = mInventory.Get(mToken);
 	if (mLastValue != v)
-		this->Invalidate(INVALIDATION_NOCHILDREN);
+		this->Invalidate();
 	mLastValue = v;
 }
 
@@ -84,13 +84,13 @@ bool InventoryItemLayer::TestMouseHit(int x, int y)
 void MUST_CALL InventoryItemLayer::OnMouseEnter()
 {
 	mBackground = D2D1::ColorF::White;
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }
 
 void MUST_CALL InventoryItemLayer::OnMouseLeave()
 {
 	mBackground = D2D1::ColorF(D2D1::ColorF::Black);
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }
 
 bool MUST_CALL InventoryItemLayer::OnMouseMove(int x, int y)

@@ -16,6 +16,7 @@ protected:
 	INVALIDATION_MODE mInvalidationMode;
 	bool mInitalized;
 	int mIsDrawing;
+	bool mIsValid;
 
 protected:
 	void StartDrawing(ID2D1RenderTarget *target);
@@ -36,10 +37,8 @@ public:
 
 	virtual void Update();
 	virtual void Draw(ID2D1RenderTarget* target);
-	virtual void Draw(ID2D1RenderTarget* target, bool force);
 
-	void Invalidate(INVALIDATION_MODE mode = INVALIDATION_DEFAULT);
-	INVALIDATION_MODE GetInvalidationMode();
+	void Invalidate();
 	bool IsValid();
 };
 

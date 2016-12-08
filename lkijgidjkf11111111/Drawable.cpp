@@ -17,7 +17,7 @@ void Drawable::EndDrawing(ID2D1RenderTarget *target)
 }
 
 Drawable::Drawable(ID2D1BitmapRenderTarget* target)
-	: mTarget(target), mInitalized(false), mInvalidationMode(INVALIDATION_DEFAULT)
+	: mTarget(target), mInitalized(false), mIsValid(false), mInvalidationMode(INVALIDATION_DEFAULT)
 {
 
 }
@@ -63,31 +63,21 @@ void Drawable::Update()
 
 void Drawable::Draw(ID2D1RenderTarget* target)
 {
-	return this->Draw(target, false);
-}
-
-void Drawable::Draw(ID2D1RenderTarget* target, bool force)
-{
-	if (force || !this->IsValid()) {
+	if (!this->IsValid()) {
 		this->StartDrawing(target);
 		if (this->OnDraw(target)) {
-			this->Invalidate(INVALIDATION_NONE);
+			mIsValid = true;
 		}
 		this->EndDrawing(target);
 	}
 }
 
-void Drawable::Invalidate(INVALIDATION_MODE mode /*= INVALIDATION_DEFAULT*/)
+void Drawable::Invalidate()
 {
-	mInvalidationMode = mode;
-}
-
-INVALIDATION_MODE Drawable::GetInvalidationMode()
-{
-	return mInvalidationMode;
+	mIsValid = false;
 }
 
 bool Drawable::IsValid()
 {
-	return mInvalidationMode == INVALIDATION_NONE;
+	return mIsValid;
 }

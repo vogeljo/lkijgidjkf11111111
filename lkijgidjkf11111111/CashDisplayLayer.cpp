@@ -18,7 +18,7 @@ void CashDisplayLayer::SetUnit(Unit unit)
 void CashDisplayLayer::SetDrawUnitName(bool value)
 {
 	mDrawUnitName = value;
-	this->Invalidate(INVALIDATION_ALL);
+	this->Invalidate();
 }
 
 void CashDisplayLayer::ToggleDrawUnitName()
@@ -75,7 +75,7 @@ bool CashDisplayLayer::OnDraw(ID2D1RenderTarget* target)
 bool MUST_CALL CashDisplayLayer::OnLMouseDown(int x, int y)
 {
 	mMode = (mMode == CashDisplayLayerMode::Total) ? CashDisplayLayerMode::Change : CashDisplayLayerMode::Total;
-	this->Invalidate(INVALIDATION_ALL);
+	this->Invalidate();
 	//this->ToggleDrawUnitName();
 	return Layer::OnLMouseDown(x, y);
 }

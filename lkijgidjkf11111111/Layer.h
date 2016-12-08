@@ -24,8 +24,10 @@ protected:
 	bool mAlphaBackground;
 	D2D1_RECT_F mPadding;
 
+	// replace Drawable::mTarget by this.
+	ID2D1BitmapRenderTarget *mBackBuffer;
+
 	void SetTarget(ID2D1BitmapRenderTarget *target);
-	void DrawFromBackBuffer(ID2D1RenderTarget *target, D2D1_RECT_F& rect);
 
 	// animations
 	LinearTweenDynamic<float> dynOpacity;
@@ -58,6 +60,7 @@ public:
 	void SetPadding(float padding);
 	void SetPadding(float left, float top, float right, float bottom);
 	bool IsVisible();
+	bool IsOpaque();
 
 	bool Intersects(int x, int y);
 	Layer* GetLayerAt(int x, int y);
@@ -67,6 +70,8 @@ public:
 
 	virtual void Update() override;
 	virtual void Draw(ID2D1RenderTarget* target) override;
+
+	void Print(ID2D1RenderTarget *target);
 
 	void FadeIn(DWORD duration_ms = 100);
 	void FadeOut(DWORD duration_ms = 100);

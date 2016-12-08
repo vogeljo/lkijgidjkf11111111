@@ -26,7 +26,7 @@ void InfoLayer::Initialize()
 void InfoLayer::SetBackground(D2D1_COLOR_F color)
 {
 	mBackground = color;
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }
 
 bool InfoLayer::TestMouseHit(int x, int y)
@@ -59,11 +59,11 @@ bool InfoLayer::OnDraw(ID2D1RenderTarget* target)
 void InfoLayer::SetText(std::wstring str)
 {
 	mText = str;
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }
 
 void InfoLayer::SetTitle(std::wstring str)
 {
 	mTitle = str;
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }

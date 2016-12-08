@@ -383,13 +383,13 @@ void MapLayer::DrawHouse(ID2D1RenderTarget *target, HouseInfo *house)
 void MapLayer::SetTileSize(int value)
 {
 	mTileSize = value;
-	this->Invalidate(INVALIDATION_ALL);
+	this->Invalidate();
 }
 
 void MapLayer::SetPlayer(Player *player)
 {
 	mPlayer = player;
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }
 
 void MapLayer::CenterUnit(Unit *unit)
@@ -397,7 +397,7 @@ void MapLayer::CenterUnit(Unit *unit)
 	auto loc = unit->GetLocation();
 
 	mDragScroll.SetOffset(loc.x * mTileSize - mWidth / 2, loc.y * mTileSize - mHeight / 2);
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }
 
 bool MUST_CALL MapLayer::OnMouseMove(int x, int y)
@@ -439,7 +439,7 @@ bool MUST_CALL MapLayer::OnMouseMove(int x, int y)
 		}
 
 		if (oldX != mMouseTileX || oldY != mMouseTileY)
-			this->Invalidate(INVALIDATION_ALL);
+			this->Invalidate();
 	}
 	return r;
 }
@@ -448,7 +448,7 @@ bool MUST_CALL MapLayer::OnRMouseDown(int x, int y)
 {
 	if (Layer::OnMouseMove(x, y)) {
 		mDragScroll.StartDrag(x, y);
-		this->Invalidate(INVALIDATION_ALL);
+		this->Invalidate();
 		return true;
 	}
 	return false;
@@ -457,7 +457,7 @@ bool MUST_CALL MapLayer::OnRMouseDown(int x, int y)
 bool MUST_CALL MapLayer::OnRMouseUp(int x, int y)
 {
 	mDragScroll.EndDrag();
-	this->Invalidate(INVALIDATION_ALL);
+	this->Invalidate();
 	return true;
 }
 
@@ -465,7 +465,7 @@ bool MUST_CALL MapLayer::OnLMouseDown(int x, int y)
 {
 	if (Layer::OnLMouseDown(x, y)) {
 		mPlayer->GetInventory().Add(MyGameItems::APPLE, 20);
-		this->Invalidate(INVALIDATION_ALL);
+		this->Invalidate();
 		return true;
 	}
 	return false;
@@ -488,5 +488,5 @@ void MUST_CALL MapLayer::OnMouseLeave()
 	l_info->FadeOut(50);
 	mMouseTileX = mMouseTileY = -1;
 	mDragScroll.EndDrag();
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }

@@ -34,19 +34,19 @@ bool ButtonLayer::OnDraw(ID2D1RenderTarget* target)
 void ButtonLayer::SetText(std::wstring str)
 {
 	mText = str;
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }
 
 void MUST_CALL ButtonLayer::OnMouseEnter()
 {
 	mHover = true;
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }
 
 void MUST_CALL ButtonLayer::OnMouseLeave()
 {
 	mHover = false;
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }
 
 bool MUST_CALL ButtonLayer::OnMouseMove(int x, int y)

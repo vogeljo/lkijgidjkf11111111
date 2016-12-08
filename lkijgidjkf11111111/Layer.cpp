@@ -12,22 +12,11 @@ void Layer::SetTarget(ID2D1BitmapRenderTarget *target)
 	}
 }
 
-void Layer::DrawFromBackBuffer(ID2D1RenderTarget *target, D2D1_RECT_F& rect)
-{
-	target->DrawBitmap(this->GetBitmap(), rect, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, rect);
-}
-
 Layer::Layer(Game& game, int width, int height)
 	: Drawable(D2Pool::CreateRenderTarget(width, height)), mGame(game), mWidth(width), mHeight(height), mVisible(true), mAlphaBackground(false)
 {
 	dynOpacity.Reset(1.0f, 1.0f, 0);
 }
-
-//Layer::Layer(ID2D1RenderTarget* target)
-//	: Drawable(target), mOpacity(1.0f), mVisible(true), mAlphaBackground(false)
-//{
-//	this->SetTarget(target);
-//}
 
 Layer::~Layer()
 {
@@ -122,7 +111,7 @@ void Layer::SetParent(Layer* layer)
 void Layer::InvalidateParent()
 {
 	if (this->GetParent())
-		this->GetParent()->Invalidate(INVALIDATION_MODE::INVALIDATION_ALL);
+		this->GetParent()->Invalidate();
 }
 
 float Layer::GetOpacity()
@@ -150,7 +139,7 @@ void Layer::SetPadding(float left, float top, float right, float bottom)
 	mPadding.right = right;
 	mPadding.bottom = bottom;
 
-	this->Invalidate(INVALIDATION_NOCHILDREN);
+	this->Invalidate();
 }
 
 void Layer::SetPadding(float padding)
@@ -161,6 +150,11 @@ void Layer::SetPadding(float padding)
 bool Layer::IsVisible()
 {
 	return mVisible;
+}
+
+bool Layer::IsOpaque()
+{
+	return this->GetOpacity() >= 1.0f;
 }
 
 bool Layer::Intersects(int x, int y)
@@ -214,8 +208,7 @@ void Layer::Draw(ID2D1RenderTarget* target)
 	this->StartDrawing(target);
 
 	for each(Layer *layer in mLayers) {
-		bool childWasValid = layer->IsValid();
-		if (!layer->IsVisible())
+		if (!layer->IsVisible()  || layer->IsValid())
 			continue;
 		layer->Draw(layer->GetTarget());
 		if (!!layer->GetBitmap())
@@ -226,12 +219,16 @@ void Layer::Draw(ID2D1RenderTarget* target)
 
 	while (!batch.empty()) {
 		Layer *l = batch.front();
-		//target->FillRectangle(l->GetBounds(), D2Pool::GetSolidColorBrush(D2D1::ColorF::Maroon));
-		target->DrawBitmap(l->GetBitmap(), l->GetBounds(), l->GetOpacity(), D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, l->GetBoundingRectangle());
+		l->Print(target);
 		batch.pop();
 	}
 
 	this->EndDrawing(target);
+}
+
+void Layer::Print(ID2D1RenderTarget *target)
+{
+	target->DrawBitmap(this->GetBitmap(), this->GetBounds(), this->GetOpacity());
 }
 
 bool Layer::IsBitmap()
@@ -309,7 +306,7 @@ void Layer::FadeIn(DWORD duration_ms /*= 100*/)
 	if (!this->IsVisible() && dynOpacity.HasEnded()) {
 		this->SetVisible(true);
 		dynOpacity.Reset(0.0f, 1.0f, duration_ms);
-		this->Invalidate(INVALIDATION_NOCHILDREN);
+		this->Invalidate();
 	}
 }
 
