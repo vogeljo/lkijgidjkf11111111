@@ -203,24 +203,18 @@ void Layer::Update()
 
 void Layer::Draw(ID2D1RenderTarget* target)
 {
-	std::queue<Layer*> batch;
-
 	this->StartDrawing(target);
 
 	for each(Layer *layer in mLayers) {
 		if (!layer->IsVisible()  || layer->IsValid())
 			continue;
 		layer->Draw(layer->GetTarget());
-		if (!!layer->GetBitmap())
-			batch.push(layer);
 	}
 
 	Drawable::Draw(target);
 
-	while (!batch.empty()) {
-		Layer *l = batch.front();
-		l->Print(target);
-		batch.pop();
+	for each(Layer *layer in mLayers) {
+		layer->Print(target);
 	}
 
 	this->EndDrawing(target);
@@ -229,6 +223,9 @@ void Layer::Draw(ID2D1RenderTarget* target)
 void Layer::Print(ID2D1RenderTarget *target)
 {
 	target->DrawBitmap(this->GetBitmap(), this->GetBounds(), this->GetOpacity());
+
+	for each(auto l in mLayers)
+		l->Print(target);
 }
 
 bool Layer::IsBitmap()
