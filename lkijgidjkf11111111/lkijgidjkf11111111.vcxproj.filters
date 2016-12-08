@@ -144,6 +144,12 @@
     <ClInclude Include="TweenDynamic.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="sqlite3\sqlite3.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite3\sqlite3ext.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D2Pool.cpp">
@@ -249,6 +255,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="HouseInfo.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite3\shell.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite3\sqlite3.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

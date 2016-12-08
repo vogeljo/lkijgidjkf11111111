@@ -159,6 +159,8 @@
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="sqlite3\sqlite3.h" />
+    <ClInclude Include="sqlite3\sqlite3ext.h" />
     <ClInclude Include="TimedSineDynamic.h" />
     <ClInclude Include="ThiefNPCUnit.h" />
     <ClInclude Include="TweenDynamic.h" />
@@ -198,6 +200,8 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGame.cpp" />
+    <ClCompile Include="sqlite3\shell.c" />
+    <ClCompile Include="sqlite3\sqlite3.c" />
     <ClCompile Include="ThiefNPCUnit.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitStats.cpp" />
