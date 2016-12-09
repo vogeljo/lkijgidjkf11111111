@@ -61,7 +61,7 @@ void MUST_CALL ConsoleLayer::OnKeyChar(wchar_t c)
 		break;
 	default:
 		if (iswprint(c)) {
-			mLine += c;
+			this->Insert({ c });
 			this->Invalidate();
 		}
 		break;
@@ -73,6 +73,40 @@ void MUST_CALL ConsoleLayer::OnKeyChar(wchar_t c)
 void ConsoleLayer::OnCommand(std::wstring cmd)
 {
 
+}
+
+void MUST_CALL ConsoleLayer::OnKeyDown(int key)
+{
+	switch (key) {
+	case 'V':
+		if (GetKeyState(VK_CONTROL) & 0x8000) {
+			auto hwnd = mGame.GetWindowHandle();
+			OpenClipboard(hwnd);
+
+			auto hnd = GetClipboardData(CF_UNICODETEXT);
+			auto ptr = GlobalLock(hnd);
+
+			wchar_t* text = (wchar_t*)ptr;
+
+			this->Insert(text);
+
+			GlobalUnlock(hnd);
+			CloseClipboard();
+		}
+	}
+}
+
+void ConsoleLayer::Insert(std::wstring str)
+{
+	std::wstring newstr;
+	for (auto it = str.begin(); it != str.end(); ++it) {
+		if (iswprint(*it)) {
+			newstr.append({ *it });
+		}
+	}
+	mLine.append(newstr);
+
+	this->Invalidate();
 }
 
 void ConsoleLayer::OnFocusChange(bool hasFocus)

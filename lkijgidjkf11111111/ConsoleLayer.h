@@ -1,5 +1,6 @@
 #pragma once
 #include "Layer.h"
+#include "Game.h"
 #include "AlternatingDynamic.h"
 
 #include <cctype>
@@ -25,5 +26,10 @@ public:
 	virtual void Initialize() override;
 
 	void OnCommand(std::wstring cmd);
+
+	virtual void MUST_CALL OnKeyDown(int key) override;
+
+	void Insert(std::wstring str);
+
 };
 
