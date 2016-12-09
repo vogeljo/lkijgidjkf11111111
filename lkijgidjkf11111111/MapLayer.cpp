@@ -58,17 +58,19 @@ void MapLayer::OnUpdate()
 
 	float speed = 0.2f;
 
-	if (Util::IsKeyDown('W')) {
-		mPlayer->SetLocation(mPlayer->GetLocation().x, mPlayer->GetLocation().y - speed);
-	}
-	if (Util::IsKeyDown('A')) {
-		mPlayer->SetLocation(mPlayer->GetLocation().x - speed, mPlayer->GetLocation().y);
-	}
-	if (Util::IsKeyDown('S')) {
-		mPlayer->SetLocation(mPlayer->GetLocation().x, mPlayer->GetLocation().y + speed);
-	}
-	if (Util::IsKeyDown('D')) {
-		mPlayer->SetLocation(mPlayer->GetLocation().x + speed, mPlayer->GetLocation().y);
+	if (this->HasFocus()) {
+		if (Util::IsKeyDown('W')) {
+			mPlayer->SetLocation(mPlayer->GetLocation().x, mPlayer->GetLocation().y - speed);
+		}
+		if (Util::IsKeyDown('A')) {
+			mPlayer->SetLocation(mPlayer->GetLocation().x - speed, mPlayer->GetLocation().y);
+		}
+		if (Util::IsKeyDown('S')) {
+			mPlayer->SetLocation(mPlayer->GetLocation().x, mPlayer->GetLocation().y + speed);
+		}
+		if (Util::IsKeyDown('D')) {
+			mPlayer->SetLocation(mPlayer->GetLocation().x + speed, mPlayer->GetLocation().y);
+		}
 	}
 
 	mPlayer->Update();

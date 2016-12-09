@@ -48,6 +48,9 @@ LRESULT WINAPI GameWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		if (wParam == VK_ESCAPE)
 			game->Exit();
 		break;
+	case WM_CHAR:
+		game->OnKeyChar((wchar_t)wParam);
+		break;
 	case WM_MOUSEWHEEL:
 		game->OnVMouseScroll(mouse_xs, mouse_ys, GET_DELTA(wParam));
 		break;
@@ -211,4 +214,16 @@ bool MUST_CALL Game::OnMouseMove(int x, int y)
 	mMouseHover = (l == this) ? nullptr : l;
 
 	return Layer::OnMouseMove(x, y);
+}
+
+void MUST_CALL Game::OnKeyChar(wchar_t c)
+{
+	if (mFocused) {
+		mFocused->OnKeyChar(c);
+	}
+}
+
+Layer* Game::GetFocused()
+{
+	return mFocused;
 }

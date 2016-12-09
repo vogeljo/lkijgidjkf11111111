@@ -68,6 +68,8 @@ public:
 	virtual bool TestMouseHit(int x, int y);
 	bool IsTransparent();
 
+	bool HasFocus();
+
 	virtual void Update() override;
 	virtual void Draw(ID2D1RenderTarget* target) override;
 
@@ -99,6 +101,7 @@ public:
 	virtual bool MUST_CALL OnHMouseScroll(int x, int y, float delta);
 
 	virtual void MUST_CALL OnKeyDown(int key);
+	virtual void MUST_CALL OnKeyChar(wchar_t c);
 
 	virtual void MUST_CALL OnMouseEnter();
 	virtual void MUST_CALL OnMouseLeave();

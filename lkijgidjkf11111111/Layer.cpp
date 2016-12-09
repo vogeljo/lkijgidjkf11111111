@@ -192,6 +192,11 @@ bool Layer::IsTransparent()
 	return mAlphaBackground || dynOpacity.Get() < 1.0f;
 }
 
+bool Layer::HasFocus()
+{
+	return mGame.GetFocused() == this;
+}
+
 void Layer::Update()
 {
 	Drawable::Update();
@@ -257,6 +262,8 @@ bool MUST_CALL Layer::OnLMouseDown(int x, int y)
 		l->OnLMouseDown(x - l->GetPositionX(), y - l->GetPositionY());
 		return false;
 	}
+	else
+		mGame.SetFocus(this);
 	return true;
 }
 
@@ -267,6 +274,8 @@ bool MUST_CALL Layer::OnRMouseDown(int x, int y)
 		l->OnRMouseDown(x - l->GetPositionX(), y - l->GetPositionY());
 		return false;
 	}
+	else
+		mGame.SetFocus(this);
 	return true;
 }
 
@@ -311,6 +320,11 @@ bool MUST_CALL Layer::OnHMouseScroll(int x, int y, float delta)
 }
 
 void Layer::OnKeyDown(int key)
+{
+
+}
+
+void MUST_CALL Layer::OnKeyChar(wchar_t c)
 {
 
 }

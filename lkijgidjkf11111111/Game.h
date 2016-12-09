@@ -58,5 +58,9 @@ public:
 
 	virtual bool MUST_CALL OnMouseMove(int x, int y) override;
 
+
+	virtual void MUST_CALL OnKeyChar(wchar_t c) override;
+
+	Layer* GetFocused();
 };
 
