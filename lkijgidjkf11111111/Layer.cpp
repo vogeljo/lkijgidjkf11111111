@@ -339,6 +339,11 @@ void MUST_CALL Layer::OnMouseLeave()
 
 }
 
+void MUST_CALL Layer::OnFocusChange(bool hasFocus)
+{
+
+}
+
 void Layer::FadeIn(DWORD duration_ms /*= 100*/)
 {
 	if (!this->IsVisible() && dynOpacity.HasEnded()) {

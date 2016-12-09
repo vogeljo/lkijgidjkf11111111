@@ -45,8 +45,6 @@ LRESULT WINAPI GameWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		break;
 	case WM_KEYDOWN:
 		game->OnKeyDown(wParam);
-		if (wParam == VK_ESCAPE)
-			game->Exit();
 		break;
 	case WM_CHAR:
 		game->OnKeyChar((wchar_t)wParam);
@@ -139,7 +137,15 @@ int Game::GetMousePosY()
 
 void Game::SetFocus(Layer *layer)
 {
+	auto old_focused = mFocused;
 	mFocused = layer;
+
+	if (layer != old_focused) {
+		if (old_focused)
+			old_focused->OnFocusChange(false);
+
+		layer->OnFocusChange(true);
+	}
 }
 
 void Game::Show()

@@ -11,6 +11,7 @@
 #include "MyGameItems.h"
 #include "InventoryLayer.h"
 #include "PlayerAttributesLayer.h"
+#include "ConsoleLayer.h"
 
 #include "HouseInfo.h"
 
@@ -28,6 +29,7 @@ private:
 	MapLayer *l_map;
 	InventoryLayer *l_inventory;
 	PlayerAttributesLayer *l_player_attr;
+	ConsoleLayer *l_console;
 
 	MyGameTime mTime;
 	MyGameTimeLayer *l_time;
@@ -52,5 +54,6 @@ public:
 
 	virtual void OnKeyDown(int key) override;
 
+	void ToggleConsole();
 };
 

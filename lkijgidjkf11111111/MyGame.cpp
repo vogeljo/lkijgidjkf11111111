@@ -65,11 +65,17 @@ void MyGame::Initialize()
 	l_player_attr->SetPosition(this->GetWidth() - 300, 0);
 	l_player_attr->SetVisible(false);
 
+	l_console = new ConsoleLayer(this->GetGame(), this->GetWidth(), 50.0f);
+	l_console->SetPosition(0, this->GetHeight() - 50);
+	l_console->SetVisible(false);
+	this->AddLayer(l_console);
+
 	this->AddLayer(l_map);
 	this->AddLayer(l_player_attr);
 	this->AddLayer(l_cash);
 	this->AddLayer(l_time);
 	this->AddLayer(l_inventory);
+	this->AddLayer(l_console);
 
 	this->SetFocus(l_map);
 }
@@ -89,27 +95,55 @@ void MyGame::OnKeyDown(int key)
 	switch (key)
 	{
 	case VK_TAB:
-		if (l_inventory->IsVisible())
-			l_inventory->FadeOut(100);
+		if (!l_console->HasFocus()) {
+			if (l_inventory->IsVisible())
+				l_inventory->FadeOut(100);
+			else
+				l_inventory->FadeIn(100);
+		}
+		break;
+	case VK_ESCAPE:
+		if (l_console->IsVisible() && l_console->HasFocus()) {
+			this->ToggleConsole();
+		}
 		else
-			l_inventory->FadeIn(100);
+			this->Exit();
 		break;
 	case 'C':
-		if (l_player_attr->IsVisible()) {
-			l_player_attr->FadeOut(100);
-			l_cash->FadeOut(100);
-			l_time->FadeOut(100);
+		if ((GetKeyState(VK_SHIFT) & 0x8000) && (GetKeyState(VK_CONTROL) & 0x8000)) {
+			printf("Opening/closing console\n");
+			this->ToggleConsole();
 		}
-		else {
-			l_player_attr->FadeIn(100);
-			l_cash->FadeIn(100);
-			l_time->FadeIn(100);
+		else if (!l_console->HasFocus()) {
+			if (l_player_attr->IsVisible()) {
+				l_player_attr->FadeOut(100);
+				l_cash->FadeOut(100);
+				l_time->FadeOut(100);
+			}
+			else {
+				l_player_attr->FadeIn(100);
+				l_cash->FadeIn(100);
+				l_time->FadeIn(100);
+			}
 		}
 		break;
 	default:
 		break;
 	}
 	Game::OnKeyDown(key);
+}
+
+void MyGame::ToggleConsole()
+{
+	bool hiding = l_console->IsVisible();
+	if (hiding) {
+		l_console->FadeOut();
+		this->SetFocus(l_map);
+	}
+	else {
+		l_console->FadeIn();
+		this->SetFocus(l_console);
+	}
 }
 
 MyGame::~MyGame()

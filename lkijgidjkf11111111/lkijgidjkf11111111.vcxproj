@@ -122,9 +122,11 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AlternatingDynamic.h" />
     <ClInclude Include="BoundedConstantDynamic.h" />
     <ClInclude Include="ButtonLayer.h" />
     <ClInclude Include="CashDisplayLayer.h" />
+    <ClInclude Include="ConsoleLayer.h" />
     <ClInclude Include="ConstantDynamic.h" />
     <ClInclude Include="crc32.h" />
     <ClInclude Include="DragController.h" />
@@ -169,6 +171,7 @@
   <ItemGroup>
     <ClCompile Include="ButtonLayer.cpp" />
     <ClCompile Include="CashDisplayLayer.cpp" />
+    <ClCompile Include="ConsoleLayer.cpp" />
     <ClCompile Include="crc32.cpp" />
     <ClCompile Include="DragController.cpp" />
     <ClCompile Include="HouseInfo.cpp" />

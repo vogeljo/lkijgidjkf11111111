@@ -224,6 +224,26 @@ void D2Pool::PrintText(std::wstring str, ID2D1RenderTarget *target, IDWriteTextF
 	SafeRelease(&layout);
 }
 
+D2D1_SIZE_F D2Pool::MeasureString(std::wstring str, IDWriteTextFormat *format, D2D1_RECT_F& rect, float fontSize, DWRITE_FONT_WEIGHT weight, DWRITE_TEXT_ALIGNMENT halign, DWRITE_PARAGRAPH_ALIGNMENT valign /*= DWRITE_PARAGRAPH_ALIGNMENT_NEAR*/)
+{
+	IDWriteTextLayout *layout;
+	GetWriteFactory()->CreateTextLayout(str.c_str(), str.length(), format, rect.right - rect.left, rect.bottom - rect.top, &layout);
+	layout->SetTextAlignment(halign);
+	layout->SetParagraphAlignment(valign);
+	DWRITE_TEXT_RANGE range;
+	range.startPosition = 0;
+	range.length = str.length();
+	layout->SetFontSize(fontSize, range);
+	layout->SetFontWeight(weight, range);
+
+	DWRITE_TEXT_METRICS metrics;
+
+	layout->GetMetrics(&metrics);
+	SafeRelease(&layout);
+
+	return D2D1::SizeF(metrics.widthIncludingTrailingWhitespace, metrics.height);
+}
+
 std::wstring D2Pool::FormatString(std::wstring str, ...)
 {
 	va_list argp;

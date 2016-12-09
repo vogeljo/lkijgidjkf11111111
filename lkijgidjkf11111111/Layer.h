@@ -105,5 +105,7 @@ public:
 
 	virtual void MUST_CALL OnMouseEnter();
 	virtual void MUST_CALL OnMouseLeave();
+
+	virtual void OnFocusChange(bool hasFocus);
 };
 
