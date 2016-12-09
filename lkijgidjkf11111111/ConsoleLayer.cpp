@@ -88,7 +88,8 @@ void MUST_CALL ConsoleLayer::OnKeyDown(int key)
 
 			wchar_t* text = (wchar_t*)ptr;
 
-			this->Insert(text);
+			if (text)
+				this->Insert(text);
 
 			GlobalUnlock(hnd);
 			CloseClipboard();
