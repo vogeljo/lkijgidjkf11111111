@@ -93,6 +93,11 @@ public:
 	// returns false when the mouse is over a sublayer.
 	virtual bool MUST_CALL OnRMouseUp(int x, int y);
 
+	// returns false when the mouse is over a sublayer.
+	virtual bool MUST_CALL OnVMouseScroll(int x, int y, float delta);
+	// returns false when the mouse is over a sublayer.
+	virtual bool MUST_CALL OnHMouseScroll(int x, int y, float delta);
+
 	virtual void MUST_CALL OnKeyDown(int key);
 
 	virtual void MUST_CALL OnMouseEnter();

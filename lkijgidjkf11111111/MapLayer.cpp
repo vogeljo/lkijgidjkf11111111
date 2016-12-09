@@ -70,12 +70,6 @@ void MapLayer::OnUpdate()
 	if (Util::IsKeyDown('D')) {
 		mPlayer->SetLocation(mPlayer->GetLocation().x + speed, mPlayer->GetLocation().y);
 	}
-	if (Util::IsKeyDown(VK_OEM_PLUS)) {
-		this->SetTileSize(mTileSize + 1);
-	}
-	if (Util::IsKeyDown(VK_OEM_MINUS)) {
-		this->SetTileSize(mTileSize - 1);
-	}
 
 	mPlayer->Update();
 	npcThief->Update();
@@ -489,4 +483,13 @@ void MUST_CALL MapLayer::OnMouseLeave()
 	mMouseTileX = mMouseTileY = -1;
 	mDragScroll.EndDrag();
 	this->Invalidate();
+}
+
+bool MUST_CALL MapLayer::OnVMouseScroll(int x, int y, float delta)
+{
+	if (Layer::OnVMouseScroll(x, y, delta)) {
+		mTileSize = mTileSize + delta * 7;
+		return true;
+	}
+	return false;
 }

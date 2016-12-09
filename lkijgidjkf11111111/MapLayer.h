@@ -73,5 +73,8 @@ public:
 	virtual void OnKeyDown(int key) override;
 	virtual void MUST_CALL OnMouseLeave() override;
 
+
+	virtual bool MUST_CALL OnVMouseScroll(int x, int y, float delta) override;
+
 };
 

@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#define GET_DELTA(wParam) ((float)GET_WHEEL_DELTA_WPARAM(wParam) / (float)WHEEL_DELTA)
+
 LRESULT WINAPI GameWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	Game *game = (Game*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 
@@ -45,6 +47,12 @@ LRESULT WINAPI GameWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		game->OnKeyDown(wParam);
 		if (wParam == VK_ESCAPE)
 			game->Exit();
+		break;
+	case WM_MOUSEWHEEL:
+		game->OnVMouseScroll(mouse_xs, mouse_ys, GET_DELTA(wParam));
+		break;
+	case WM_MOUSEHWHEEL:
+		game->OnHMouseScroll(mouse_xs, mouse_ys, GET_DELTA(wParam));
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);

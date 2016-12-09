@@ -290,6 +290,26 @@ bool MUST_CALL Layer::OnRMouseUp(int x, int y)
 	return true;
 }
 
+bool MUST_CALL Layer::OnVMouseScroll(int x, int y, float delta)
+{
+	Layer *l = this->GetLayerAt(x, y);
+	if (l != this) {
+		l->OnVMouseScroll(x, y, delta);
+		return false;
+	}
+	return true;
+}
+
+bool MUST_CALL Layer::OnHMouseScroll(int x, int y, float delta)
+{
+	Layer *l = this->GetLayerAt(x, y);
+	if (l != this) {
+		l->OnHMouseScroll(x, y, delta);
+		return false;
+	}
+	return true;
+}
+
 void Layer::OnKeyDown(int key)
 {
 
