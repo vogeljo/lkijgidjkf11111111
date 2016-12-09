@@ -337,7 +337,7 @@ void Layer::FadeIn(DWORD duration_ms /*= 100*/)
 void Layer::FadeOut(DWORD duration_ms /*= 100*/)
 {
 	if (this->IsVisible() && dynOpacity.HasEnded()) {
-		dynOpacity.Reset(1.0f, 0.0f, duration_ms, [&]() {
+		dynOpacity.Reset(this->GetOpacity(), 0.0f, duration_ms, [&]() {
 			this->SetVisible(false);
 		});
 	}
