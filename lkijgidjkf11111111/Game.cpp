@@ -137,14 +137,39 @@ int Game::GetMousePosY()
 
 void Game::SetFocus(Layer *layer)
 {
-	auto old_focused = mFocused;
+	if (layer == this)
+		layer = nullptr;
+
+	if (layer) {
+		if (!layer->TakesFocus())
+			return;
+	}
+
+	auto old = mFocused;
 	mFocused = layer;
 
-	if (layer != old_focused) {
-		if (old_focused)
-			old_focused->OnFocusChange(false);
+	if (old != layer) {
+		// changed
+		if (old)
+			old->OnFocusChange(false);
+		else
+			this->OnFocusChange(false);
 
-		layer->OnFocusChange(true);
+		if (layer)
+			layer->OnFocusChange(true);
+		else
+			this->OnFocusChange(true);
+	}
+}
+
+void Game::YieldFocus(Layer *from)
+{
+	printf("%x yielding focus.\n", from);
+	if (from) {
+		auto parent = from->GetParent();
+		if (parent) {
+			this->SetFocus(parent);
+		}
 	}
 }
 
@@ -159,10 +184,6 @@ void Game::SetFullscreen()
 	val &= ~(WS_OVERLAPPEDWINDOW);
 	SetWindowLongPtr(mWindow, GWL_STYLE, val);
 	SetWindowPos(mWindow, NULL, 0, 0, Util::GetScreenWidth(), Util::GetScreenHeight(), SWP_NOMOVE | SWP_NOZORDER);
-
-	/*WINDOWPLACEMENT wp;
-	wp.flags = WPF_RESTORETOMAXIMIZED;
-	SetWindowPlacement(mWindow, &wp);*/
 }
 
 void Game::Exit()
@@ -201,9 +222,18 @@ bool Game::OnDraw(ID2D1RenderTarget* target)
 
 void Game::OnKeyDown(int key)
 {
-	if (mFocused) {
-		mFocused->OnKeyDown(key);
+	bool exit_key = key == VK_ESCAPE;
+
+	if (this->GetFocused() == this)
+		printf("CASfKSJFKASJKgSJK\n");
+
+	if (this->GetFocused()) {
+		this->GetFocused()->OnKeyDown(key);
+		if (exit_key)
+			this->GetFocused()->OnExitKey();
 	}
+	else if (exit_key)
+		this->OnExitKey();
 }
 
 bool MUST_CALL Game::OnMouseMove(int x, int y)
@@ -224,8 +254,8 @@ bool MUST_CALL Game::OnMouseMove(int x, int y)
 
 void MUST_CALL Game::OnKeyChar(wchar_t c)
 {
-	if (mFocused) {
-		mFocused->OnKeyChar(c);
+	if (this->GetFocused()) {
+		this->GetFocused()->OnKeyChar(c);
 	}
 }
 

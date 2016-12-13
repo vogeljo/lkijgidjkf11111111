@@ -31,5 +31,8 @@ public:
 
 	virtual void Initialize() override;
 
+
+	virtual bool TakesFocus() override;
+
 };
 

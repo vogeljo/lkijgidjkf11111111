@@ -55,5 +55,7 @@ public:
 	virtual void OnKeyDown(int key) override;
 
 	void ToggleConsole();
+
+	virtual void OnExitKey() override;
 };
 
