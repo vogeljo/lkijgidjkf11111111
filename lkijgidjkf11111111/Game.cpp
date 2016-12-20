@@ -164,7 +164,6 @@ void Game::SetFocus(Layer *layer)
 
 void Game::YieldFocus(Layer *from)
 {
-	printf("%x yielding focus.\n", from);
 	if (from) {
 		auto parent = from->GetParent();
 		if (parent) {
@@ -223,10 +222,7 @@ bool Game::OnDraw(ID2D1RenderTarget* target)
 void Game::OnKeyDown(int key)
 {
 	bool exit_key = key == VK_ESCAPE;
-
-	if (this->GetFocused() == this)
-		printf("CASfKSJFKASJKgSJK\n");
-
+	
 	if (this->GetFocused()) {
 		this->GetFocused()->OnKeyDown(key);
 		if (exit_key)
