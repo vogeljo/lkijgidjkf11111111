@@ -150,6 +150,9 @@
     <ClInclude Include="AlternatingDynamic.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="UniqueStack.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D2Pool.cpp">

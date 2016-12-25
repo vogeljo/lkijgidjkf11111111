@@ -164,6 +164,7 @@
     <ClInclude Include="TimedSineDynamic.h" />
     <ClInclude Include="ThiefNPCUnit.h" />
     <ClInclude Include="TweenDynamic.h" />
+    <ClInclude Include="UniqueStack.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitStats.h" />
     <ClInclude Include="Util.h" />
