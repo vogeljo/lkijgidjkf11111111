@@ -72,7 +72,54 @@ void MUST_CALL ConsoleLayer::OnKeyChar(wchar_t c)
 
 void ConsoleLayer::OnCommand(std::wstring cmd)
 {
+	size_t index = 0;
+	auto next_word = [&index, cmd](std::wstring& target) -> bool {
+		if (index == cmd.npos)
+			return false;
 
+		while (cmd[index] == L' ')
+			++index;
+
+		auto first_space = cmd.find(' ', index);
+		std::wstring result;
+
+		if (first_space == cmd.npos) {
+			result = cmd.substr(index);
+			index = cmd.npos;
+		}
+		else {
+			result = cmd.substr(index, first_space - index);
+			index = first_space + 1;
+		}
+
+		if (result.empty())
+			return false;
+		else {
+			target = result;
+			return true;
+		}
+	};
+
+	std::vector<std::wstring> commands;
+	std::wstring word;
+	while (next_word(word)) {
+		commands.push_back(word);
+	}
+
+	if (!commands.empty()) {
+		auto main_command = commands.front();
+		std::for_each(main_command.begin(), main_command.end(), [&](wchar_t& chr) { chr = std::tolower(chr); });
+
+		auto assert_ccount = [&](size_t count) {
+			if (commands.size() < count)
+				MessageBoxW(this->GetGame().GetWindowHandle(), D2Pool::FormatString(L"Not enough params for command '%s'", main_command.c_str()).c_str(), NULL, MB_ICONINFORMATION);
+		};
+
+		if (main_command == L"pos") {
+			assert_ccount(4);
+			MessageBox(this->GetGame().GetWindowHandle(), "Setting position", NULL, MB_ICONINFORMATION);
+		}
+	}
 }
 
 void MUST_CALL ConsoleLayer::OnKeyDown(int key)
