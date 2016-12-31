@@ -57,12 +57,18 @@ bool InventoryItemLayer::OnDraw(ID2D1RenderTarget* target)
 	float radius = INVENTORY_ITEM_LAYER_SIZE / 2;
 
 	target->FillEllipse(D2D1::Ellipse(D2D1::Point2F(radius, radius), radius, radius), D2Pool::GetSolidColorBrush(mBackground));
+	target->DrawEllipse(D2D1::Ellipse(D2D1::Point2F(radius, radius), radius - 2.0f, radius - 2.0f), D2Pool::GetSolidColorBrush(D2Pool::GetComplementaryColor(mBackground)), 1.5f);
 
 	Item* it = ItemPool::Get(mToken);
 	auto g = D2Pool::GetGraphic(it->GetGraphic());
+	auto quant = mInventory.Get(mToken);
+	auto text = quant ? std::to_wstring(mInventory.Get(mToken)) : L"-";
+
+	D2D1_COLOR_F textColor = D2Pool::GetReadableColor(D2D1::ColorF(clearColor.r, clearColor.g, clearColor.b, 1.0f));
 
 	target->DrawBitmap(g, this->GetContentRectangle());
-	D2Pool::PrintText(std::to_wstring(mInventory.Get(mToken)), target, D2Pool::GetFormat(D2PoolFont::NORMAL), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2Pool::GetReadableColor(clearColor)), 18.0f, DWRITE_TEXT_ALIGNMENT_TRAILING, DWRITE_PARAGRAPH_ALIGNMENT_FAR);
+	D2Pool::PrintText(text, target, D2Pool::GetFormat(D2PoolFont::NORMAL), this->GetContentRectangle() + 0.4f, D2Pool::GetSolidColorBrush(D2Pool::GetComplementaryColor(textColor)), 30.0f, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	D2Pool::PrintText(text, target, D2Pool::GetFormat(D2PoolFont::NORMAL), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(textColor), 30.0f, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
 	//target->DrawRectangle(this->GetBoundingRectangle(), D2Pool::GetSolidColorBrush(mBackground), 2.0f);
 	return true;
