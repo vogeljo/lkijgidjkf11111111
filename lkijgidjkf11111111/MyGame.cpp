@@ -70,12 +70,25 @@ void MyGame::Initialize()
 	l_console->SetVisible(false);
 	this->AddLayer(l_console);
 
+	l_grid = new GridLayer(this->GetGame(), 200, 200, 5, 4);
+	l_grid->SetPosition(400, 400);
+	l_grid->SetVisible(true);
+
+	ButtonLayer* btn = new ButtonLayer(*this, 50, 20);
+	btn->SetClickHandler([this]() {
+		MessageBoxW(this->GetGame().GetWindowHandle(), L"Clicked.", NULL, NULL);
+	});
+
+	l_grid->AddLayer(btn);
+	l_grid->AddLayer(new ButtonLayer(*this, 40, 40));
+
 	this->AddLayer(l_map);
 	this->AddLayer(l_player_attr);
 	this->AddLayer(l_cash);
 	this->AddLayer(l_time);
 	this->AddLayer(l_inventory);
 	this->AddLayer(l_console);
+	this->AddLayer(l_grid);
 
 	this->SetFocus(l_map);
 }

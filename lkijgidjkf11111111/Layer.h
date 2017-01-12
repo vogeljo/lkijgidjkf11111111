@@ -80,6 +80,8 @@ public:
 
 	virtual bool IsBitmap() override;
 
+	virtual void OnLayerAdded(Layer *layer);
+
 	// returns false when the mouse is over a sublayer.
 	virtual bool MUST_CALL OnMouseMove(int x, int y);
 

@@ -52,6 +52,7 @@ void Layer::AddLayer(Layer *layer, Layer *lower)
 	}
 
 	mLayers.insert(it, layer);
+	this->OnLayerAdded(layer);
 }
 
 void Layer::SetPosition(int x, int y)
@@ -243,6 +244,11 @@ void Layer::Print(ID2D1RenderTarget *target)
 bool Layer::IsBitmap()
 {
 	return true;
+}
+
+void Layer::OnLayerAdded(Layer *layer)
+{
+
 }
 
 bool MUST_CALL Layer::OnMouseMove(int x, int y)
