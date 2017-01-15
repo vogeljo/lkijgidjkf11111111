@@ -236,9 +236,6 @@ void Layer::Print(ID2D1RenderTarget *target)
 		opacity *= p->GetOpacity();
 
 	target->DrawBitmap(this->GetBitmap(), this->GetBounds(), opacity);
-
-	for each(auto l in mLayers)
-		l->Print(target);
 }
 
 bool Layer::IsBitmap()
