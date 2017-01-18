@@ -15,6 +15,8 @@
 #include "GridLayer.h"
 #include "ButtonLayer.h"
 
+#include "ListLayer.h"
+
 #include "HouseInfo.h"
 
 #include <iostream>
@@ -32,6 +34,7 @@ private:
 	InventoryLayer *l_inventory;
 	PlayerAttributesLayer *l_player_attr;
 	ConsoleLayer *l_console;
+	ListLayer *l_list;
 
 	GridLayer *l_grid;
 

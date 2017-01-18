@@ -144,6 +144,7 @@
     <ClInclude Include="ITimedDynamic.h" />
     <ClInclude Include="LinearDynamic.h" />
     <ClInclude Include="LinearTimedAnimation.h" />
+    <ClInclude Include="ListLayer.h" />
     <ClInclude Include="MapData.h" />
     <ClInclude Include="MapLayer.h" />
     <ClInclude Include="MapTile.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="InventoryItemLayer.cpp" />
     <ClCompile Include="ITimedAnimation.cpp" />
     <ClCompile Include="LinearTimedAnimation.cpp" />
+    <ClCompile Include="ListLayer.cpp" />
     <ClCompile Include="MapData.cpp" />
     <ClCompile Include="MapLayer.cpp" />
     <ClCompile Include="MapTile.cpp" />

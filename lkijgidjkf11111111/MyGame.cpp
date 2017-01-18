@@ -82,6 +82,11 @@ void MyGame::Initialize()
 	l_grid->AddLayer(btn);
 	l_grid->AddLayer(new ButtonLayer(*this, 40, 40));
 
+	l_list = new ListLayer(*this, 500, 300);
+	l_list->SetPosition(20, 150);
+	l_list->SetVisible(true);
+	l_list->AddItem(L"My first item!");
+
 	this->AddLayer(l_map);
 	this->AddLayer(l_player_attr);
 	this->AddLayer(l_cash);
@@ -89,6 +94,7 @@ void MyGame::Initialize()
 	this->AddLayer(l_inventory);
 	this->AddLayer(l_console);
 	this->AddLayer(l_grid);
+	this->AddLayer(l_list);
 
 	this->SetFocus(l_map);
 }
