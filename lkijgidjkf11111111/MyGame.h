@@ -12,7 +12,6 @@
 #include "InventoryLayer.h"
 #include "PlayerAttributesLayer.h"
 #include "ConsoleLayer.h"
-#include "GridLayer.h"
 #include "ButtonLayer.h"
 
 #include "HouseInfo.h"
@@ -32,8 +31,6 @@ private:
 	InventoryLayer *l_inventory;
 	PlayerAttributesLayer *l_player_attr;
 	ConsoleLayer *l_console;
-
-	GridLayer *l_grid;
 
 	MyGameTime mTime;
 	MyGameTimeLayer *l_time;
