@@ -12,6 +12,7 @@
 #include "InventoryLayer.h"
 #include "PlayerAttributesLayer.h"
 #include "ConsoleLayer.h"
+#include "HouseLayer.h"
 
 #include "HouseInfo.h"
 
@@ -30,6 +31,7 @@ private:
 	InventoryLayer *l_inventory;
 	PlayerAttributesLayer *l_player_attr;
 	ConsoleLayer *l_console;
+	HouseLayer *l_house;
 
 	MyGameTime mTime;
 	MyGameTimeLayer *l_time;

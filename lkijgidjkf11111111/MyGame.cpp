@@ -16,7 +16,7 @@ MyGame::MyGame(int width, int height)
 	uPlayer.SetName(buffer); 
 	uPlayer.SetColor(D2D1::ColorF(D2D1::ColorF::Orange));
 	
-	HouseInfo *house1 = new HouseInfo(*map_ptr, L"House 1");
+	HouseInfo *house1 = new HouseInfo(*map_ptr, L"Haus am See");
 	house1->AddField(MapCoordPair(20, 20));
 	house1->AddField(MapCoordPair(22, 20));
 	house1->AddField(MapCoordPair(21, 21));
@@ -68,7 +68,9 @@ void MyGame::Initialize()
 	l_console = new ConsoleLayer(this->GetGame(), this->GetWidth(), 50.0f);
 	l_console->SetPosition(0, this->GetHeight() - 50);
 	l_console->SetVisible(false);
-	this->AddLayer(l_console);
+
+	l_house = new HouseLayer(nullptr, this->GetGame(), this->GetWidth(), this->GetHeight());
+	l_house->SetVisible(false);
 
 	this->AddLayer(l_map);
 	this->AddLayer(l_player_attr);
@@ -76,6 +78,7 @@ void MyGame::Initialize()
 	this->AddLayer(l_time);
 	this->AddLayer(l_inventory);
 	this->AddLayer(l_console);
+	this->AddLayer(l_house);
 
 	this->SetFocus(l_map);
 }
@@ -124,6 +127,22 @@ void MyGame::OnKeyDown(int key)
 				l_player_attr->FadeIn(100);
 				l_cash->FadeIn(100);
 				l_time->FadeIn(100);
+			}
+		}
+		break;
+	case 'E':
+		if (l_map->HasFocus() || l_house->HasFocus()) {
+			if (!l_house->IsVisible()) {
+				auto hi = (HouseInfo*)map_ptr->GetData(MapCoordPair(uPlayer.GetLocation().x, uPlayer.GetLocation().y));
+				if (hi && hi->Intersects(uPlayer)) { // double check?
+					l_house->SetHouse(hi);
+					l_house->FadeIn();
+					this->SetFocus(l_house);
+				}
+			}
+			else {
+				l_house->FadeOut();
+				this->SetFocus(l_map);
 			}
 		}
 		break;

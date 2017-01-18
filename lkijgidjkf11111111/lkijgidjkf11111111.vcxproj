@@ -131,6 +131,7 @@
     <ClInclude Include="crc32.h" />
     <ClInclude Include="DragController.h" />
     <ClInclude Include="HouseInfo.h" />
+    <ClInclude Include="HouseLayer.h" />
     <ClInclude Include="IDynamic.h" />
     <ClInclude Include="InfoLayer.h" />
     <ClInclude Include="INPCMovement.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="crc32.cpp" />
     <ClCompile Include="DragController.cpp" />
     <ClCompile Include="HouseInfo.cpp" />
+    <ClCompile Include="HouseLayer.cpp" />
     <ClCompile Include="InfoLayer.cpp" />
     <ClCompile Include="INPCMovement.cpp" />
     <ClCompile Include="INPCUnit.cpp" />
