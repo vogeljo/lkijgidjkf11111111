@@ -159,6 +159,9 @@
     <ClInclude Include="WeaponSword.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="WeaponKnife.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D2Pool.cpp">
@@ -276,6 +279,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="WeaponSword.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponKnife.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

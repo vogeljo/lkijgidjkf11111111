@@ -18,7 +18,7 @@ enum class D2PoolFont {
 };
 
 enum class D2Graphic {
-	NONE, APPLE, SWORD
+	NONE, APPLE, SWORD, KNIFE
 };
 
 class D2Pool abstract

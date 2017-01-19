@@ -169,6 +169,7 @@
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitStats.h" />
     <ClInclude Include="Util.h" />
+    <ClInclude Include="WeaponKnife.h" />
     <ClInclude Include="WeaponSword.h" />
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +211,7 @@
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitStats.cpp" />
     <ClCompile Include="Util.cpp" />
+    <ClCompile Include="WeaponKnife.cpp" />
     <ClCompile Include="WeaponSword.cpp" />
   </ItemGroup>
   <ItemGroup>

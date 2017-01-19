@@ -354,6 +354,9 @@ ID2D1Bitmap* D2Pool::GetGraphic(D2Graphic graphic)
 		case D2Graphic::SWORD:
 			filename = L"sword.png";
 			break;
+		case D2Graphic::KNIFE:
+			filename = L"knife.png";
+			break;
 		}
 		if (filename.empty())
 			return nullptr;
