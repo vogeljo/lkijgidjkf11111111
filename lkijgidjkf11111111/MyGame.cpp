@@ -45,6 +45,9 @@ void MyGame::Initialize()
 	uPlayer.GetStats().Set(Stat::Health, 1000);
 	uPlayer.SetLocation(5.0f, 5.0f);
 
+	w_sword = new WeaponSword(&uPlayer);
+	uPlayer.SetWeapon(w_sword);
+
 	l_map = new MapLayer(*this, mWidth, mHeight, *map_ptr);
 	l_map->SetPosition(0, 0);
 	l_map->SetPlayer(&uPlayer);

@@ -8,6 +8,7 @@
 #include "Inventory.h"
 #include "Util.h"
 #include "MapData.h"
+#include "IWeapon.h"
 
 typedef int Money;
 
@@ -37,6 +38,7 @@ protected:
 	UnitLocation mLocation;
 	float mSpeed;
 	float mVisionRange;
+	IWeapon *mWeapon;
 
 	D2D1_COLOR_F mColor;
 	Inventory mInventory;
@@ -67,6 +69,9 @@ public:
 
 	void SetSpeed(float value);
 	float GetSpeed();
+
+	IWeapon* GetWeapon();
+	void SetWeapon(IWeapon* w);
 
 	Money GetMoneyChange();
 

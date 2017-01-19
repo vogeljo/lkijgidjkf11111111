@@ -14,6 +14,8 @@
 #include "ConsoleLayer.h"
 #include "HouseLayer.h"
 
+#include "WeaponSword.h"
+
 #include "HouseInfo.h"
 
 #include <iostream>
@@ -32,6 +34,8 @@ private:
 	PlayerAttributesLayer *l_player_attr;
 	ConsoleLayer *l_console;
 	HouseLayer *l_house;
+
+	WeaponSword *w_sword;
 
 	MyGameTime mTime;
 	MyGameTimeLayer *l_time;

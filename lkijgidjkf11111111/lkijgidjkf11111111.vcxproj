@@ -142,6 +142,7 @@
     <ClInclude Include="InventoryItemLayer.h" />
     <ClInclude Include="ITimedAnimation.h" />
     <ClInclude Include="ITimedDynamic.h" />
+    <ClInclude Include="IWeapon.h" />
     <ClInclude Include="LinearDynamic.h" />
     <ClInclude Include="LinearTimedAnimation.h" />
     <ClInclude Include="MapData.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitStats.h" />
     <ClInclude Include="Util.h" />
+    <ClInclude Include="WeaponSword.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ButtonLayer.cpp" />
@@ -185,6 +187,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="InventoryItemLayer.cpp" />
     <ClCompile Include="ITimedAnimation.cpp" />
+    <ClCompile Include="IWeapon.cpp" />
     <ClCompile Include="LinearTimedAnimation.cpp" />
     <ClCompile Include="MapData.cpp" />
     <ClCompile Include="MapLayer.cpp" />
@@ -207,6 +210,7 @@
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitStats.cpp" />
     <ClCompile Include="Util.cpp" />
+    <ClCompile Include="WeaponSword.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="lkijgidjkf11111111.rc" />

@@ -198,6 +198,24 @@ void MapLayer::DrawUnit(ID2D1RenderTarget *target, Unit *unit, bool drawVision)
 	rect_health.right = rect_health.left + phealth * (rect_health.right - rect_health.left);
 	target->FillRectangle(rect_health, D2Pool::GetSolidColorBrush(health_color));
 
+	if (auto w = unit->GetWeapon()) {
+#define WEAPON_LABEL_FONT_SIZE 11.0f
+#define WEAPON_SIZE 32
+#define WEAPON_INSET 15
+#define WEAPON_OFFSET (WEAPON_SIZE - WEAPON_INSET)
+		auto rect_w_label = D2D1::RectF(rect.left - 10.0f, rect.top - 55.0f, rect.right + 10.0f, rect.top - 20.0f);
+		auto m = D2Pool::MeasureString(w->GetName(), D2Pool::GetFormat(D2PoolFont::NORMAL), rect_w_label, WEAPON_LABEL_FONT_SIZE, DWRITE_FONT_WEIGHT_LIGHT, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+		rect_w_label.top = rect_w_label.bottom - m.height;
+
+		target->SetTransform(D2D1::Matrix3x2F::Rotation(w->GetAngleRad(), pos_center));
+		auto gr = w->GetGraphic();
+		target->DrawBitmap(gr, D2D1::RectF(rect.left - WEAPON_OFFSET, rect.top - WEAPON_OFFSET, rect.left + WEAPON_INSET, rect.top + WEAPON_INSET));
+		target->SetTransform(D2D1::Matrix3x2F::Identity());
+
+		target->FillRectangle(rect_w_label, D2Pool::GetSolidColorBrush(D2D1::ColorF::Black, 0.5f));
+		D2Pool::PrintText(w->GetName(), target, D2Pool::GetFormat(D2PoolFont::NORMAL), rect_w_label, D2Pool::GetSolidColorBrush(D2D1::ColorF::White), WEAPON_LABEL_FONT_SIZE, DWRITE_FONT_WEIGHT_LIGHT, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	}
+
 	if (!name.empty()) {
 		std::wstring str;
 		str += name[0];

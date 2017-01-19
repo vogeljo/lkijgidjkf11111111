@@ -153,6 +153,12 @@
     <ClInclude Include="HouseLayer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="IWeapon.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponSword.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D2Pool.cpp">
@@ -264,6 +270,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="HouseLayer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="IWeapon.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponSword.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

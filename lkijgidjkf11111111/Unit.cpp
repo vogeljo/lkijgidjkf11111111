@@ -3,7 +3,7 @@
 UnitLocation UnitLocation::NONE = UnitLocation::UnitLocation(std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
 
 Unit::Unit()
-	: mSpeed(5.0f), mVisionRange(25.0f)
+	: mSpeed(5.0f), mVisionRange(25.0f), mWeapon(nullptr)
 {
 	mColor = D2D1::ColorF(rand());
 }
@@ -99,6 +99,16 @@ void Unit::SetSpeed(float value)
 float Unit::GetSpeed()
 {
 	return mSpeed;
+}
+
+IWeapon* Unit::GetWeapon()
+{
+	return mWeapon;
+}
+
+void Unit::SetWeapon(IWeapon* w)
+{
+	mWeapon = w;
 }
 
 Money Unit::GetMoneyChange()
