@@ -351,6 +351,9 @@ ID2D1Bitmap* D2Pool::GetGraphic(D2Graphic graphic)
 		case D2Graphic::APPLE:
 			filename = L"apple.png";
 			break;
+		case D2Graphic::SWORD:
+			filename = L"sword.png";
+			break;
 		}
 		if (filename.empty())
 			return nullptr;
