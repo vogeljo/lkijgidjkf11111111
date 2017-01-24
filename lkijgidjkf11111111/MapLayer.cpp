@@ -145,7 +145,6 @@ bool MapLayer::OnDraw(ID2D1RenderTarget* target)
 	}
 
 	if (npcThief) {
-		//printf("%f ; %f\n", npcThief->GetLocation().x, npcThief->GetLocation().y);
 		if (mPlayer->HasVisionAt(*npcThief))
 			DrawUnit(target, npcThief, false);
 	}

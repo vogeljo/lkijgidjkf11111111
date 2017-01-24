@@ -67,7 +67,7 @@ bool PlayerAttributesLayer::OnDraw(ID2D1RenderTarget* target)
 	}
 
 	// TODO: catch changes in attributes
-	return false;
+	return true;
 }
 
 void PlayerAttributesLayer::Initialize()

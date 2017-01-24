@@ -69,3 +69,8 @@ void MyGameTimeLayer::Initialize()
 {
 
 }
+
+bool MyGameTimeLayer::TakesFocus()
+{
+	return false;
+}

@@ -47,7 +47,6 @@ public:
 	int GetPositionY();
 	int GetWidth();
 	int GetHeight();
-	D2D1_POINT_2F GetCenter();
 	D2D1_RECT_F GetContentRectangle();
 	D2D1_RECT_F GetBoundingRectangle();
 	D2D1_RECT_F GetBounds();
@@ -79,6 +78,9 @@ public:
 	void FadeOut(DWORD duration_ms = 100);
 
 	virtual bool IsBitmap() override;
+	virtual bool TakesFocus();
+
+	virtual void OnExitKey();
 
 	virtual void OnLayerAdded(Layer *layer);
 
@@ -109,5 +111,14 @@ public:
 	virtual void MUST_CALL OnMouseLeave();
 
 	virtual void OnFocusChange(bool hasFocus);
+	void Focus();
+
+	// Show layer, taking focus
+	void Show();
+
+	// Hide layer, yielding focus
+	void Hide();
+
+	Layer* GetChildBehind(Layer *child);
 };
 

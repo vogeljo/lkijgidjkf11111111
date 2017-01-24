@@ -68,16 +68,16 @@ void MyGame::Initialize()
 	l_console = new ConsoleLayer(this->GetGame(), this->GetWidth(), 50.0f);
 	l_console->SetPosition(0, this->GetHeight() - 50);
 	l_console->SetVisible(false);
-	this->AddLayer(l_console);
 
 	this->AddLayer(l_map);
-	this->AddLayer(l_player_attr);
-	this->AddLayer(l_cash);
-	this->AddLayer(l_time);
-	this->AddLayer(l_inventory);
-	this->AddLayer(l_console);
 
-	this->SetFocus(l_map);
+	l_map->AddLayer(l_player_attr);
+	l_map->AddLayer(l_cash);
+	l_map->AddLayer(l_time);
+	l_map->AddLayer(l_inventory);
+	l_map->AddLayer(l_console);
+
+	l_map->Show();
 }
 
 bool MUST_CALL MyGame::OnMouseMove(int x, int y)
@@ -102,16 +102,8 @@ void MyGame::OnKeyDown(int key)
 				l_inventory->FadeIn(100);
 		}
 		break;
-	case VK_ESCAPE:
-		if (l_console->IsVisible() && l_console->HasFocus()) {
-			this->ToggleConsole();
-		}
-		else
-			this->Exit();
-		break;
 	case 'C':
 		if ((GetKeyState(VK_SHIFT) & 0x8000) && (GetKeyState(VK_CONTROL) & 0x8000)) {
-			printf("Opening/closing console\n");
 			this->ToggleConsole();
 		}
 		else if (!l_console->HasFocus()) {
@@ -146,6 +138,12 @@ void MyGame::ToggleConsole()
 	}
 }
 
+void MyGame::OnExitKey()
+{
+	if (MessageBox(this->GetWindowHandle(), "Wirklich?", "Schließen", MB_YESNO | MB_ICONINFORMATION) == IDYES)
+		this->Exit();
+}
+
 MyGame::~MyGame()
 {
 	if (map_ptr) {
@@ -172,6 +170,12 @@ void MyGame::OnUpdate()
 bool MyGame::OnDraw(ID2D1RenderTarget* target)
 {
 	target->Clear(D2D1::ColorF(D2D1::ColorF::CornflowerBlue));
+
+	target->SetTransform(D2D1::Matrix3x2F::Rotation(3.0f));
+
+	D2Pool::PrintText(L"lkijgidjkf11111111", target, D2Pool::GetFormat(D2PoolFont::MONOSPACE), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2D1::ColorF::Black), 80.0f, DWRITE_FONT_WEIGHT_EXTRA_BLACK, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+
+	target->SetTransform(D2D1::Matrix3x2F::Identity());
 
 	return true;
 }

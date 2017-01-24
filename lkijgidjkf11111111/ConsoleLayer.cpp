@@ -113,6 +113,6 @@ void ConsoleLayer::Insert(std::wstring str)
 void ConsoleLayer::OnFocusChange(bool hasFocus)
 {
 	if (!hasFocus)
-		this->FadeOut();
+		this->Hide();
 	this->Invalidate();
 }

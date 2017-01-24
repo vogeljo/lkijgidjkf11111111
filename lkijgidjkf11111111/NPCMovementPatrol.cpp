@@ -69,11 +69,7 @@ UnitLocation NPCMovementPatrol::GetLocation()
 
 		mTweenX.Reset(last_val.x, next_val.x, duration);
 		mTweenY.Reset(last_val.y, next_val.y, duration);
-
-		printf("Tweens reset.\n");
-		printf("X: %f -> %f\n", last_val.x, next_val.x);
-		printf("Y: %f -> %f\n", last_val.y, next_val.y);
-
+		
 		mLastWaypoint = next;
 	}
 

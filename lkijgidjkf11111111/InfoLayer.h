@@ -24,5 +24,8 @@ public:
 	void SetBackground(D2D1_COLOR_F color);
 
 	virtual bool TestMouseHit(int x, int y) override;
+
+	virtual bool TakesFocus() override;
+
 };
 

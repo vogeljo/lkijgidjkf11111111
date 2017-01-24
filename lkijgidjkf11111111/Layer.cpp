@@ -218,12 +218,9 @@ void Layer::Draw(ID2D1RenderTarget* target)
 	}
 
 	Drawable::Draw(target);
-
-	for each(Layer *layer in mLayers) {
-		if (layer->IsVisible())
-			layer->Print(target);
-	}
-
+	for each(auto l in mLayers)
+		l->Print(target);
+	
 	this->EndDrawing(target);
 }
 
@@ -246,6 +243,16 @@ bool Layer::IsBitmap()
 void Layer::OnLayerAdded(Layer *layer)
 {
 
+}
+
+bool Layer::TakesFocus()
+{
+	return true;
+}
+
+void Layer::OnExitKey()
+{
+	this->FadeOut();
 }
 
 bool MUST_CALL Layer::OnMouseMove(int x, int y)
@@ -347,10 +354,42 @@ void MUST_CALL Layer::OnFocusChange(bool hasFocus)
 
 }
 
+void Layer::Focus()
+{
+	if (this->TakesFocus())
+		mGame.SetFocus(this);
+}
+
+void Layer::Show()
+{
+	this->SetVisible(true);
+	this->Focus();
+}
+
+void Layer::Hide()
+{
+	mGame.YieldFocus(this);
+	this->SetVisible(false);
+}
+
+Layer* Layer::GetChildBehind(Layer *child)
+{
+	for (auto it = mLayers.begin(); it != mLayers.end(); ++it) {
+		if (*it == child) {
+			if (it != mLayers.begin())
+				return *(it - 1);
+			else
+				break;
+		}
+	}
+
+	return this;
+}
+
 void Layer::FadeIn(DWORD duration_ms /*= 100*/)
 {
 	if (!this->IsVisible() && dynOpacity.HasEnded()) {
-		this->SetVisible(true);
+		this->Show();
 		dynOpacity.Reset(0.0f, 1.0f, duration_ms);
 		this->Invalidate();
 	}
@@ -360,7 +399,7 @@ void Layer::FadeOut(DWORD duration_ms /*= 100*/)
 {
 	if (this->IsVisible() && dynOpacity.HasEnded()) {
 		dynOpacity.Reset(this->GetOpacity(), 0.0f, duration_ms, [&]() {
-			this->SetVisible(false);
+			this->Hide();
 		});
 	}
 }
