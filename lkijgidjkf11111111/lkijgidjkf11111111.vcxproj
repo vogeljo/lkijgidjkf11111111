@@ -161,6 +161,7 @@
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="ShellEngine.h" />
     <ClInclude Include="TimedSineDynamic.h" />
     <ClInclude Include="ThiefNPCUnit.h" />
     <ClInclude Include="TweenDynamic.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGame.cpp" />
+    <ClCompile Include="ShellEngine.cpp" />
     <ClCompile Include="ThiefNPCUnit.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitStats.cpp" />

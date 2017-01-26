@@ -40,6 +40,15 @@ void MyGame::Initialize()
 {
 	MyGameItems::Initialize();
 
+	mShell.SetHandler(L"alert", [&](ShellEngine& se, std::vector<std::wstring>& args) -> void {
+		auto message = Util::Concat(args.begin(), args.end());
+		MessageBoxW(this->GetWindowHandle(), message.c_str(), L"Message", MB_ICONINFORMATION);
+	});
+	
+	mShell.SetHandler(L"help", [&](ShellEngine& se, std::vector<std::wstring>& args) -> void {
+		MessageBoxW(this->GetWindowHandle(), L"Nope. Not yet implemented.", L"Help", MB_ICONINFORMATION);
+	});
+
 	//uPlayer.SetName(L"Spieler");
 	uPlayer.GetStats().Set(Stat::Money, 12000);
 	uPlayer.GetStats().Set(Stat::Health, 1000);

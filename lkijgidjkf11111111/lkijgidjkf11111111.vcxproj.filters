@@ -150,6 +150,9 @@
     <ClInclude Include="AlternatingDynamic.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="ShellEngine.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D2Pool.cpp">
@@ -258,6 +261,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleLayer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="ShellEngine.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
