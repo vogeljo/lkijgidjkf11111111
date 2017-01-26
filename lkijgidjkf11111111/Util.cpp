@@ -53,3 +53,19 @@ D2D1_COLOR_F Util::TweenHealth(float progress)
 {
 	return D2D1::ColorF(1.0f - progress, progress, 0.0f);
 }
+
+std::wstring Util::ToLower(std::wstring input)
+{
+	std::for_each(input.begin(), input.end(), [](wchar_t& ch) {
+		ch = ::tolower(ch);
+	});
+	return input;
+}
+
+std::wstring Util::ToUpper(std::wstring input)
+{
+	std::for_each(input.begin(), input.end(), [](wchar_t& ch) {
+		ch = ::toupper(ch);
+	});
+	return input;
+}

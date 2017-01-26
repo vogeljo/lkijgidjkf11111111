@@ -2,6 +2,7 @@
 #include "native.h"
 #include <chrono>
 #include <stack>
+#include <algorithm>
 
 typedef uint64_t TimeStamp;
 typedef TimeStamp TimeDiff;
@@ -20,6 +21,23 @@ public:
 	static TimeStamp PopTime();
 
 	static D2D1_COLOR_F TweenHealth(float progress);
+
+	static std::wstring ToLower(std::wstring input);
+	static std::wstring ToUpper(std::wstring input);
+
+	template<typename T>
+	static std::wstring Concat(T begin, T end, std::wstring delimeter = L" ") {
+		std::wstring result;
+		auto len = std::distance(begin, end);
+		for (auto it = begin; it != end; ++it) {
+			auto val = *it;
+			result += val;
+			if (len != 1)
+				result += delimeter;
+			--len;
+		}
+		return result;
+	}
 };
 
 //TODO: implementations to source file (VC doesnt like that; C2676)
