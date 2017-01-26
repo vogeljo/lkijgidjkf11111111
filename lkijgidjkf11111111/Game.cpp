@@ -172,6 +172,11 @@ void Game::YieldFocus(Layer *from)
 	}
 }
 
+ShellEngine& Game::GetShellEngine()
+{
+	return mShell;
+}
+
 void Game::Show()
 {
 	ShowWindow(mWindow, SW_SHOW);
@@ -264,4 +269,9 @@ void MUST_CALL Game::OnKeyChar(wchar_t c)
 Layer* Game::GetFocused()
 {
 	return mFocused;
+}
+
+bool Game::Shell(const std::wstring& command)
+{
+	return mShell.Execute(command);
 }

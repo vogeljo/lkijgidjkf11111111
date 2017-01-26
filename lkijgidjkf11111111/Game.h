@@ -1,8 +1,10 @@
 #pragma once
 #include "Layer.h"
 #include "Util.h"
+#include "ShellEngine.h"
 
 #include "native.h"
+
 
 enum class CGameSpecialDimensions {
 	FULLSCREEN
@@ -15,8 +17,9 @@ protected:
 	HWND mWindow;
 	ID2D1HwndRenderTarget *mWindowTarget;
 
-	Layer *mMouseHover;
 	Layer *mFocused;
+	Layer *mMouseHover;
+	ShellEngine mShell;
 public:
 	Game(int width, int height);
 	virtual ~Game();
@@ -31,6 +34,8 @@ public:
 	int GetMousePosX();
 	int GetMousePosY();
 	void SetFocus(Layer *layer);
+
+	ShellEngine& GetShellEngine();
 
 	void Show();
 	void SetFullscreen();
@@ -53,5 +58,7 @@ public:
 	virtual void MUST_CALL OnKeyChar(wchar_t c) override;
 
 	Layer* GetFocused();
+
+	bool Shell(const std::wstring& command);
 };
 

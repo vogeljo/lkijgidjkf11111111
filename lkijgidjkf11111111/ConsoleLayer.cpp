@@ -72,7 +72,10 @@ void MUST_CALL ConsoleLayer::OnKeyChar(wchar_t c)
 
 void ConsoleLayer::OnCommand(std::wstring cmd)
 {
-
+	bool result = this->GetGame().Shell(cmd);
+	if (!result) {
+		MessageBoxW(this->GetGame().GetWindowHandle(), L"Unknown command.", L"Error", MB_ICONERROR);
+	}
 }
 
 void MUST_CALL ConsoleLayer::OnKeyDown(int key)
