@@ -67,7 +67,7 @@ bool PlayerAttributesLayer::OnDraw(ID2D1RenderTarget* target)
 	}
 
 	// TODO: catch changes in attributes
-	return false;
+	return true;
 }
 
 void PlayerAttributesLayer::Initialize()
@@ -85,4 +85,9 @@ void PlayerAttributesLayer::Initialize()
 	D2Pool::GetSourceRenderTarget()->CreateLinearGradientBrush(D2D1::LinearGradientBrushProperties(D2D1::Point2F(0, 0), D2D1::Point2F(this->GetWidth(), 0)), stops, &mBackground);
 
 	stops->Release();
+}
+
+bool PlayerAttributesLayer::TakesFocus()
+{
+	return false;
 }

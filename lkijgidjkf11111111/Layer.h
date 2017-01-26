@@ -23,6 +23,7 @@ protected:
 	bool mVisible;
 	bool mAlphaBackground;
 	D2D1_RECT_F mPadding;
+	bool mHideOnExitKey;
 
 	// replace Drawable::mTarget by this.
 	ID2D1BitmapRenderTarget *mBackBuffer;
@@ -47,7 +48,6 @@ public:
 	int GetPositionY();
 	int GetWidth();
 	int GetHeight();
-	D2D1_POINT_2F GetCenter();
 	D2D1_RECT_F GetContentRectangle();
 	D2D1_RECT_F GetBoundingRectangle();
 	D2D1_RECT_F GetBounds();
@@ -61,6 +61,8 @@ public:
 	void SetPadding(float left, float top, float right, float bottom);
 	bool IsVisible();
 	bool IsOpaque();
+	bool GetHideOnExitKey();
+	void SetHideOnExitKey(bool value);
 
 	bool Intersects(int x, int y);
 	Layer* GetLayerAt(int x, int y);
@@ -79,6 +81,11 @@ public:
 	void FadeOut(DWORD duration_ms = 100);
 
 	virtual bool IsBitmap() override;
+	virtual bool TakesFocus();
+
+	virtual void OnExitKey();
+
+	virtual void OnLayerAdded(Layer *layer);
 
 	// returns false when the mouse is over a sublayer.
 	virtual bool MUST_CALL OnMouseMove(int x, int y);
@@ -107,5 +114,14 @@ public:
 	virtual void MUST_CALL OnMouseLeave();
 
 	virtual void OnFocusChange(bool hasFocus);
+	void Focus();
+
+	// Show layer, taking focus
+	void Show();
+
+	// Hide layer, yielding focus
+	void Hide();
+
+	Layer* GetChildBehind(Layer *child);
 };
 

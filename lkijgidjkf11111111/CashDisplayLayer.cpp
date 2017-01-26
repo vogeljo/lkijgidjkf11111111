@@ -96,3 +96,8 @@ void CashDisplayLayer::Initialize()
 
 	stops->Release();
 }
+
+bool CashDisplayLayer::TakesFocus()
+{
+	return false;
+}

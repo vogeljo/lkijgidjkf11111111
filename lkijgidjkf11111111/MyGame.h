@@ -13,6 +13,7 @@
 #include "PlayerAttributesLayer.h"
 #include "ConsoleLayer.h"
 #include "HouseLayer.h"
+#include "ButtonLayer.h"
 
 #include "HouseInfo.h"
 
@@ -57,5 +58,10 @@ public:
 	virtual void OnKeyDown(int key) override;
 
 	void ToggleConsole();
+
+	virtual void OnExitKey() override;
+
+	virtual bool OnExit() override;
+
 };
 

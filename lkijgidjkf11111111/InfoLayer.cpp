@@ -34,6 +34,11 @@ bool InfoLayer::TestMouseHit(int x, int y)
 	return false;
 }
 
+bool InfoLayer::TakesFocus()
+{
+	return false;
+}
+
 void InfoLayer::OnUpdate()
 {
 

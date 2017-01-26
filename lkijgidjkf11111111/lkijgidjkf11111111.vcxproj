@@ -130,6 +130,7 @@
     <ClInclude Include="ConstantDynamic.h" />
     <ClInclude Include="crc32.h" />
     <ClInclude Include="DragController.h" />
+    <ClInclude Include="GridLayer.h" />
     <ClInclude Include="HouseInfo.h" />
     <ClInclude Include="HouseLayer.h" />
     <ClInclude Include="IDynamic.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="TimedSineDynamic.h" />
     <ClInclude Include="ThiefNPCUnit.h" />
     <ClInclude Include="TweenDynamic.h" />
+    <ClInclude Include="UniqueStack.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitStats.h" />
     <ClInclude Include="Util.h" />
@@ -175,6 +177,7 @@
     <ClCompile Include="ConsoleLayer.cpp" />
     <ClCompile Include="crc32.cpp" />
     <ClCompile Include="DragController.cpp" />
+    <ClCompile Include="GridLayer.cpp" />
     <ClCompile Include="HouseInfo.cpp" />
     <ClCompile Include="HouseLayer.cpp" />
     <ClCompile Include="InfoLayer.cpp" />

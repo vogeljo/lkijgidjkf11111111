@@ -73,14 +73,15 @@ void MyGame::Initialize()
 	l_house->SetVisible(false);
 
 	this->AddLayer(l_map);
-	this->AddLayer(l_player_attr);
-	this->AddLayer(l_cash);
-	this->AddLayer(l_time);
-	this->AddLayer(l_inventory);
-	this->AddLayer(l_console);
-	this->AddLayer(l_house);
 
-	this->SetFocus(l_map);
+	l_map->AddLayer(l_player_attr);
+	l_map->AddLayer(l_cash);
+	l_map->AddLayer(l_time);
+	l_map->AddLayer(l_inventory);
+	l_map->AddLayer(l_house);
+	l_map->AddLayer(l_console);
+
+	l_map->Focus();
 }
 
 bool MUST_CALL MyGame::OnMouseMove(int x, int y)
@@ -114,7 +115,6 @@ void MyGame::OnKeyDown(int key)
 		break;
 	case 'C':
 		if ((GetKeyState(VK_SHIFT) & 0x8000) && (GetKeyState(VK_CONTROL) & 0x8000)) {
-			printf("Opening/closing console\n");
 			this->ToggleConsole();
 		}
 		else if (!l_console->HasFocus()) {
@@ -154,15 +154,24 @@ void MyGame::OnKeyDown(int key)
 
 void MyGame::ToggleConsole()
 {
-	bool hiding = l_console->IsVisible();
-	if (hiding) {
+	bool visible = l_console->IsVisible();
+	if (visible) {
 		l_console->FadeOut();
-		this->SetFocus(l_map);
 	}
 	else {
 		l_console->FadeIn();
-		this->SetFocus(l_console);
 	}
+}
+
+void MyGame::OnExitKey()
+{
+	this->Exit();
+}
+
+bool MyGame::OnExit()
+{
+	//return MessageBox(this->GetWindowHandle(), "Wirklich schließen?", "Schließen", MB_YESNO | MB_ICONQUESTION) == IDYES;
+	return true;
 }
 
 MyGame::~MyGame()
@@ -191,6 +200,12 @@ void MyGame::OnUpdate()
 bool MyGame::OnDraw(ID2D1RenderTarget* target)
 {
 	target->Clear(D2D1::ColorF(D2D1::ColorF::CornflowerBlue));
+
+	target->SetTransform(D2D1::Matrix3x2F::Rotation(3.0f));
+
+	D2Pool::PrintText(L"lkijgidjkf11111111", target, D2Pool::GetFormat(D2PoolFont::MONOSPACE), this->GetContentRectangle(), D2Pool::GetSolidColorBrush(D2D1::ColorF::Black), 80.0f, DWRITE_FONT_WEIGHT_EXTRA_BLACK, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+
+	target->SetTransform(D2D1::Matrix3x2F::Identity());
 
 	return true;
 }

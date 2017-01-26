@@ -50,6 +50,8 @@ void MapLayer::Initialize()
 	npcThief->SetName(L"Thief 1");
 	npcThief->SetLocation(15.0f, 7.0f);
 	npcThief->GetPatrol()->AddWaypoint(10.0f, 10.0f);
+
+	this->SetHideOnExitKey(true);
 }
 
 void MapLayer::OnUpdate()
@@ -145,7 +147,6 @@ bool MapLayer::OnDraw(ID2D1RenderTarget* target)
 	}
 
 	if (npcThief) {
-		//printf("%f ; %f\n", npcThief->GetLocation().x, npcThief->GetLocation().y);
 		if (mPlayer->HasVisionAt(*npcThief))
 			DrawUnit(target, npcThief, false);
 	}
@@ -494,4 +495,9 @@ bool MUST_CALL MapLayer::OnVMouseScroll(int x, int y, float delta)
 		return true;
 	}
 	return false;
+}
+
+void MapLayer::OnExitKey()
+{
+	this->GetGame().Exit();
 }
