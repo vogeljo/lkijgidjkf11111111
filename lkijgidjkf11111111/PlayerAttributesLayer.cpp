@@ -86,3 +86,8 @@ void PlayerAttributesLayer::Initialize()
 
 	stops->Release();
 }
+
+bool PlayerAttributesLayer::TakesFocus()
+{
+	return false;
+}

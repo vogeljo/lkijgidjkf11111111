@@ -26,6 +26,8 @@ void InventoryLayer::Initialize()
 
 	this->AddLayer(l_btnClose);
 	this->AddLayer(l_item1);
+
+	this->SetHideOnExitKey(true);
 }
 
 void InventoryLayer::OnUpdate()

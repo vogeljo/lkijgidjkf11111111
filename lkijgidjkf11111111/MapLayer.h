@@ -76,5 +76,8 @@ public:
 
 	virtual bool MUST_CALL OnVMouseScroll(int x, int y, float delta) override;
 
+
+	virtual void OnExitKey() override;
+
 };
 

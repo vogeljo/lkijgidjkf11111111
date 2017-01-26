@@ -44,12 +44,12 @@ public:
 	virtual void OnUpdate() override;
 	virtual bool OnDraw(ID2D1RenderTarget* target) override;
 
+	// return false to abort exit
+	virtual bool OnExit();
 
 	virtual void OnKeyDown(int key) override;
 
 	virtual bool MUST_CALL OnMouseMove(int x, int y) override;
-
-
 	virtual void MUST_CALL OnKeyChar(wchar_t c) override;
 
 	Layer* GetFocused();

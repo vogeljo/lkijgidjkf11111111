@@ -58,5 +58,8 @@ public:
 	void ToggleConsole();
 
 	virtual void OnExitKey() override;
+
+	virtual bool OnExit() override;
+
 };
 

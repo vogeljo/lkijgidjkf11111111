@@ -23,6 +23,7 @@ protected:
 	bool mVisible;
 	bool mAlphaBackground;
 	D2D1_RECT_F mPadding;
+	bool mHideOnExitKey;
 
 	// replace Drawable::mTarget by this.
 	ID2D1BitmapRenderTarget *mBackBuffer;
@@ -60,6 +61,8 @@ public:
 	void SetPadding(float left, float top, float right, float bottom);
 	bool IsVisible();
 	bool IsOpaque();
+	bool GetHideOnExitKey();
+	void SetHideOnExitKey(bool value);
 
 	bool Intersects(int x, int y);
 	Layer* GetLayerAt(int x, int y);

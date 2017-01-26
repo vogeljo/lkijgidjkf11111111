@@ -164,7 +164,7 @@ void Game::SetFocus(Layer *layer)
 
 void Game::YieldFocus(Layer *from)
 {
-	if (from) {
+	if (from && from->TakesFocus()) {
 		auto parent = from->GetParent();
 		if (parent) {
 			this->SetFocus(parent);
@@ -187,7 +187,8 @@ void Game::SetFullscreen()
 
 void Game::Exit()
 {
-	DestroyWindow(mWindow);
+	if (this->OnExit())
+		DestroyWindow(mWindow);
 }
 
 void Game::Draw(ID2D1RenderTarget* target)
@@ -216,6 +217,11 @@ void Game::OnUpdate()
 bool Game::OnDraw(ID2D1RenderTarget* target)
 {
 	//throw std::logic_error("The method or operation is not implemented.");
+	return true;
+}
+
+bool Game::OnExit()
+{
 	return true;
 }
 

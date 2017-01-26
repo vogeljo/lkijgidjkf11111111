@@ -140,8 +140,13 @@ void MyGame::ToggleConsole()
 
 void MyGame::OnExitKey()
 {
-	if (MessageBox(this->GetWindowHandle(), "Wirklich?", "Schlieﬂen", MB_YESNO | MB_ICONINFORMATION) == IDYES)
-		this->Exit();
+	this->Exit();
+}
+
+bool MyGame::OnExit()
+{
+	//return MessageBox(this->GetWindowHandle(), "Wirklich schlieﬂen?", "Schlieﬂen", MB_YESNO | MB_ICONQUESTION) == IDYES;
+	return true;
 }
 
 MyGame::~MyGame()

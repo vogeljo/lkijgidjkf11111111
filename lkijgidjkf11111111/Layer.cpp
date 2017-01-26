@@ -158,6 +158,16 @@ bool Layer::IsOpaque()
 	return this->GetOpacity() >= 1.0f;
 }
 
+bool Layer::GetHideOnExitKey()
+{
+	return mHideOnExitKey;
+}
+
+void Layer::SetHideOnExitKey(bool value)
+{
+	mHideOnExitKey = value;
+}
+
 bool Layer::Intersects(int x, int y)
 {
 	return (mPosX <= x && (mPosX + mWidth) >= x)
@@ -252,7 +262,8 @@ bool Layer::TakesFocus()
 
 void Layer::OnExitKey()
 {
-	this->FadeOut();
+	if (this->GetHideOnExitKey())
+		this->FadeOut();
 }
 
 bool MUST_CALL Layer::OnMouseMove(int x, int y)
