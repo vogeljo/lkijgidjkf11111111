@@ -317,6 +317,11 @@ D2D1_COLOR_F D2Pool::GetReadableColor(D2D1_COLOR_F& backgroundColor)
 	return D2D1::ColorF(backgroundColor.r * 0.2126 + backgroundColor.g * 0.7152 + backgroundColor.b * 0.0722 > 0.5f ? D2D1::ColorF::Black : D2D1::ColorF::White);
 }
 
+D2D1_COLOR_F D2Pool::GetComplementaryColor(D2D1_COLOR_F& color)
+{
+	return D2D1::ColorF(1.0f - color.r, 1.0f - color.g, 1.0f - color.b, color.a);
+}
+
 IWICImagingFactory* D2Pool::GetWICFactory()
 {
 	static IWICImagingFactory *factory = nullptr;

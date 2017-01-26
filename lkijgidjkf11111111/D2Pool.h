@@ -51,6 +51,7 @@ public:
 	static std::wstring IntToMoneyChange(int money, bool currency = true);
 
 	static D2D1_COLOR_F GetReadableColor(D2D1_COLOR_F& backgroundColor);
+	static D2D1_COLOR_F GetComplementaryColor(D2D1_COLOR_F& color);
 
 	static IWICImagingFactory* GetWICFactory();
 
