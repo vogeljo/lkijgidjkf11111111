@@ -12,6 +12,7 @@
 #include "InventoryLayer.h"
 #include "PlayerAttributesLayer.h"
 #include "ConsoleLayer.h"
+#include "ButtonLayer.h"
 
 #include "HouseInfo.h"
 

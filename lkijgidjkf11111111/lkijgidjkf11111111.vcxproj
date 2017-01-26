@@ -130,6 +130,7 @@
     <ClInclude Include="ConstantDynamic.h" />
     <ClInclude Include="crc32.h" />
     <ClInclude Include="DragController.h" />
+    <ClInclude Include="GridLayer.h" />
     <ClInclude Include="HouseInfo.h" />
     <ClInclude Include="IDynamic.h" />
     <ClInclude Include="InfoLayer.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="ConsoleLayer.cpp" />
     <ClCompile Include="crc32.cpp" />
     <ClCompile Include="DragController.cpp" />
+    <ClCompile Include="GridLayer.cpp" />
     <ClCompile Include="HouseInfo.cpp" />
     <ClCompile Include="InfoLayer.cpp" />
     <ClCompile Include="INPCMovement.cpp" />
