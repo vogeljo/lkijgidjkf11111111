@@ -119,8 +119,6 @@ void MyGame::OnKeyDown(int key)
 		if (l_console->IsVisible() && l_console->HasFocus()) {
 			this->ToggleConsole();
 		}
-		else
-			this->Exit();
 		break;
 	case 'C':
 		if ((GetKeyState(VK_SHIFT) & 0x8000) && (GetKeyState(VK_CONTROL) & 0x8000)) {
